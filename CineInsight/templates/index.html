@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineInsight - Decode Sarcasm in Movie Reviews</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>
+    <!-- Background overlay elements for cinematic blur and gradients -->
+    <div class="bg-overlay"></div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="#" class="logo-container" id="logo-link">
+                <!-- SVG CineInsight Logo -->
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="logo-icon">
+                    <rect width="40" height="40" rx="8" fill="#E35614" />
+                    <!-- Film slate lines -->
+                    <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M11 9L14 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M18 9L21 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M25 9L28 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <!-- Clapperboard top part angled slightly open -->
+                    <path d="M8 9H32" stroke="white" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <span class="logo-text">Cine<span class="orange-text">Insight</span></span>
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#how-it-works" class="nav-link">How it Works</a></li>
+                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="signin.html" class="signin-link">Sign In</a>
+                <a href="signup.html" class="btn btn-primary btn-header">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-card">
+                    <!-- AI Badge -->
+                    <div class="badge-container">
+                        <span class="badge">
+                            <!-- Spark Icon -->
+                            <svg class="badge-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L14.85 9.15L22 12L14.85 14.85L12 22L9.15 14.85L2 12L9.15 9.15L12 2Z"
+                                    fill="#E35614" />
+                            </svg>
+                            AI-POWERED ANALYSIS
+                        </span>
+                    </div>
+
+                    <!-- Heading -->
+                    <h1 class="hero-title">Decode the <span class="highlight">Unsaid</span> in Every Movie Review.</h1>
+
+                    <!-- Subtitle -->
+                    <p class="hero-subtitle">The world's first AI-powered multimodal sarcasm detection tool for smarter
+                        movie picks. No more misleading ratings.</p>
+
+                    <!-- Hero Actions -->
+                    <div class="hero-actions">
+                        <a href="signup.html" class="btn btn-primary btn-hero">
+                            <!-- Play Icon -->
+                            <svg class="btn-icon" width="12" height="14" viewBox="0 0 12 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.5 12.38V1.62C1.5 1.05 2.13 0.7 2.61 1.01L10.68 6.39C11.11 6.68 11.11 7.32 10.68 7.61L2.61 12.99C2.13 13.3 1.5 12.95 1.5 12.38Z"
+                                    fill="white" />
+                            </svg>
+                            Get Started
+                        </a>
+                        <a href="signin.html" class="btn btn-secondary btn-hero">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="container features-container">
+                <!-- Text Analysis Card -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <!-- Chat Bubble Icon -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="feature-icon">
+                            <path
+                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                stroke="#E35614" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8 8H16" stroke="#E35614" stroke-width="2" stroke-linecap="round" />
+                            <path d="M8 12H13" stroke="#E35614" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Text Analysis</h3>
+                    <p class="feature-description">Linguistic subtext processing</p>
+                </div>
+
+                <!-- Audio Tone Card -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <!-- Head speaking Icon -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="feature-icon">
+                            <path
+                                d="M4 19.5C4 16.46 8 15.5 10 15.5C12 15.5 16 16.46 16 19.5M10 12C12.21 12 14 10.21 14 8C14 5.79 12.21 4 10 4C7.79 4 6 5.79 6 8C6 10.21 7.79 12 10 12ZM17 7.5C18.5 8.5 18.5 10.5 17 11.5"
+                                stroke="#E35614" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M20 6C22.5 7.5 22.5 11.5 20 13" stroke="#E35614" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Audio Tone</h3>
+                    <p class="feature-description">Pitch & inflection detection</p>
+                </div>
+
+                <!-- Visual Cues Card -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <!-- Eye Icon -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="feature-icon">
+                            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z"
+                                stroke="#E35614" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="12" cy="12" r="3" stroke="#E35614" stroke-width="2.5" fill="none" />
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Visual Cues</h3>
+                    <p class="feature-description">Micro-expression monitoring</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <p>&copy; 2026 CineInsight. All rights reserved.</p>
+            </div>
+            <div class="footer-center">
+                <a href="#privacy" class="footer-link">Privacy</a>
+                <a href="#terms" class="footer-link">Terms</a>
+                <a href="#contact" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-right">
+                <a href="#globe" class="social-link" aria-label="Website">
+                    <!-- Globe SVG -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path
+                            d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                    </svg>
+                </a>
+                <a href="#contact" class="social-link" aria-label="Email">
+                    <!-- At Sign SVG -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M16 8v5a3 3 0 006 0v-1a10 10 0 10-3.92 7.94" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript File -->
+    <script src="../static/main.js"></script>
+</body>
+
+</html>

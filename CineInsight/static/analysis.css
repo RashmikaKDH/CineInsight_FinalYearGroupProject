@@ -1,0 +1,645 @@
+/* ==========================================================================
+   CineInsight Movie Review Analysis Results Page Stylesheet
+   ========================================================================== */
+
+:root {
+    /* Brand Colors */
+    --color-primary: #E35614;
+    --color-primary-hover: #C2410C;
+    --color-primary-light: rgba(227, 86, 20, 0.06);
+    --color-primary-glow: rgba(227, 86, 20, 0.15);
+    
+    /* Layout/Neutral Colors */
+    --color-dark: #0A1128;
+    --color-text-main: #0F172A;
+    --color-text-muted: #475569;
+    --color-text-light: #64748B;
+    --color-border: #E2E8F0;
+    --color-bg-page: #F8FAFC;
+    
+    /* Layout Constants */
+    --max-width: 1200px;
+    --border-radius-lg: 16px;
+    --border-radius-md: 12px;
+    --border-radius-sm: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--color-text-main);
+    background-color: var(--color-bg-page);
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ==========================================================================
+   Header Navigation
+   ========================================================================== */
+.analysis-header {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid var(--color-border);
+    height: 72px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo-icon {
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(227, 86, 20, 0.12);
+    transition: transform 0.2s ease;
+}
+
+.logo-container:hover .logo-icon {
+    transform: scale(1.04);
+}
+
+.logo-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    letter-spacing: -0.01em;
+}
+
+/* Navigation links */
+.analysis-nav {
+    margin-left: 40px;
+    margin-right: auto;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--color-text-main);
+}
+
+.nav-link.active {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* User Panel */
+.user-panel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.welcome-text {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FDBA74, #E35614);
+    box-shadow: 0 4px 10px rgba(227, 86, 20, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.avatar-circle:hover {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   Main Results Section
+   ========================================================================== */
+.analysis-main {
+    padding: 48px 0;
+    flex-grow: 1;
+}
+
+/* Results Header */
+.results-header {
+    margin-bottom: 32px;
+    animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+}
+
+.page-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   Upper Score Card Grid
+   ========================================================================== */
+.upper-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 24px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.score-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: 28px;
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.015);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Card 1: Overall Sentiment Card */
+.overall-sentiment-card {
+    align-items: flex-start;
+}
+
+.card-title-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 12px;
+}
+
+.gauge-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+}
+
+.gauge-svg {
+    display: block;
+}
+
+.sentiment-footer-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--color-border);
+    padding-top: 18px;
+    margin-top: auto;
+    font-size: 0.86rem;
+}
+
+.reviews-count {
+    color: var(--color-text-light);
+}
+
+.trend-indicator {
+    color: #10B981;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.trend-indicator svg {
+    flex-shrink: 0;
+}
+
+/* Card 2: Sarcasm Warning Card */
+.sarcasm-detected-card {
+    background-color: #FFF5F5;
+    border-color: #FFE2E2;
+    align-items: flex-start;
+}
+
+.warning-header-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.warning-icon {
+    flex-shrink: 0;
+}
+
+.warning-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #EF4444;
+}
+
+.warning-description {
+    font-size: 0.94rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.red-bold {
+    color: #EF4444;
+    font-weight: 700;
+}
+
+/* Sarcasm Reasoning Button */
+.btn-reasoning-report {
+    background-color: #DC2626;
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-bottom: 10px;
+}
+
+.btn-reasoning-report:hover {
+    background-color: #B91C1C;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.25);
+}
+
+.btn-reasoning-report:active {
+    transform: translateY(0);
+}
+
+.badge-why {
+    background-color: #FFFFFF;
+    color: #DC2626;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.warning-help-text {
+    font-size: 0.78rem;
+    color: #94A3B8;
+    line-height: 1.45;
+}
+
+/* ==========================================================================
+   Aspect-Specific Section
+   ========================================================================== */
+.aspect-section {
+    margin-bottom: 40px;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.1s;
+}
+
+.section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 20px;
+}
+
+.aspect-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.aspect-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    padding: 20px 24px;
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.01);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease;
+}
+
+.aspect-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.03);
+}
+
+.aspect-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.aspect-label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--color-text-light);
+    letter-spacing: 0.06em;
+}
+
+.aspect-score {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.score-blue {
+    color: #2563EB;
+}
+
+.score-yellow {
+    color: #D97706;
+}
+
+.score-lightblue {
+    color: #3B82F6;
+}
+
+/* Aspect Progress bars */
+.aspect-progress-track {
+    height: 8px;
+    background-color: #F1F5F9;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+
+.aspect-progress-bar {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.bar-blue {
+    background-color: #2563EB;
+}
+
+.bar-yellow {
+    background-color: #F59E0B;
+}
+
+.bar-lightblue {
+    background-color: #60A5FA;
+}
+
+/* Help Indicator links */
+.aspect-help-link {
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #94A3B8;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    transition: color 0.2s ease;
+}
+
+.aspect-help-link:hover {
+    color: var(--color-text-light);
+}
+
+.help-question-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #94A3B8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+}
+
+/* ==========================================================================
+   Conclusion Card Panel
+   ========================================================================== */
+.conclusion-section {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.2s;
+}
+
+.conclusion-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-primary); /* CineInsight Orange Left border */
+    border-radius: 4px var(--border-radius-lg) var(--border-radius-lg) 4px;
+    padding: 28px;
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.015);
+}
+
+.conclusion-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.conclusion-icon {
+    flex-shrink: 0;
+}
+
+.conclusion-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.conclusion-text {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+}
+
+/* ==========================================================================
+   Footer Section
+   ========================================================================== */
+.dashboard-footer {
+    background-color: #FFFFFF;
+    border-top: 1px solid var(--color-border);
+    padding: 24px 0;
+    margin-top: 64px;
+}
+
+.footer-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon-footer {
+    border-radius: 4px;
+}
+
+.logo-text-footer {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text-light);
+}
+
+.footer-right {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: var(--color-text-light);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Keyframes & Animations
+   ========================================================================== */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 992px) {
+    .upper-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .aspect-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .page-title {
+        font-size: 1.95rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .analysis-main {
+        padding: 32px 0;
+    }
+
+    .analysis-header {
+        height: auto;
+        padding: 12px 0;
+    }
+
+    .header-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .analysis-nav {
+        margin: 0 auto;
+    }
+
+    .nav-links {
+        gap: 18px;
+    }
+
+    .user-panel {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .score-card {
+        padding: 20px;
+    }
+
+    .conclusion-card {
+        padding: 20px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .footer-right {
+        justify-content: center;
+    }
+}

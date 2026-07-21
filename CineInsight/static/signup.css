@@ -1,0 +1,658 @@
+/* ==========================================================================
+   CineInsight Sign Up Page Stylesheet
+   ========================================================================== */
+
+:root {
+    /* Brand Colors */
+    --color-primary: #E35614;
+    --color-primary-hover: #C2410C;
+    --color-primary-light: rgba(227, 86, 20, 0.06);
+    --color-primary-glow: rgba(227, 86, 20, 0.15);
+    
+    /* Neutral Colors */
+    --color-dark: #0A1128;
+    --color-text-main: #0F172A;
+    --color-text-muted: #475569;
+    --color-text-light: #64748B;
+    --color-border: #E2E8F0;
+    --color-input-bg: #F8FAFC;
+    
+    /* Layout Constants */
+    --border-radius: 8px;
+    --border-radius-pill: 50px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--color-text-main);
+    background-color: #F8FAFC;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Header Navigation
+   ========================================================================== */
+.main-header {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid var(--color-border);
+    height: 72px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo-icon {
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.12);
+    transition: transform 0.2s ease;
+}
+
+.logo-container:hover .logo-icon {
+    transform: scale(1.04);
+}
+
+.logo-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    letter-spacing: -0.01em;
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.login-link {
+    text-decoration: none;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.login-link:hover {
+    color: var(--color-primary);
+}
+
+.btn-signup {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 10px rgba(227, 86, 20, 0.1);
+}
+
+.btn-signup:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(227, 86, 20, 0.2);
+}
+
+/* ==========================================================================
+   Page Container & Card
+   ========================================================================== */
+.page-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.signup-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 1060px;
+    display: flex;
+    box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.04);
+    overflow: hidden;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Left Side: Form Panel
+   ========================================================================== */
+.form-panel {
+    flex: 1.1;
+    padding: 56px 48px;
+    border-right: 1px solid var(--color-border);
+}
+
+.panel-header {
+    margin-bottom: 28px;
+}
+
+.panel-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.15rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.panel-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+}
+
+/* Form Styles */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.label-icon {
+    color: var(--color-text-light);
+    flex-shrink: 0;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    background-color: #FFFFFF;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-glow);
+}
+
+/* Helper Text */
+.input-help {
+    font-size: 0.76rem;
+    color: var(--color-text-light);
+    margin-top: 2px;
+}
+
+/* Focus color shifting for labels */
+.input-group:focus-within .input-label {
+    color: var(--color-primary);
+}
+.input-group:focus-within .label-icon {
+    color: var(--color-primary);
+}
+
+/* Consent Checkbox Custom Style */
+.checkbox-group {
+    margin-top: 4px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.custom-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #CBD5E1;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    flex-shrink: 0;
+    position: relative;
+    margin-top: 2px;
+    transition: all 0.2s ease;
+}
+
+.checkbox-container:hover input ~ .custom-checkbox {
+    border-color: #94A3B8;
+}
+
+.checkbox-container input:checked ~ .custom-checkbox {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.custom-checkbox::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-container input:checked ~ .custom-checkbox::after {
+    display: block;
+}
+
+.checkbox-text {
+    font-size: 0.84rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+}
+
+.inline-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.inline-link:hover {
+    text-decoration: underline;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    border: none;
+    padding: 13px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 10px rgba(227, 86, 20, 0.1);
+    margin-top: 8px;
+}
+
+.submit-btn:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(227, 86, 20, 0.2);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.arrow-icon {
+    transition: transform 0.2s ease;
+}
+
+.submit-btn:hover .arrow-icon {
+    transform: translateX(3px);
+}
+
+/* Redirection Footer Link */
+.signin-prompt {
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--color-text-light);
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+.signin-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s ease;
+}
+
+.signin-link:hover {
+    text-decoration: underline;
+    color: var(--color-primary-hover);
+}
+
+/* ==========================================================================
+   Right Side: Graphic Showcase
+   ========================================================================== */
+.graphic-panel {
+    flex: 0.9;
+    background-color: #F8FAFC;
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative visual card stack layout */
+.visual-stack {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.glow-bg {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(227, 86, 20, 0.06) 0%, rgba(227, 86, 20, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Base floating badge stylings */
+.floating-badge {
+    position: absolute;
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.03);
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-badge:hover {
+    transform: scale(1.03) translateY(-3px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+    z-index: 10;
+}
+
+.badge-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-light);
+}
+
+/* Offsets and Rotations */
+.badge-text {
+    width: 175px;
+    top: 20px;
+    left: 20px;
+    transform: rotate(-6deg);
+}
+
+.badge-audio {
+    width: 175px;
+    top: 35px;
+    right: 20px;
+    transform: rotate(5deg);
+}
+
+.badge-facial {
+    width: 180px;
+    bottom: 45px;
+    left: 15px;
+    transform: rotate(-3deg);
+}
+
+/* Active solid foreground badge */
+.badge-sarcasm {
+    width: 195px;
+    bottom: 60px;
+    right: 25px;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    z-index: 5;
+    transform: rotate(4deg) scale(1.05);
+    box-shadow: 0 15px 35px rgba(227, 86, 20, 0.22);
+}
+
+.badge-sarcasm:hover {
+    transform: rotate(2deg) scale(1.08) translateY(-3px);
+    box-shadow: 0 20px 45px rgba(227, 86, 20, 0.3);
+    z-index: 12;
+}
+
+.badge-sarcasm .badge-title {
+    color: #FFFFFF;
+}
+
+/* Showcase Texts below stack */
+.showcase-content {
+    text-align: center;
+    max-width: 360px;
+    z-index: 2;
+}
+
+.showcase-quote {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.45rem;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.showcase-text {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+}
+
+/* ==========================================================================
+   Footer Section
+   ========================================================================== */
+.main-footer {
+    background-color: #FFFFFF;
+    border-top: 1px solid var(--color-border);
+    padding: 24px 0;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-left p {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+}
+
+.footer-right {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: var(--color-text-light);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Keyframes & Entry Animations
+   ========================================================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .signup-card {
+        max-width: 920px;
+    }
+    
+    .form-panel {
+        padding: 40px;
+    }
+    
+    .graphic-panel {
+        padding: 40px;
+    }
+    
+    .panel-title {
+        font-size: 1.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        padding: 24px 16px;
+    }
+    
+    .signup-card {
+        flex-direction: column;
+        max-width: 500px;
+    }
+    
+    .form-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        padding: 36px 24px;
+    }
+    
+    .panel-title {
+        font-size: 1.75rem;
+    }
+    
+    .graphic-panel {
+        padding: 40px 24px;
+    }
+    
+    .visual-stack {
+        height: 240px;
+    }
+    
+    .floating-badge {
+        padding: 10px 14px;
+    }
+    
+    .badge-text {
+        width: 145px;
+        top: 20px;
+        left: 10px;
+    }
+
+    .badge-audio {
+        width: 145px;
+        top: 30px;
+        right: 10px;
+    }
+
+    .badge-facial {
+        width: 150px;
+        bottom: 30px;
+        left: 10px;
+    }
+
+    .badge-sarcasm {
+        width: 165px;
+        bottom: 45px;
+        right: 15px;
+    }
+    
+    .showcase-quote {
+        font-size: 1.3rem;
+    }
+
+    .main-footer {
+        padding: 20px 0;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+}

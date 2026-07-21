@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results - CineInsight</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Analysis Stylesheet -->
+    <link rel="stylesheet" href="../static/analysis.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="analysis-header">
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo-container">
+                <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+                    <rect width="40" height="40" rx="8" fill="#E35614"/>
+                    <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M11 9L14 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M18 9L21 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M25 9L28 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8 9H32" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span class="logo-text">CineInsight</span>
+            </a>
+
+            <!-- Navigation links (Dashboard, Reports, Settings) -->
+            <nav class="analysis-nav">
+                <ul class="nav-links">
+                    <li><a href="dashboard.html" class="nav-link">Analysis</a></li>
+                    <li><a href="analysis.html" class="nav-link active">Reports</a></li>
+                    <li><a href="#settings" class="nav-link">Settings</a></li>
+                </ul>
+            </nav>
+
+            <!-- User Panel -->
+            <div class="user-panel">
+                <span class="welcome-text">Welcome, Alex</span>
+                <div class="avatar-circle"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="analysis-main">
+        <div class="container">
+            
+            <!-- Hero Title Block -->
+            <section class="results-header">
+                <h1 class="page-title">Movie Review Analysis</h1>
+                <p class="page-subtitle">AI Video Analysis: "The Matrix Resurrections"</p>
+            </section>
+
+            <!-- Upper Score Grid -->
+            <section class="upper-grid">
+                
+                <!-- Card 1: Overall Sentiment Score -->
+                <div class="score-card overall-sentiment-card">
+                    <h2 class="card-title-label">Overall Sentiment Score</h2>
+                    
+                    <!-- Gauge Container -->
+                    <div class="gauge-container">
+                        <!-- SVG Semi-circular Gauge -->
+                        <svg class="gauge-svg" width="220" height="130" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background Track Arc -->
+                            <path d="M 30,110 A 70,70 0 0,1 170,110" stroke="#F1F5F9" stroke-width="14" fill="none" stroke-linecap="round"/>
+                            <!-- Colored Foreground Arc (85% value represents 33 offset out of 220) -->
+                            <path d="M 30,110 A 70,70 0 0,1 170,110" stroke="#10B981" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="33"/>
+                            
+                            <!-- Gauge Inner Text -->
+                            <text x="100" y="82" text-anchor="middle" font-size="28" font-family="'Outfit'" font-weight="700" fill="#10B981">85%</text>
+                            <text x="100" y="104" text-anchor="middle" font-size="12" font-family="'Inter'" font-weight="500" fill="#64748B">Positive</text>
+                        </svg>
+                    </div>
+
+                    <!-- Card Footer Metadata -->
+                    <div class="sentiment-footer-row">
+                        <span class="reviews-count">Based on 1,245 reviews</span>
+                        <span class="trend-indicator">
+                            <!-- Arrow Up Icon -->
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                            <span>+5% vs last week</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Sarcasm Detected Warning -->
+                <div class="score-card sarcasm-detected-card">
+                    <div class="warning-header-row">
+                        <!-- Warning Triangle SVG -->
+                        <svg class="warning-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        <h2 class="warning-title">Sarcasm Detected</h2>
+                    </div>
+                    
+                    <p class="warning-description">High likelihood of sarcasm detected in <strong class="red-bold">23%</strong> of the reviews, potentially affecting the overall score accuracy.</p>
+                    
+                    <!-- Report Button -->
+                    <button type="button" class="btn-reasoning-report" id="btn-reasoning-report">
+                        <span class="btn-text">Create Reasoning Report</span>
+                        <span class="badge-why">❓ Why?</span>
+                    </button>
+                    
+                    <span class="warning-help-text">Generate a detailed breakdown of detected sarcasm and linguistic nuances.</span>
+                </div>
+            </section>
+
+            <!-- Middle Section: Aspect-Specific Scores -->
+            <section class="aspect-section">
+                <h2 class="section-title">Aspect-Specific Scores</h2>
+                
+                <div class="aspect-grid">
+                    
+                    <!-- Acting Card -->
+                    <div class="aspect-card">
+                        <div class="aspect-info-row">
+                            <span class="aspect-label">ACTING</span>
+                            <span class="aspect-score score-blue">92%</span>
+                        </div>
+                        <div class="aspect-progress-track">
+                            <div class="aspect-progress-bar bar-blue" style="width: 92%;"></div>
+                        </div>
+                        <a href="#why-acting" class="aspect-help-link">
+                            <span class="help-question-icon">?</span>
+                            <span>Why?</span>
+                        </a>
+                    </div>
+
+                    <!-- Plot Card -->
+                    <div class="aspect-card">
+                        <div class="aspect-info-row">
+                            <span class="aspect-label">PLOT</span>
+                            <span class="aspect-score score-yellow">65%</span>
+                        </div>
+                        <div class="aspect-progress-track">
+                            <div class="aspect-progress-bar bar-yellow" style="width: 65%;"></div>
+                        </div>
+                        <a href="#why-plot" class="aspect-help-link">
+                            <span class="help-question-icon">?</span>
+                            <span>Why?</span>
+                        </a>
+                    </div>
+
+                    <!-- CGI / Visuals Card -->
+                    <div class="aspect-card">
+                        <div class="aspect-info-row">
+                            <span class="aspect-label">CGI / VISUALS</span>
+                            <span class="aspect-score score-lightblue">88%</span>
+                        </div>
+                        <div class="aspect-progress-track">
+                            <div class="aspect-progress-bar bar-lightblue" style="width: 88%;"></div>
+                        </div>
+                        <a href="#why-cgi" class="aspect-help-link">
+                            <span class="help-question-icon">?</span>
+                            <span>Why?</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lower Section: Sentiment Conclusion -->
+            <section class="conclusion-section">
+                <div class="conclusion-card">
+                    <div class="conclusion-title-row">
+                        <!-- Document/Text Icon -->
+                        <svg class="conclusion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E35614" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                        <h2 class="conclusion-title">Sentiment Conclusion</h2>
+                    </div>
+                    <p class="conclusion-text">The overall reception for "The Matrix Resurrections" leans heavily positive, primarily driven by strong praise for the nostalgic return of the main cast and impressive, modernized visual effects. However, the sentiment is notably dragged down by mixed reactions to the convoluted plot structure. Additionally, a significant portion of the positive sentiment in specific scenes was flagged as highly sarcastic, indicating that while the overall score is high (85%), the genuine enthusiasm might be slightly lower. Viewers appreciate the technical achievements but remain divided on the narrative choices.</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <!-- SVG CineInsight Logo -->
+                <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon-footer">
+                    <rect width="40" height="40" rx="8" fill="#E35614"/>
+                    <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M11 9L14 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M18 9L21 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M25 9L28 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8 9H32" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span class="logo-text-footer">CineInsight &copy; 2026</span>
+            </div>
+            <div class="footer-right">
+                <a href="#terms" class="footer-link">Terms</a>
+                <a href="#privacy" class="footer-link">Privacy</a>
+                <a href="#api" class="footer-link">API</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript File -->
+    <script src="../static/main.js"></script>
+</body>
+</html>
