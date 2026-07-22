@@ -1,0 +1,27 @@
+<svg width="64" height="64" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B2B"/>
+      <stop offset="100%" stop-color="#E35614"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Card -->
+  <rect width="40" height="40" rx="9" fill="url(#cineGradient)"/>
+  
+  <!-- Clapperboard Top Stick (Top portion) -->
+  <path d="M8 11C8 9.89543 8.89543 9 10 9H30C31.1046 9 32 9.89543 32 11V14H8V11Z" fill="white"/>
+  <!-- Clapperboard Diagonal Cutout Stripes -->
+  <path d="M12 9L15 14M18 9L21 14M24 9L27 14" stroke="#E35614" stroke-width="1.8" stroke-linecap="round"/>
+  
+  <!-- Main Slate Body -->
+  <rect x="8" y="16" width="24" height="15" rx="3" stroke="white" stroke-width="2" fill="white" fill-opacity="0.12"/>
+  
+  <!-- Film Strip Side Holes (Left & Right) -->
+  <circle cx="10.5" cy="19.5" r="1" fill="white"/>
+  <circle cx="10.5" cy="27.5" r="1" fill="white"/>
+  <circle cx="29.5" cy="19.5" r="1" fill="white"/>
+  <circle cx="29.5" cy="27.5" r="1" fill="white"/>
+  
+  <!-- Play Symbol (Center Insight icon) -->
+  <path d="M17.5 19.5L25.5 23.5L17.5 27.5V19.5Z" fill="white"/>
+</svg>

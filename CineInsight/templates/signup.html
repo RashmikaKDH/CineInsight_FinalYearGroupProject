@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon-64x64.png') }}">
     <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="../static/signup.css">
 </head>
@@ -18,12 +22,21 @@
         <div class="header-container">
             <a href="{{ url_for('index') }}" class="logo-container">
                 <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
-                    <rect width="40" height="40" rx="8" fill="#E35614"/>
-                    <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M11 9L14 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M18 9L21 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M25 9L28 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M8 9H32" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="cineGradientSignup" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FF6B2B"/>
+                            <stop offset="100%" stop-color="#E35614"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="40" height="40" rx="9" fill="url(#cineGradientSignup)"/>
+                    <path d="M8 11C8 9.89543 8.89543 9 10 9H30C31.1046 9 32 9.89543 32 11V14H8V11Z" fill="white"/>
+                    <path d="M12 9L15 14M18 9L21 14M24 9L27 14" stroke="#E35614" stroke-width="1.8" stroke-linecap="round"/>
+                    <rect x="8" y="16" width="24" height="15" rx="3" stroke="white" stroke-width="2" fill="white" fill-opacity="0.12"/>
+                    <circle cx="10.5" cy="19.5" r="1" fill="white"/>
+                    <circle cx="10.5" cy="27.5" r="1" fill="white"/>
+                    <circle cx="29.5" cy="19.5" r="1" fill="white"/>
+                    <circle cx="29.5" cy="27.5" r="1" fill="white"/>
+                    <path d="M17.5 19.5L25.5 23.5L17.5 27.5V19.5Z" fill="white"/>
                 </svg>
                 <span class="logo-text">CineInsight</span>
             </a>
