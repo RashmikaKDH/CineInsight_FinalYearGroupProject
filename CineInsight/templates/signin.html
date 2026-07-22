@@ -103,7 +103,11 @@
                 </div>
 
                 <!-- Sign In Form -->
-                <form action="#" class="signin-form" id="signin-form">
+                <form action="{{ url_for('signin') }}" method="post" class="signin-form" id="signin-form">
+
+                    {% if error %}
+                    <p class="form-error" style="color: #ef4444; margin-bottom: 16px; font-weight: 600;">{{ error }}</p>
+                    {% endif %}
 
                     <!-- Email Field -->
                     <div class="input-group">
@@ -117,7 +121,7 @@
                                 <path d="M22 6L12 13L2 6" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" />
                             </svg>
-                            <input type="email" id="email" class="form-input" placeholder="name@gmail.com" required
+                            <input type="email" id="email" name="email" class="form-input" placeholder="name@gmail.com" required
                                 autocomplete="email">
                         </div>
                     </div>
@@ -136,7 +140,7 @@
                                 <path d="M7 11V7C7 4.24 9.24 2 12 2C14.76 2 17 4.24 17 7V11" stroke="#94A3B8"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <input type="password" id="password" class="form-input" placeholder="••••••••" required
+                            <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required
                                 autocomplete="current-password">
                             <button type="button" class="password-toggle-btn" id="password-toggle"
                                 aria-label="Toggle password visibility">
