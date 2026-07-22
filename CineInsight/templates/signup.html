@@ -45,7 +45,11 @@
                     <p class="panel-subtitle">Join the multimodal research platform for YouTube movie reviews.</p>
                 </div>
 
-                <form class="signup-form" id="signup-form" action="#">
+                <form class="signup-form" id="signup-form" action="{{ url_for('signup') }}" method="post">
+
+                    {% if error %}
+                    <p class="form-error" style="color: #ef4444; margin-bottom: 16px; font-weight: 600;">{{ error }}</p>
+                    {% endif %}
                     
                     <!-- Name Input -->
                     <div class="input-group">
@@ -56,7 +60,7 @@
                             </svg>
                             <span>Name</span>
                         </label>
-                        <input type="text" id="name" class="form-input" placeholder="John Doe" required autocomplete="name">
+                        <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required autocomplete="name">
                     </div>
 
                     <!-- Email Input -->
@@ -69,7 +73,7 @@
                             </svg>
                             <span>Email</span>
                         </label>
-                        <input type="email" id="email" class="form-input" placeholder="researcher@gmail.com" required autocomplete="email">
+                        <input type="email" id="email" name="email" class="form-input" placeholder="researcher@gmail.com" required autocomplete="email">
                     </div>
 
                     <!-- Password Input -->
@@ -81,7 +85,7 @@
                             </svg>
                             <span>Password</span>
                         </label>
-                        <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="new-password">
+                        <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required autocomplete="new-password">
                         <span class="input-help">Must be at least 8 characters with one special character.</span>
                     </div>
 
@@ -96,7 +100,7 @@
                             </svg>
                             <span>Confirm Password</span>
                         </label>
-                        <input type="password" id="confirm-password" class="form-input" placeholder="••••••••" required autocomplete="new-password">
+                        <input type="password" id="confirm-password" name="confirm_password" class="form-input" placeholder="••••••••" required autocomplete="new-password">
                     </div>
 
                     <!-- Consent Checkbox -->

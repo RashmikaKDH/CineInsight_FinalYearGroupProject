@@ -143,56 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 7. Sign Up Form Redirect to Dashboard with database save
-    const signupForm = document.getElementById('signup-form');
-    if (signupForm) {
-        const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirm-password');
-
-        if (passwordInput && confirmPasswordInput) {
-            const validatePassword = () => {
-                if (passwordInput.value !== confirmPasswordInput.value) {
-                    confirmPasswordInput.setCustomValidity("Passwords do not match");
-                } else {
-                    confirmPasswordInput.setCustomValidity("");
-                }
-            };
-            passwordInput.addEventListener('change', validatePassword);
-            confirmPasswordInput.addEventListener('keyup', validatePassword);
-        }
-
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            if (!nameInput || !emailInput || !passwordInput) return;
-
-            const name = nameInput.value.trim();
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-
-            // Load registered users
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-
-            // Check if user already exists
-            const userExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
-            if (userExists) {
-                alert("This email is already registered. Please sign in instead.");
-                return;
-            }
-
-            // Save new user to localStorage database
-            const newUser = { name, email, password };
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-
-            // Inform the user and redirect to Sign In page (not dashboard)
-            alert("Registered successfully!");
-            window.location.href = 'signin.html';
-        });
-    }
-
     // 7a. Dynamic Welcome Greeting & Sign Out Flow
     const welcomeText = document.querySelector('.welcome-text');
     if (welcomeText) {
