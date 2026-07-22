@@ -21,7 +21,7 @@
         <!-- Left Panel: Product Information -->
         <section class="left-panel">
             <div class="panel-content">
-                <a href="index.html" class="logo-container">
+                <a href="{{ url_for('index') }}" class="logo-container">
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
                         class="logo-icon">
                         <rect width="40" height="40" rx="8" fill="#E35614" />
@@ -126,7 +126,7 @@
                     <div class="input-group">
                         <div class="label-row">
                             <label for="password" class="input-label">Password</label>
-                            <a href="forgot.html" class="forgot-link">Forgot password?</a>
+                            <a href="{{ url_for('forgot') }}" class="forgot-link">Forgot password?</a>
                         </div>
                         <div class="input-container">
                             <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -190,7 +190,7 @@
 
                 <!-- Signup Prompt -->
                 <div class="signup-prompt">
-                    <p>Don't have an account? <a href="signup.html" class="signup-link">Sign Up Here</a></p>
+                    <p>Don't have an account? <a href="{{ url_for('signup') }}" class="signup-link">Sign Up Here</a></p>
                 </div>
 
             </div>

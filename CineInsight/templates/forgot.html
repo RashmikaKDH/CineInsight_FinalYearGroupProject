@@ -18,7 +18,7 @@
         <section class="left-panel">
             <div class="panel-content">
                 <!-- Logo -->
-                <a href="index.html" class="logo-container">
+                <a href="{{ url_for('index') }}" class="logo-container">
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
                         <rect width="40" height="40" rx="8" fill="#E35614"/>
                         <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
@@ -123,14 +123,14 @@
                     <h2 class="form-title">Reset Link Sent</h2>
                     <p class="form-subtitle" style="margin-bottom: 8px;">We've sent a link to recover your account to <br><strong id="sent-email-span" style="color: var(--color-dark); font-weight: 700;">email@address.com</strong></p>
                     <p class="form-subtitle" style="font-size: 0.85rem;">Please check your spam folder if you don't receive it in a few minutes.</p>
-                    <button type="button" class="submit-btn" style="margin-top: 12px;" onclick="window.location.href='signin.html'">
+                    <button type="button" class="submit-btn" style="margin-top: 12px;" onclick="window.location.href='{{ url_for('signin') }}'">
                         <span>Back to Sign In</span>
                     </button>
                 </div>
 
                 <!-- Back to Sign In Redirect -->
                 <div class="signup-prompt">
-                    <p>Remember your password? <a href="signin.html" class="signup-link">Sign In Here</a></p>
+                    <p>Remember your password? <a href="{{ url_for('signin') }}" class="signup-link">Sign In Here</a></p>
                 </div>
 
             </div>

@@ -345,7 +345,7 @@
                     </svg>
                 </div>
                 <h1 class="title">Choose an account</h1>
-                <p class="subtitle">to continue to <a href="index.html" class="app-link">CineInsight</a></p>
+                <p class="subtitle">to continue to <a href="{{ url_for('index') }}" class="app-link">CineInsight</a></p>
             </section>
 
             <!-- Right Side (Account List) -->
@@ -436,7 +436,7 @@
                 item.addEventListener('click', () => {
                     // Check if it's the "Use another account" button
                     if (item.id === 'use-another-account') {
-                        window.location.href = 'signin.html';
+                        window.location.href = "{{ url_for('signin') }}";
                         return;
                     }
 
@@ -467,7 +467,7 @@
                     localStorage.setItem('currentUser', JSON.stringify({ name, email }));
 
                     // 3. Redirect to dashboard
-                    window.location.href = 'dashboard.html';
+                    window.location.href = "{{ url_for('dashboard') }}";
                 });
             });
         });

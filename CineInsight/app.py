@@ -1,27 +1,43 @@
 from flask import Flask, render_template
 
-# Flask app eka initialize kirima
 app = Flask(__name__)
 
-# 1. Home / Search Screen ekata route eka
+
 @app.route('/')
-def home():
-    # templates folder eke thiyena index.html eka render karanawa
+def index():
     return render_template('index.html')
 
-# 2. Login Screen ekata route eka
-@app.route('/login')
-def login():
-    # templates folder eke thiyena login.html eka render karanawa
-    return render_template('login.html')
 
-# 3. Registration Screen ekata route eka
-@app.route('/register')
-def register():
-    # templates folder eke thiyena register.html eka render karanawa
-    return render_template('register.html')
+@app.route('/signin')
+def signin():
+    return render_template('signin.html')
 
-# App eka run karana code eka
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+
+@app.route('/analysis')
+def analysis():
+    return render_template('analysis.html')
+
+
+@app.route('/forgot')
+def forgot():
+    return render_template('forgot.html')
+
+
+@app.route('/google-login')
+def google_login():
+    return render_template('google-login.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     

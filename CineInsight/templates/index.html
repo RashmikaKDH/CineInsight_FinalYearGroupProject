@@ -47,8 +47,8 @@
             </nav>
 
             <div class="header-actions">
-                <a href="signin.html" class="signin-link">Sign In</a>
-                <a href="signup.html" class="btn btn-primary btn-header">Get Started</a>
+                <a href="{{ url_for('signin') }}" class="signin-link">Sign In</a>
+                <a href="{{ url_for('signup') }}" class="btn btn-primary btn-header">Get Started</a>
             </div>
         </div>
     </header>
@@ -81,7 +81,7 @@
 
                     <!-- Hero Actions -->
                     <div class="hero-actions">
-                        <a href="signup.html" class="btn btn-primary btn-hero">
+                        <a href="{{ url_for('signup') }}" class="btn btn-primary btn-hero">
                             <!-- Play Icon -->
                             <svg class="btn-icon" width="12" height="14" viewBox="0 0 12 14" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +91,7 @@
                             </svg>
                             Get Started
                         </a>
-                        <a href="signin.html" class="btn btn-secondary btn-hero">Sign In</a>
+                        <a href="{{ url_for('signin') }}" class="btn btn-secondary btn-hero">Sign In</a>
                     </div>
                 </div>
             </div>

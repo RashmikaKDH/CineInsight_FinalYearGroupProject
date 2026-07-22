@@ -17,7 +17,7 @@
     <header class="analysis-header">
         <div class="header-container">
             <!-- Logo -->
-            <a href="index.html" class="logo-container">
+            <a href="{{ url_for('index') }}" class="logo-container">
                 <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
                     <rect width="40" height="40" rx="8" fill="#E35614"/>
                     <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
@@ -32,8 +32,8 @@
             <!-- Navigation links (Dashboard, Reports, Settings) -->
             <nav class="analysis-nav">
                 <ul class="nav-links">
-                    <li><a href="dashboard.html" class="nav-link">Analysis</a></li>
-                    <li><a href="analysis.html" class="nav-link active">Reports</a></li>
+                    <li><a href="{{ url_for('dashboard') }}" class="nav-link">Analysis</a></li>
+                    <li><a href="{{ url_for('analysis') }}" class="nav-link active">Reports</a></li>
                     <li><a href="#settings" class="nav-link">Settings</a></li>
                 </ul>
             </nav>
