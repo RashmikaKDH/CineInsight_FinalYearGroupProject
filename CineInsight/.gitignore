@@ -1,0 +1,39 @@
+reportuntillvideoextraction.md
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Downloaded Temp Videos (from yt-dlp)
+temp_video.mp4
+temp_video.mp4.part
+*.ytdl
+*.webm
+*.mkv
+
+# Flask / Databases
+instance/
+*.sqlite3
+*.db
+*.log
