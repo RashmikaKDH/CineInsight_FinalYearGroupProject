@@ -25,5 +25,5 @@ def process_youtube_review(url):
 
 # === TEST KARALA BALANNA YT LINK EKAK DANNA ===
 if __name__ == "__main__":
-    test_url = "https:winget uninstall aria2.aria2//youtu.be/ZS8EC2LQlng?si=Ov0qngs1i7zvfxcH" # Meka wenuwata kemathi review link ekak danna
+    test_url = "https://youtu.be/ZS8EC2LQlng?si=Ov0qngs1i7zvfxcH" # Meka wenuwata kemathi review link ekak danna
     t_tensor, a_tensor, v_tensor = process_youtube_review(test_url)
