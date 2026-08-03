@@ -116,23 +116,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 7a. Dynamic Welcome Greeting & Sign Out Flow
-    // 7. Dynamic Welcome Greeting & Sign Out Flow
-    const welcomeText = document.querySelector('.welcome-text');
-    if (welcomeText) {
-        // We let Flask handle the welcome text through Jinja templates
-        // but we still want the logout functionality
-        const userPanel = document.querySelector('.user-panel');
-        if (userPanel) {
-            userPanel.style.cursor = 'pointer';
-            userPanel.setAttribute('title', 'Click to Sign Out');
-            userPanel.addEventListener('click', () => {
-                if (confirm("Are you sure you want to sign out?")) {
-                    window.location.href = '/signin';
-                }
-            });
-        }
+    // 7. Avatar initials color generator (consistent across pages)
+    const AVATAR_COLORS = [
+        'linear-gradient(135deg, #FDBA74, #E35614)',
+        'linear-gradient(135deg, #93C5FD, #2563EB)',
+        'linear-gradient(135deg, #86EFAC, #16A34A)',
+        'linear-gradient(135deg, #F9A8D4, #DB2777)',
+        'linear-gradient(135deg, #C4B5FD, #7C3AED)',
+        'linear-gradient(135deg, #FDE68A, #D97706)',
+        'linear-gradient(135deg, #6EE7B7, #059669)',
+        'linear-gradient(135deg, #FCA5A5, #DC2626)',
+    ];
+
+    function getAvatarColor(name) {
+        if (!name) return AVATAR_COLORS[0];
+        const index = name.charCodeAt(0) % AVATAR_COLORS.length;
+        return AVATAR_COLORS[index];
     }
+
+    // Apply dynamic gradient to all avatar circles on the page
+    document.querySelectorAll('.avatar-circle').forEach(avatar => {
+        const name = avatar.dataset.name || '';
+        avatar.style.background = getAvatarColor(name);
+    });
 
     // 8. Dashboard Real YouTube Search
     const btnAnalyze = document.getElementById('btn-analyze');
