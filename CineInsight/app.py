@@ -1,8 +1,12 @@
 import os
 
 import mysql.connector
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, redirect, render_template, request, session, url_for, jsonify, Response, stream_with_context
 from werkzeug.security import check_password_hash, generate_password_hash
+import yt_dlp
+import json
+from main import process_youtube_review_generator
+
 
 
 app = Flask(__name__)
@@ -131,6 +135,84 @@ def forgot():
 @app.route('/google-login')
 def google_login():
     return render_template('google-login.html')
+
+
+@app.route('/api/search')
+def api_search():
+    query = request.args.get('q', '')
+    limit = request.args.get('limit', '8')  # Default to 8 results
+    
+    if not query:
+        return jsonify({'error': 'No query provided'}), 400
+
+    ydl_opts = {
+        'quiet': True,
+        'extract_flat': True,
+        'force_generic_extractor': False
+    }
+    
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            # ytsearchN fetches exactly N results
+            search_query = f"ytsearch{limit}:{query}"
+            info = ydl.extract_info(search_query, download=False)
+            
+            results = []
+            if 'entries' in info:
+                for entry in info['entries']:
+                    duration = entry.get('duration')
+                    if duration:
+                        m, s = divmod(int(duration), 60)
+                        h, m = divmod(m, 60)
+                        if h > 0:
+                            duration_str = f"{h}:{m:02d}:{s:02d}"
+                        else:
+                            duration_str = f"{m}:{s:02d}"
+                    else:
+                        duration_str = "N/A"
+                        
+                    views = entry.get('view_count')
+                    view_str = "0 views"
+                    if views:
+                        if views >= 1000000:
+                            view_str = f"{(views/1000000):.1f}M views"
+                        elif views >= 1000:
+                            view_str = f"{(views/1000):.1f}K views"
+                        else:
+                            view_str = f"{views} views"
+
+                    thumbs = entry.get('thumbnails', [])
+                    thumb_url = thumbs[-1]['url'] if thumbs else '../static/assets/dune_thumb.png'
+
+                    results.append({
+                        'id': entry.get('id'),
+                        'title': entry.get('title'),
+                        'url': entry.get('url'),
+                        'duration_str': duration_str,
+                        'view_str': view_str,
+                        'thumbnail': thumb_url
+                    })
+            return jsonify({'results': results})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/analyze')
+def api_analyze():
+    url = request.args.get('url')
+    if not url:
+        return jsonify({'error': 'No URL provided'}), 400
+
+    def generate():
+        try:
+            for json_str in process_youtube_review_generator(url):
+                # SSE format: "data: {json}\n\n"
+                yield f"data: {json_str}\n\n"
+        except Exception as e:
+            error_json = json.dumps({"status": "error", "message": f"Pipeline Error: {str(e)}"})
+            yield f"data: {error_json}\n\n"
+
+    return Response(stream_with_context(generate()), mimetype='text/event-stream')
+
 
 
 if __name__ == '__main__':

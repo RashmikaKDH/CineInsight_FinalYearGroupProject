@@ -8,10 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.main-header');
     
     const handleScroll = () => {
-        if (window.scrollY > 20) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
+        if (header) {
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         }
     };
 
@@ -106,96 +108,136 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. Sign In Form Redirect to Dashboard with credentials check
-    const signinForm = document.getElementById('signin-form');
-    if (signinForm) {
-        signinForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            if (!emailInput || !passwordInput) return;
-
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-
-            // Load registered users from "database" (localStorage)
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            
-            // Check credentials
-            const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
-
-            if (user) {
-                // Save current session
-                localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email }));
-                window.location.href = 'dashboard.html';
-            } else {
-                alert("Email or password incorrect.");
-            }
-        });
-    }
-
     // Google SSO Button click redirect
     const googleSsoBtn = document.querySelector('.google-sso-btn');
     if (googleSsoBtn) {
         googleSsoBtn.addEventListener('click', () => {
-            window.location.href = 'google-login.html';
+            window.location.href = '/google-login';
         });
     }
 
     // 7a. Dynamic Welcome Greeting & Sign Out Flow
+    // 7. Dynamic Welcome Greeting & Sign Out Flow
     const welcomeText = document.querySelector('.welcome-text');
     if (welcomeText) {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.name) {
-            welcomeText.textContent = `Welcome, ${currentUser.name}`;
-        } else {
-            welcomeText.textContent = 'Welcome, Guest';
-        }
-
-        // Click user profile panel to trigger Sign Out
+        // We let Flask handle the welcome text through Jinja templates
+        // but we still want the logout functionality
         const userPanel = document.querySelector('.user-panel');
         if (userPanel) {
             userPanel.style.cursor = 'pointer';
             userPanel.setAttribute('title', 'Click to Sign Out');
             userPanel.addEventListener('click', () => {
                 if (confirm("Are you sure you want to sign out?")) {
-                    localStorage.removeItem('currentUser');
-                    window.location.href = 'signin.html';
+                    window.location.href = '/signin';
                 }
             });
         }
     }
 
-    // 8. Dashboard Simulation Interactions
+    // 8. Dashboard Real YouTube Search
     const btnAnalyze = document.getElementById('btn-analyze');
     const btnSearch = document.getElementById('btn-search');
     const reviewInput = document.getElementById('review-link-input');
+    const reviewsGrid = document.getElementById('reviews-grid');
+    const searchLoader = document.getElementById('search-loader');
+    const sectionTitle = document.getElementById('section-title');
 
-    const triggerAnalysis = (query) => {
+    // Save default HTML to restore later if needed
+    const defaultCardsHTML = reviewsGrid ? Array.from(reviewsGrid.children)
+        .filter(child => child.id !== 'search-loader')
+        .map(child => child.outerHTML)
+        .join('') : '';
+
+    const performSearch = async (query) => {
         if (!query || query.trim() === "") {
-            alert("Please enter a valid review link or keyword.");
+            alert("Please enter a valid search keyword (e.g., 'Dune 2 review').");
             return;
         }
-        alert(`Initializing CineInsight multimodal analysis for: "${query}"\n\n- Extracting audio prosody...\n- Scanning micro-expressions...\n- Processing linguistic irony...\n\nOpening analysis report...`);
-        window.location.href = 'analysis.html';
+
+        if (sectionTitle) sectionTitle.textContent = `Search Results for "${query}"`;
+        
+        // Hide existing cards, show loader
+        Array.from(reviewsGrid.children).forEach(child => {
+            if (child.id !== 'search-loader') child.style.display = 'none';
+        });
+        if (searchLoader) searchLoader.style.display = 'block';
+
+        try {
+            // You can change limit=8 to any number you want!
+            const response = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8`);
+            const data = await response.json();
+
+            if (searchLoader) searchLoader.style.display = 'none';
+
+            if (data.error) {
+                alert("Error searching YouTube: " + data.error);
+                return;
+            }
+
+            // Remove previous search results if any
+            document.querySelectorAll('.dynamic-search-card').forEach(c => c.remove());
+
+            if (data.results && data.results.length > 0) {
+                data.results.forEach(video => {
+                    const cardHTML = `
+                    <article class="review-card dynamic-search-card">
+                        <div class="card-image-wrapper">
+                            <img src="${video.thumbnail}" alt="${video.title.replace(/"/g, '&quot;')}" class="card-thumb" style="object-fit: cover; width: 100%; height: 100%;">
+                            <span class="duration-badge">${video.duration_str}</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title" title="${video.title.replace(/"/g, '&quot;')}">${video.title}</h3>
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <span>${video.view_str}</span>
+                                </span>
+                            </div>
+                            <button type="button" class="btn-analyze-card" onclick="window.location.href='/analysis?url=${encodeURIComponent(video.url)}'">
+                                <svg class="analyze-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="20" x2="18" y2="10"/>
+                                    <line x1="12" y1="20" x2="12" y2="4"/>
+                                    <line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                                <span>Analyze Sentiment</span>
+                            </button>
+                        </div>
+                    </article>
+                    `;
+                    reviewsGrid.insertAdjacentHTML('beforeend', cardHTML);
+                });
+            } else {
+                reviewsGrid.insertAdjacentHTML('beforeend', '<p class="dynamic-search-card" style="grid-column: 1/-1; color: white;">No results found.</p>');
+            }
+        } catch (error) {
+            console.error("Search error:", error);
+            if (searchLoader) searchLoader.style.display = 'none';
+            alert("Failed to connect to the server.");
+        }
     };
 
-    if (btnAnalyze && reviewInput) {
-        btnAnalyze.addEventListener('click', () => triggerAnalysis(reviewInput.value));
-    }
     if (btnSearch && reviewInput) {
-        btnSearch.addEventListener('click', () => triggerAnalysis(reviewInput.value));
+        btnSearch.addEventListener('click', () => performSearch(reviewInput.value));
+    }
+    
+    if (reviewInput) {
+        reviewInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch(reviewInput.value);
+        });
     }
 
-    // Card click triggers
+    // Existing hardcoded card click triggers (fallback for defaults)
     const cardAnalyzeBtns = document.querySelectorAll('.btn-analyze-card');
     cardAnalyzeBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const card = btn.closest('.review-card');
-            const title = card ? card.querySelector('.card-title').textContent.trim() : "this review";
-            triggerAnalysis(title);
-        });
+        // Only attach to static cards, dynamic ones use inline onclick
+        if(!btn.closest('.dynamic-search-card')) {
+            btn.addEventListener('click', (e) => {
+                alert("This is a sample card. Try searching for a real YouTube review and clicking Analyze!");
+            });
+        }
     });
 
     // 9. Reasoning Report Trigger
