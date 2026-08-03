@@ -5,6 +5,26 @@ venv/
 .venv/
 env/
 .env
+.flaskenv
+
+# Runtime / local config
+instance/
+*.sqlite3
+*.sqlite
+*.db
+*.log
+
+# Test / tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+*.egg-info/
 
 # Python Cache
 __pycache__/
@@ -28,12 +48,7 @@ Thumbs.db
 # Downloaded Temp Videos (from yt-dlp)
 temp_video.mp4
 temp_video.mp4.part
+temp_video.mp4.ytdl
 *.ytdl
 *.webm
 *.mkv
-
-# Flask / Databases
-instance/
-*.sqlite3
-*.db
-*.log
