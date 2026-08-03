@@ -1,18 +1,44 @@
 import os
+from functools import wraps
 
 import mysql.connector
-from flask import Flask, redirect, render_template, request, session, url_for, jsonify, Response, stream_with_context
+from flask import Flask, redirect, render_template, request, session, url_for, jsonify, Response, stream_with_context, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 import yt_dlp
 import json
 from main import process_youtube_review_generator
 
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'cineinsight-dev-secret-key')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
+
+# ---------------------------------------------------------------------------
+# Access Control Decorators
+# ---------------------------------------------------------------------------
+
+def login_required(f):
+    """Redirect to sign-in if the user is not authenticated."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('signin'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def admin_required(f):
+    """Allow access only to Admin-role users."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('signin'))
+        if session.get('user_role') != 'Admin':
+            return redirect(url_for('profile'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @app.route('/')
@@ -81,6 +107,9 @@ def signup():
         if not name or not email or not password:
             return render_template('signup.html', error='Please fill in all required fields.')
 
+        if len(password) < 8:
+            return render_template('signup.html', error='Password must be at least 8 characters long.')
+
         if password != confirm_password:
             return render_template('signup.html', error='Passwords do not match.')
 
@@ -103,6 +132,7 @@ def signup():
                 (name, email, hashed_password)
             )
             connection.commit()
+            flash('Account created successfully! Please sign in.', 'success')
             return redirect(url_for('signin'))
         except mysql.connector.Error:
             if connection is not None:
@@ -118,6 +148,7 @@ def signup():
 
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
     return render_template('dashboard.html')
 
@@ -213,6 +244,94 @@ def api_analyze():
 
     return Response(stream_with_context(generate()), mimetype='text/event-stream')
 
+
+
+# ---------------------------------------------------------------------------
+# Profile & Admin Routes
+# ---------------------------------------------------------------------------
+
+@app.route('/profile')
+@login_required
+def profile():
+    """Show the logged-in user's profile details."""
+    connection = None
+    cursor = None
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute(
+            'SELECT User_Id, Name, Email, Role FROM `USER` WHERE User_Id = %s',
+            (session['user_id'],)
+        )
+        user = cursor.fetchone()
+        return render_template('profile.html', user=user)
+    except mysql.connector.Error:
+        return redirect(url_for('dashboard'))
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+
+@app.route('/admin')
+@admin_required
+def admin_panel():
+    """Admin-only: list all registered users."""
+    connection = None
+    cursor = None
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute('SELECT User_Id, Name, Email, Role FROM `USER` ORDER BY User_Id ASC')
+        users = cursor.fetchall()
+        return render_template('admin.html', users=users)
+    except mysql.connector.Error:
+        return render_template('admin.html', users=[], error='Database error.')
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+
+@app.route('/admin/delete/<int:user_id>', methods=['POST'])
+@admin_required
+def admin_delete_user(user_id):
+    """Admin-only: permanently delete a user account."""
+    # Prevent admin from deleting their own account
+    if user_id == session.get('user_id'):
+        flash('You cannot delete your own account.', 'error')
+        return redirect(url_for('admin_panel'))
+
+    connection = None
+    cursor = None
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # Fetch user before deletion to get their name for the message
+        cursor.execute('SELECT Name FROM `USER` WHERE User_Id = %s', (user_id,))
+        target = cursor.fetchone()
+
+        if not target:
+            flash('User not found.', 'error')
+            return redirect(url_for('admin_panel'))
+
+        cursor.execute('DELETE FROM `USER` WHERE User_Id = %s', (user_id,))
+        connection.commit()
+        flash(f"User '{target['Name']}' was deleted successfully.", 'success')
+    except mysql.connector.Error:
+        if connection: connection.rollback()
+        flash('Database error. Could not delete user.', 'error')
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+    return redirect(url_for('admin_panel'))
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    """Clear session and redirect to sign-in."""
+    session.clear()
+    return redirect(url_for('signin'))
 
 
 if __name__ == '__main__':

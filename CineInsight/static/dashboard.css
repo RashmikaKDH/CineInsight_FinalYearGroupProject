@@ -109,19 +109,62 @@ html, body {
     color: var(--color-text-main);
 }
 
+.avatar-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
 .avatar-circle {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     background: linear-gradient(135deg, #FDBA74, #E35614);
-    box-shadow: 0 4px 10px rgba(227, 86, 20, 0.2);
+    box-shadow: 0 4px 10px rgba(227, 86, 20, 0.25);
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    user-select: none;
 }
 
 .avatar-circle:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(227, 86, 20, 0.35);
 }
+
+/* Logout Button */
+.logout-form {
+    margin: 0;
+    padding: 0;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(227, 86, 20, 0.06);
+    color: var(--color-primary);
+    border-color: rgba(227, 86, 20, 0.25);
+}
+
 
 /* ==========================================================================
    Main Dashboard Section

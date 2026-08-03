@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - CineInsight</title>
+    <meta name="description" content="View and manage your CineInsight profile.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../static/dashboard.css">
+    <link rel="stylesheet" href="../static/profile.css">
+</head>
+
+<body>
+
+    <!-- ── Header ── -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <a href="{{ url_for('index') }}" class="logo-container">
+                <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="logo-icon">
+                    <rect width="40" height="40" rx="8" fill="#E35614" />
+                    <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M11 9L14 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M18 9L21 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M25 9L28 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M8 9H32" stroke="white" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <span class="logo-text">CineInsight</span>
+            </a>
+
+            <div class="user-panel">
+                <span class="welcome-text">{{ session.get('user_name', 'User').split()[0] }}</span>
+                <a href="{{ url_for('profile') }}" class="avatar-link" title="Profile">
+                    <div class="avatar-circle" data-name="{{ session.get('user_name', 'U') }}">
+                        {{ session.get('user_name', 'U')[0].upper() }}
+                    </div>
+                </a>
+                <form action="{{ url_for('logout') }}" method="post" class="logout-form">
+                    <button type="submit" class="logout-btn" title="Sign Out">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                            <polyline points="16 17 21 12 16 7"/>
+                            <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── Main Content ── -->
+    <main class="profile-main">
+        <div class="profile-container">
+
+            <!-- Back Button -->
+            <a href="{{ url_for('dashboard') }}" class="back-link" id="back-to-dashboard">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Back to Dashboard
+            </a>
+
+            <!-- ── Profile Card ── -->
+            <div class="profile-grid">
+
+                <!-- Left: Avatar + Info Card -->
+                <section class="profile-card" aria-label="User profile">
+                    <!-- Large Avatar -->
+                    <div class="profile-avatar-wrapper">
+                        <div class="profile-avatar" id="profile-avatar"
+                            data-name="{{ user.Name }}">
+                            {{ user.Name[0].upper() if user.Name|length > 1 else user.Name[0].upper() }}{% if user.Name.split()|length > 1 %}{{ user.Name.split()[1][0].upper() }}{% endif %}
+                        </div>
+                        <!-- Role Badge on avatar -->
+                        {% if user.Role == 'Admin' %}
+                        <span class="role-badge role-admin">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 1L15.09 7.26L22 8.27L17 13.14L18.18 20.02L12 16.77L5.82 20.02L7 13.14L2 8.27L8.91 7.26L12 1Z"/>
+                            </svg>
+                            Admin
+                        </span>
+                        {% else %}
+                        <span class="role-badge role-user">User</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- User Name -->
+                    <h1 class="profile-name">{{ user.Name }}</h1>
+                    <p class="profile-email">{{ user.Email }}</p>
+
+                    <!-- Info Rows -->
+                    <div class="profile-info-list">
+                        <div class="profile-info-row">
+                            <span class="info-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                Full Name
+                            </span>
+                            <span class="info-value">{{ user.Name }}</span>
+                        </div>
+                        <div class="profile-info-row">
+                            <span class="info-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                                Email
+                            </span>
+                            <span class="info-value">{{ user.Email }}</span>
+                        </div>
+                        <div class="profile-info-row">
+                            <span class="info-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                Account Role
+                            </span>
+                            <span class="info-value">
+                                {% if user.Role == 'Admin' %}
+                                <span class="inline-badge badge-admin">Admin</span>
+                                {% else %}
+                                <span class="inline-badge badge-user">User</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="profile-info-row">
+                            <span class="info-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                User ID
+                            </span>
+                            <span class="info-value">#{{ user.User_Id }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="profile-actions">
+                        <a href="{{ url_for('dashboard') }}" class="btn-profile-secondary">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                            Dashboard
+                        </a>
+                        <form action="{{ url_for('logout') }}" method="post" style="flex:1;">
+                            <button type="submit" class="btn-profile-logout">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                                    <polyline points="16 17 21 12 16 7"/>
+                                    <line x1="21" y1="12" x2="9" y2="12"/>
+                                </svg>
+                                Sign Out
+                            </button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Right: Admin Panel Access (conditional) -->
+                <aside class="profile-aside">
+
+                    <!-- Account Summary Card -->
+                    <div class="aside-card">
+                        <h2 class="aside-card-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Account Summary
+                        </h2>
+                        <div class="aside-info-row">
+                            <span class="aside-label">Status</span>
+                            <span class="status-pill status-active">● Active</span>
+                        </div>
+                        <div class="aside-info-row">
+                            <span class="aside-label">Platform</span>
+                            <span class="aside-value">CineInsight Web</span>
+                        </div>
+                        <div class="aside-info-row">
+                            <span class="aside-label">Access Level</span>
+                            <span class="aside-value">
+                                {% if user.Role == 'Admin' %}Full Admin{% else %}Standard{% endif %}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Admin Panel Card — shown ONLY to Admin role -->
+                    {% if user.Role == 'Admin' %}
+                    <div class="aside-card admin-access-card">
+                        <div class="admin-card-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 010 7.75"/>
+                            </svg>
+                            <h2 class="aside-card-title" style="margin-bottom:0;">Admin Access</h2>
+                        </div>
+                        <p class="admin-card-desc">
+                            You have administrator privileges. Access the User Management panel to view, search,
+                            and manage registered accounts.
+                        </p>
+                        <div class="admin-feature-list">
+                            <div class="admin-feature-item">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E35614"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                View all registered users
+                            </div>
+                            <div class="admin-feature-item">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E35614"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                Search users by name or email
+                            </div>
+                            <div class="admin-feature-item">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E35614"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                Delete user accounts
+                            </div>
+                        </div>
+                        <a href="{{ url_for('admin_panel') }}" class="btn-admin-panel" id="go-to-admin">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            Open Admin Panel
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="dashboard-footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="logo-icon-footer">
+                    <rect width="40" height="40" rx="8" fill="#E35614" />
+                    <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M11 9L14 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M18 9L21 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M25 9L28 14" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M8 9H32" stroke="white" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <span class="logo-text-footer">CineInsight &copy; 2026</span>
+            </div>
+            <div class="footer-right">
+                <a href="#terms" class="footer-link">Terms</a>
+                <a href="#privacy" class="footer-link">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../static/profile.js"></script>
+</body>
+
+</html>
