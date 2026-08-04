@@ -69,7 +69,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`User_Id`, `Name`, `Email`, `Password`, `Role`) VALUES
-(1, 'heshan', 'heshan@gmail.com', 'scrypt:32768:8:1$y18jm9boR4P5nsrh$fee2424d36532528ee266489cb5d39e1d91f034a18f8fc171ff3c1ce399bb3100b324a6bdab8546320f31f2a25b7ab5bb7ca32eff4f55ad7405d201145645357', 'User');
+(1, 'heshan', 'heshan@gmail.com', 'scrypt:32768:8:1$y18jm9boR4P5nsrh$fee2424d36532528ee266489cb5d39e1d91f034a18f8fc171ff3c1ce399bb3100b324a6bdab8546320f31f2a25b7ab5bb7ca32eff4f55ad7405d201145645357', 'User'),
+(2, 'CineInsight Admin', 'admin@cineinsight.com', 'scrypt:32768:8:1$fl3lDyrYzFhGUptN$f89d7dce5d445d2ba5f171d2e5b2c16f15d12b8b558075d65f57f1d3fe0061d05bd1f8897bd2f61760b995b017bb0adb511fe9435b1de04bb6655c0b759fdd73', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -135,7 +136,7 @@ ALTER TABLE `reasoning_report`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `youtube_video`
