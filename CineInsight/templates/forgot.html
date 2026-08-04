@@ -123,9 +123,18 @@
                     <h2 class="form-title">Reset Link Sent</h2>
                     <p class="form-subtitle" style="margin-bottom: 8px;">We've sent a link to recover your account to <br><strong id="sent-email-span" style="color: var(--color-dark); font-weight: 700;">email@address.com</strong></p>
                     <p class="form-subtitle" style="font-size: 0.85rem;">Please check your spam folder if you don't receive it in a few minutes.</p>
-                    <button type="button" class="submit-btn" style="margin-top: 12px;" onclick="window.location.href='{{ url_for('signin') }}'">
-                        <span>Back to Sign In</span>
-                    </button>
+                    <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 12px;">
+                        <button type="button" class="submit-btn" id="proceed-reset-btn" onclick="window.location.href='{{ url_for('reset_password') }}'">
+                            <span>Reset Password Now</span>
+                            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                        <button type="button" class="sso-btn" style="width: 100%; background: #F8FAFC; border: 1px solid var(--color-border); color: var(--color-text-main); font-weight: 600;" onclick="window.location.href='{{ url_for('signin') }}'">
+                            <span>Back to Sign In</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Back to Sign In Redirect -->
@@ -177,6 +186,11 @@
             const email = document.getElementById('email').value;
             document.getElementById('sent-email-span').textContent = email;
             
+            const proceedBtn = document.getElementById('proceed-reset-btn');
+            if (proceedBtn) {
+                proceedBtn.setAttribute('onclick', "window.location.href='{{ url_for('reset_password') }}?email=" + encodeURIComponent(email) + "'");
+            }
+
             // Hide form and header
             document.querySelector('.form-header').style.display = 'none';
             document.getElementById('forgot-form').style.display = 'none';

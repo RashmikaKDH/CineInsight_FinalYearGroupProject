@@ -132,6 +132,46 @@ def forgot():
     return render_template('forgot.html')
 
 
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '')
+        confirm_password = request.form.get('confirm_password', '')
+
+        if not password or not confirm_password:
+            return render_template('reset-password.html', error='Please fill in all required fields.')
+
+        if password != confirm_password:
+            return render_template('reset-password.html', error='Passwords do not match.')
+
+        if len(password) < 8:
+            return render_template('reset-password.html', error='Password must be at least 8 characters long.')
+
+        if email:
+            connection = None
+            cursor = None
+            try:
+                connection = get_db_connection()
+                cursor = connection.cursor()
+                hashed_password = generate_password_hash(password)
+                cursor.execute('UPDATE `USER` SET Password = %s WHERE Email = %s', (hashed_password, email))
+                connection.commit()
+            except mysql.connector.Error:
+                if connection is not None:
+                    connection.rollback()
+                return render_template('reset-password.html', error='Database error. Please try again.')
+            finally:
+                if cursor is not None:
+                    cursor.close()
+                if connection is not None:
+                    connection.close()
+
+        return render_template('reset-password.html', success=True)
+
+    return render_template('reset-password.html')
+
+
 @app.route('/google-login')
 def google_login():
     return render_template('google-login.html')
