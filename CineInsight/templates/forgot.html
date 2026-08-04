@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Reusing Sign In CSS -->
-    <link rel="stylesheet" href="../static/signin.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='signin.css') }}">
 </head>
 <body>
     <div class="split-screen-container">
@@ -124,14 +124,14 @@
                     <p class="form-subtitle" style="margin-bottom: 8px;">We've sent a link to recover your account to <br><strong id="sent-email-span" style="color: var(--color-dark); font-weight: 700;">email@address.com</strong></p>
                     <p class="form-subtitle" style="font-size: 0.85rem;">Please check your spam folder if you don't receive it in a few minutes.</p>
                     <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 12px;">
-                        <button type="button" class="submit-btn" id="proceed-reset-btn" onclick="window.location.href='{{ url_for('reset_password') }}'">
+                        <button type="button" class="submit-btn" id="proceed-reset-btn" data-href="{{ url_for('reset_password') }}">
                             <span>Reset Password Now</span>
                             <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                 <polyline points="12 5 19 12 12 19"></polyline>
                             </svg>
                         </button>
-                        <button type="button" class="sso-btn" style="width: 100%; background: #F8FAFC; border: 1px solid var(--color-border); color: var(--color-text-main); font-weight: 600;" onclick="window.location.href='{{ url_for('signin') }}'">
+                        <button type="button" class="sso-btn" id="back-signin-btn" data-href="{{ url_for('signin') }}" style="width: 100%; background: #F8FAFC; border: 1px solid var(--color-border); color: var(--color-text-main); font-weight: 600;">
                             <span>Back to Sign In</span>
                         </button>
                     </div>
@@ -181,24 +181,41 @@
     </style>
 
     <script>
-        document.getElementById('forgot-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            document.getElementById('sent-email-span').textContent = email;
-            
-            const proceedBtn = document.getElementById('proceed-reset-btn');
-            if (proceedBtn) {
-                proceedBtn.setAttribute('onclick', "window.location.href='{{ url_for('reset_password') }}?email=" + encodeURIComponent(email) + "'");
-            }
+        const forgotForm    = document.getElementById('forgot-form');
+        const proceedBtn    = document.getElementById('proceed-reset-btn');
+        const backSigninBtn = document.getElementById('back-signin-btn');
 
-            // Hide form and header
-            document.querySelector('.form-header').style.display = 'none';
-            document.getElementById('forgot-form').style.display = 'none';
-            document.querySelector('.signup-prompt').style.display = 'none';
-            
-            // Show success state
-            document.getElementById('success-state').style.display = 'flex';
-        });
+        // Wire up navigation buttons using data-href (avoids quote conflicts)
+        if (backSigninBtn) {
+            backSigninBtn.addEventListener('click', function() {
+                window.location.href = this.dataset.href;
+            });
+        }
+
+        if (forgotForm) {
+            forgotForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+
+                // Update the sent-email display
+                document.getElementById('sent-email-span').textContent = email;
+
+                // Attach email to the reset button URL
+                if (proceedBtn) {
+                    const base = proceedBtn.dataset.href;
+                    proceedBtn.dataset.href = base + '?email=' + encodeURIComponent(email);
+                    proceedBtn.addEventListener('click', function() {
+                        window.location.href = this.dataset.href;
+                    }, { once: true });
+                }
+
+                // Hide form and header, show success state
+                document.querySelector('.form-header').style.display = 'none';
+                document.getElementById('forgot-form').style.display = 'none';
+                document.querySelector('.signup-prompt').style.display = 'none';
+                document.getElementById('success-state').style.display = 'flex';
+            });
+        }
     </script>
 </body>
 </html>
