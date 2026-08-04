@@ -161,25 +161,19 @@ def download_video(url, output_path="temp_video.mp4"):
     node_runtime_path, ffmpeg_bin_path = _bootstrap_external_tools()
 
     ydl_opts = {
-        # Format 18 wenuwata DASH/HLS fragmented streams use karamu. 
-        # Mewa podi kabi walata kadala enna nisa connection drop wenne naha!
-        'format': 'bestvideo[height<=360]+bestaudio/best[height<=360]/best',
+        # Format 18 = YouTube native 360p progressive MP4 (no Range-header chunking needed)
+        # This avoids HTTP Error 416 which occurs when forced byte-range chunking is used.
+        'format': '18/best[height<=480]/bestvideo[height<=480]+bestaudio/best',
         'outtmpl': output_path,
         'quiet': True,
         'no_warnings': True,
         'noprogress': True,
         'logger': _SilentYtDlpLogger(),
         'nocheckcertificate': True,
-        'external_downloader': None,
-        'no_continue': True,
-        
-        # --- CONNECTION DROP PREVENT KARANA ALUTH OPTS ---
-        'http_chunk_size': 10485760,         # 10MB chunks walata kadala gannawa
-        'retries': 15,                       # Drop unoth 15 parak try karanawa
-        'fragment_retries': 15,              # Fragment ekak drop unoth ekama try karanawa
+        'retries': 10,
+        'fragment_retries': 10,
         'file_access_retries': 5,
-        'concurrent_fragment_downloads': 3,  # Safely kabi 3k ekawara gannawa (aria2c one na)
-        'merge_output_format': 'mp4'         # Anthimata FFmpeg walin MP4 karala denawa
+        'merge_output_format': 'mp4'
     }
     
     if node_runtime_path:
