@@ -127,8 +127,42 @@ def analysis():
     return render_template('analysis.html')
 
 
-@app.route('/forgot')
+@app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
+    if request.method == 'POST':
+        import re
+        email = request.form.get('email', '').strip().lower()
+
+        # 1. Email format validation
+        if not email:
+            return render_template('forgot.html', error='Please enter your email address.')
+
+        email_pattern = re.compile(r'^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$')
+        if not email_pattern.match(email):
+            return render_template('forgot.html', error='Please enter a valid email address.')
+
+        # 2. Database user existence check
+        connection = None
+        cursor = None
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('SELECT User_Id, Name FROM `USER` WHERE Email = %s LIMIT 1', (email,))
+            user = cursor.fetchone()
+        except mysql.connector.Error:
+            return render_template('forgot.html', error='Database error. Please try again.')
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+        if not user:
+            return render_template('forgot.html', error='No account found with that email address.')
+
+        # 3. User exists — show success state
+        return render_template('forgot.html', success=True, email=email)
+
     return render_template('forgot.html')
 
 
@@ -139,37 +173,64 @@ def reset_password():
         password = request.form.get('password', '')
         confirm_password = request.form.get('confirm_password', '')
 
+        # 1. Basic field validation
+        if not email:
+            return render_template('reset-password.html', error='Email is missing. Please go back and try again.', email=email)
+
         if not password or not confirm_password:
             return render_template('reset-password.html', error='Please fill in all required fields.', email=email)
 
-        if password != confirm_password:
-            return render_template('reset-password.html', error='Passwords do not match.', email=email)
-
+        # 2. Password strength validation
         if len(password) < 8:
             return render_template('reset-password.html', error='Password must be at least 8 characters long.', email=email)
 
-        if email:
-            connection = None
-            cursor = None
-            try:
-                connection = get_db_connection()
-                cursor = connection.cursor()
-                hashed_password = generate_password_hash(password)
-                cursor.execute('UPDATE `USER` SET Password = %s WHERE Email = %s', (hashed_password, email))
-                connection.commit()
-            except mysql.connector.Error:
-                if connection is not None:
-                    connection.rollback()
-                return render_template('reset-password.html', error='Database error. Please try again.', email=email)
-            finally:
-                if cursor is not None:
-                    cursor.close()
-                if connection is not None:
-                    connection.close()
+        # 3. Password match validation
+        if password != confirm_password:
+            return render_template('reset-password.html', error='Passwords do not match.', email=email)
+
+        # 4. Verify the user actually exists in the database
+        connection = None
+        cursor = None
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('SELECT User_Id FROM `USER` WHERE Email = %s LIMIT 1', (email,))
+            user = cursor.fetchone()
+        except mysql.connector.Error:
+            return render_template('reset-password.html', error='Database error. Please try again.', email=email)
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+        if not user:
+            return render_template('reset-password.html', error='No account found with that email. Please restart the reset process.', email=email)
+
+        # 5. All checks passed — update the password
+        connection = None
+        cursor = None
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            hashed_password = generate_password_hash(password)
+            cursor.execute('UPDATE `USER` SET Password = %s WHERE Email = %s', (hashed_password, email))
+            connection.commit()
+        except mysql.connector.Error:
+            if connection is not None:
+                connection.rollback()
+            return render_template('reset-password.html', error='Database error. Please try again.', email=email)
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
 
         return render_template('reset-password.html', success=True)
 
-    return render_template('reset-password.html')
+    # GET — pass email from query param so the hidden field is pre-filled
+    email = request.args.get('email', '')
+    return render_template('reset-password.html', email=email)
 
 
 @app.route('/google-login')
