@@ -140,13 +140,13 @@ def reset_password():
         confirm_password = request.form.get('confirm_password', '')
 
         if not password or not confirm_password:
-            return render_template('reset-password.html', error='Please fill in all required fields.')
+            return render_template('reset-password.html', error='Please fill in all required fields.', email=email)
 
         if password != confirm_password:
-            return render_template('reset-password.html', error='Passwords do not match.')
+            return render_template('reset-password.html', error='Passwords do not match.', email=email)
 
         if len(password) < 8:
-            return render_template('reset-password.html', error='Password must be at least 8 characters long.')
+            return render_template('reset-password.html', error='Password must be at least 8 characters long.', email=email)
 
         if email:
             connection = None
@@ -160,7 +160,7 @@ def reset_password():
             except mysql.connector.Error:
                 if connection is not None:
                     connection.rollback()
-                return render_template('reset-password.html', error='Database error. Please try again.')
+                return render_template('reset-password.html', error='Database error. Please try again.', email=email)
             finally:
                 if cursor is not None:
                     cursor.close()
