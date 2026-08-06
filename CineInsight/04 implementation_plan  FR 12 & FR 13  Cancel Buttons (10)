@@ -1,0 +1,222 @@
+# Implementation Plan: FR 12 & FR 13 — Cancel Buttons
+## CineInsight FYP — Signup & Signin Cancel + Redirect
+
+**Assigned to:** Collaborator  
+**Estimated time:** 30–45 minutes  
+**Difficulty:** ⭐ Easy — HTML + CSS only, no backend changes
+
+---
+
+## What Are FR 12 & FR 13?
+
+| FR | Name | Description |
+|:---|:---|:---|
+| **FR 12** | Signup Cancel | Signup form-ෙ "Cancel" button click → fields clear + welcome page redirect |
+| **FR 13** | Signin Cancel | Signin form-ෙ "Cancel" button click → fields clear + welcome page redirect |
+
+**Welcome page = `index.html` (`/` route)**
+
+---
+
+## Current State (What's Missing)
+
+- `signup.html` → **Submit button only** — Cancel button **නෑ**
+- `signin.html` → **Submit button only** — Cancel button **නෑ**
+
+---
+
+## Proposed Changes
+
+---
+
+### 1. [MODIFY] `templates/signup.html`
+
+**Location:** Lines 115–123 (Submit button area)
+
+**Current code:**
+```html
+<!-- Register Button -->
+<button type="submit" class="submit-btn">
+    <span>Register Account</span>
+    <svg class="arrow-icon" ...> ... </svg>
+</button>
+```
+
+**Replace with (add Cancel button below submit):**
+```html
+<!-- Register Button -->
+<button type="submit" class="submit-btn" id="signup-submit-btn">
+    <span>Register Account</span>
+    <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
+</button>
+
+<!-- FR 12: Cancel Button -->
+<a href="{{ url_for('index') }}"
+   class="cancel-btn"
+   id="signup-cancel-btn"
+   onclick="clearSignupForm()">
+    Cancel
+</a>
+```
+
+**Also add the JS function** before `</body>`:
+```html
+<script>
+function clearSignupForm() {
+    // Clear all form fields before navigating away
+    var form = document.getElementById('signup-form');
+    if (form) form.reset();
+}
+</script>
+```
+
+> **Why `<a>` not `<button>`?** Cancel redirects to another page — `<a href>` is semantically correct. `onclick` clears fields before navigation.
+
+---
+
+### 2. [MODIFY] `templates/signin.html`
+
+**Location:** Find the Sign In submit button (search for `type="submit"`)
+
+**Replace submit button section with (add Cancel below):**
+```html
+<!-- Sign In Button (existing — no change needed) -->
+<button type="submit" class="signin-btn" id="signin-submit-btn">
+    Sign In
+    <svg ...> ... </svg>
+</button>
+
+<!-- FR 13: Cancel Button -->
+<a href="{{ url_for('index') }}"
+   class="cancel-btn"
+   id="signin-cancel-btn"
+   onclick="clearSigninForm()">
+    Cancel
+</a>
+```
+
+**Also add the JS function** before `</body>`:
+```html
+<script>
+function clearSigninForm() {
+    var form = document.getElementById('signin-form');
+    if (form) form.reset();
+}
+</script>
+```
+
+---
+
+### 3. [MODIFY] `static/signup.css`
+
+**Add at the end of the file:**
+
+```css
+/* ── FR 12: Cancel Button ─────────────────────────────────── */
+.cancel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1.5px solid #E2E8F0;
+    background: transparent;
+    color: #64748B;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    color: #0F172A;
+}
+```
+
+---
+
+### 4. [MODIFY] `static/signin.css`
+
+**Add at the end of the file** (same CSS as above):
+
+```css
+/* ── FR 13: Cancel Button ─────────────────────────────────── */
+.cancel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1.5px solid #E2E8F0;
+    background: transparent;
+    color: #64748B;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    color: #0F172A;
+}
+```
+
+---
+
+## Files Summary
+
+| File | Action | Backend change? |
+|:---|:---:|:---:|
+| `templates/signup.html` | Add Cancel button + JS | ❌ No |
+| `templates/signin.html` | Add Cancel button + JS | ❌ No |
+| `static/signup.css` | Add `.cancel-btn` style | ❌ No |
+| `static/signin.css` | Add `.cancel-btn` style | ❌ No |
+| `app.py` | ❌ No change needed | — |
+
+---
+
+## Verification Plan
+
+### Manual Test (FR 12 — Signup)
+1. `http://127.0.0.1:5000/signup` navigate
+2. Name, Email, Password fields-ෙ data type කරන්නෙ
+3. "Cancel" click
+4. ✅ Welcome/home page-ෙ navigate
+5. Back button → signup page → ✅ fields empty (cleared)
+
+### Manual Test (FR 13 — Signin)
+1. `http://127.0.0.1:5000/signin` navigate
+2. Email, Password type කරන්නෙ
+3. "Cancel" click
+4. ✅ Welcome/home page-ෙ navigate
+5. Back button → signin page → ✅ fields empty
+
+---
+
+## Notes for Collaborator
+
+> [!NOTE]
+> - `app.py` **change කරන්නෙ නෑ** — backend route නෑ
+> - `url_for('index')` → Flask-ෙ `/` route-ෙ point කරනවා
+> - `form.reset()` → browser built-in — all fields clear
+> - CSS `.cancel-btn` — both pages-ෙ same style, separately add කරනවා
+
+> [!TIP]
+> Cancel button-ෙ Submit button-ෙ **ඉහළ** add කරන්නෙ **නෑ** — ඉහළ submit, ඇතුළෙ cancel. Visual hierarchy maintain.
