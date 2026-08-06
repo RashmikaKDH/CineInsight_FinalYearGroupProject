@@ -141,26 +141,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 8. Dashboard Real YouTube Search
-    const btnAnalyze = document.getElementById('btn-analyze');
     const btnSearch = document.getElementById('btn-search');
     const reviewInput = document.getElementById('review-link-input');
     const reviewsGrid = document.getElementById('reviews-grid');
     const searchLoader = document.getElementById('search-loader');
     const sectionTitle = document.getElementById('section-title');
 
-    // Save default HTML to restore later if needed
-    const defaultCardsHTML = reviewsGrid ? Array.from(reviewsGrid.children)
-        .filter(child => child.id !== 'search-loader')
-        .map(child => child.outerHTML)
-        .join('') : '';
-
     const performSearch = async (query) => {
         if (!query || query.trim() === "") {
-            alert("Please enter a valid search keyword (e.g., 'Dune 2 review').");
+            alert("Please enter a valid movie keyword or YouTube video URL.");
             return;
         }
 
-        if (sectionTitle) sectionTitle.textContent = `Search Results for "${query}"`;
+        const trimmed = query.trim();
+
+        // If user entered a full YouTube URL, directly navigate to analysis
+        if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.includes('youtube.com') || trimmed.includes('youtu.be')) {
+            window.location.href = `/analysis?url=${encodeURIComponent(trimmed)}`;
+            return;
+        }
+
+        if (sectionTitle) sectionTitle.textContent = `Search Results for "${trimmed}"`;
         
         // Hide existing cards, show loader
         Array.from(reviewsGrid.children).forEach(child => {
@@ -233,6 +234,67 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') performSearch(reviewInput.value);
         });
+    }
+
+    // Auto-fetch real Trending Movie Reviews on Dashboard page load
+    const loadTrendingReviews = async () => {
+        if (!reviewsGrid) return;
+        
+        // Immediately remove pre-existing sample cards BEFORE starting fetch
+        Array.from(reviewsGrid.children).forEach(child => {
+            if (child.id !== 'search-loader') child.remove();
+        });
+
+        // Show loader initially while fetching
+        if (searchLoader) searchLoader.style.display = 'block';
+
+        try {
+            const response = await fetch('/api/trending-reviews?limit=8');
+            const data = await response.json();
+
+            if (searchLoader) searchLoader.style.display = 'none';
+
+            if (data.results && data.results.length > 0) {
+                data.results.forEach(video => {
+                    const cardHTML = `
+                    <article class="review-card dynamic-search-card">
+                        <div class="card-image-wrapper">
+                            <img src="${video.thumbnail}" alt="${video.title.replace(/"/g, '&quot;')}" class="card-thumb" style="object-fit: cover; width: 100%; height: 100%;">
+                            <span class="duration-badge">${video.duration_str}</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title" title="${video.title.replace(/"/g, '&quot;')}">${video.title}</h3>
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <span>${video.view_str}</span>
+                                </span>
+                            </div>
+                            <button type="button" class="btn-analyze-card" onclick="window.location.href='/analysis?url=${encodeURIComponent(video.url)}'">
+                                <svg class="analyze-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="20" x2="18" y2="10"/>
+                                    <line x1="12" y1="20" x2="12" y2="4"/>
+                                    <line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                                <span>Analyze Sentiment</span>
+                            </button>
+                        </div>
+                    </article>
+                    `;
+                    reviewsGrid.insertAdjacentHTML('beforeend', cardHTML);
+                });
+            }
+        } catch (err) {
+            console.error("Failed to load trending movie reviews:", err);
+            if (searchLoader) searchLoader.style.display = 'none';
+        }
+    };
+
+    if (reviewsGrid) {
+        loadTrendingReviews();
     }
 
     // Existing hardcoded card click triggers (fallback for defaults)

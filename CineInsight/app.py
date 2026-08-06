@@ -328,6 +328,112 @@ def api_search():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+import re
+
+def is_english_review(title):
+    if not title:
+        return False
+    # Reject Non-Latin scripts (Hindi/Devanagari, Tamil, Telugu, Malayalam, Sinhala, CJK, Arabic, Cyrillic, etc.)
+    non_latin_pattern = re.compile(r'[\u0900-\u0DFF\u0E00-\u0E7F\u0D80-\u0DFF\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\u0600-\u06FF\u0400-\u04FF]')
+    if non_latin_pattern.search(title):
+        return False
+
+    # Reject explicit non-English language tags in video title
+    non_english_tags = [
+        'hindi', 'tamil', 'telugu', 'malayalam', 'kannada', 'sinhala',
+        'marathi', 'bengali', 'punjabi', 'gujarati', 'urdu', 'korean',
+        'japanese', 'spanish', 'french', 'german', 'italian', 'russian', 'chinese', 'bahasa'
+    ]
+    title_lower = title.lower()
+    for tag in non_english_tags:
+        if re.search(r'\b' + re.escape(tag) + r'\b', title_lower):
+            return False
+
+    return True
+
+
+TRENDING_CACHE = {
+    'timestamp': 0,
+    'data': []
+}
+
+@app.route('/api/trending-reviews')
+def api_trending_reviews():
+    import time
+    current_time = time.time()
+    # Cache results for 30 minutes (1800 seconds) for fast page load
+    if TRENDING_CACHE['data'] and (current_time - TRENDING_CACHE['timestamp']) < 1800:
+        return jsonify({'results': TRENDING_CACHE['data']})
+
+    query = "trending english movie review"
+    requested_limit = int(request.args.get('limit', '8'))
+    # Fetch extra items from YouTube search to filter down to English-only reviews
+    fetch_limit = requested_limit * 3
+
+    ydl_opts = {
+        'quiet': True,
+        'extract_flat': True,
+        'force_generic_extractor': False
+    }
+
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            search_query = f"ytsearch{fetch_limit}:{query}"
+            info = ydl.extract_info(search_query, download=False)
+
+            results = []
+            if 'entries' in info:
+                for entry in info['entries']:
+                    title = entry.get('title', '')
+                    
+                    # Filter out non-English reviews
+                    if not is_english_review(title):
+                        continue
+
+                    duration = entry.get('duration')
+                    if duration:
+                        m, s = divmod(int(duration), 60)
+                        h, m = divmod(m, 60)
+                        if h > 0:
+                            duration_str = f"{h}:{m:02d}:{s:02d}"
+                        else:
+                            duration_str = f"{m}:{s:02d}"
+                    else:
+                        duration_str = "N/A"
+
+                    views = entry.get('view_count')
+                    view_str = "0 views"
+                    if views:
+                        if views >= 1000000:
+                            view_str = f"{(views/1000000):.1f}M views"
+                        elif views >= 1000:
+                            view_str = f"{(views/1000):.1f}K views"
+                        else:
+                            view_str = f"{views} views"
+
+                    thumbs = entry.get('thumbnails', [])
+                    thumb_url = thumbs[-1]['url'] if thumbs else '../static/assets/dune_thumb.png'
+
+                    results.append({
+                        'id': entry.get('id'),
+                        'title': title,
+                        'url': entry.get('url'),
+                        'duration_str': duration_str,
+                        'view_str': view_str,
+                        'thumbnail': thumb_url
+                    })
+
+                    # Stop once we have reached the requested limit of English reviews
+                    if len(results) >= requested_limit:
+                        break
+
+            TRENDING_CACHE['timestamp'] = current_time
+            TRENDING_CACHE['data'] = results
+            return jsonify({'results': results})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/analyze')
 def api_analyze():
     url = request.args.get('url')
