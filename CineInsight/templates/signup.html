@@ -113,13 +113,21 @@
                     </div>
 
                     <!-- Register Button -->
-                    <button type="submit" class="submit-btn">
+                    <button type="submit" class="submit-btn" id="signup-submit-btn">
                         <span>Register Account</span>
                         <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
                     </button>
+
+                    <!-- FR 12: Cancel Button -->
+                    <a href="{{ url_for('index') }}"
+                       class="cancel-btn"
+                       id="signup-cancel-btn"
+                       onclick="clearSignupForm()">
+                        Cancel
+                    </a>
                 </form>
 
                 <!-- Sign In Prompt -->
@@ -201,5 +209,14 @@
 
     <!-- JS Script -->
     <script src="../static/main.js"></script>
+
+    <!-- FR 12: Clear Signup Form on Cancel -->
+    <script>
+    function clearSignupForm() {
+        // Clear all form fields before navigating away
+        var form = document.getElementById('signup-form');
+        if (form) form.reset();
+    }
+    </script>
 </body>
 </html>

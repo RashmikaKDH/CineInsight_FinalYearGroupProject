@@ -528,3 +528,29 @@ html, body {
         font-size: 1.85rem;
     }
 }
+
+/* ── FR 13: Cancel Button ─────────────────────────────────── */
+.cancel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1.5px solid #E2E8F0;
+    background: transparent;
+    color: #64748B;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    color: #0F172A;
+}
