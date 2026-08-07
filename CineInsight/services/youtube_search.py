@@ -80,6 +80,46 @@ _EXPLICIT_LANGUAGES_KNOWN = {
 }
 
 
+# ---------------------------------------------------------------------------
+# Review content filter: reject trailers, clips, songs, teasers, etc.
+# Accept only genuine review / analysis / reaction / essay content.
+# ---------------------------------------------------------------------------
+
+# Titles containing these words are NOT reviews — reject them
+_NON_REVIEW_PATTERN = _re.compile(
+    r'\b('
+    r'official trailer|official teaser|official clip|official video|'
+    r'\btrailer\b|\bteaser\b|\bclip\b|\bpromo\b|'
+    r'\bost\b|original soundtrack|\bsoundtrack\b|'
+    r'\bsong\b|\blyrics\b|lyric video|music video|'
+    r'making of|behind the scenes|bts|'
+    r'\binterview\b|cast interview|director interview|'
+    r'deleted scene|extended scene|'
+    r'\bfeaturette\b|exclusive scene'
+    r')\b',
+    flags=_re.IGNORECASE
+)
+
+# At least ONE of these signals must appear in the title for it to be a review
+_REVIEW_SIGNALS = _re.compile(
+    r'\b('
+    r'review|reviewed|reviewing|'
+    r'analysis|analyzed|analysed|'
+    r'reaction|reacting|'
+    r'explained|explanation|'
+    r'breakdown|broke down|'
+    r'discussion|discussed|'
+    r'critique|critiqued|'
+    r'thoughts on|my thoughts|'
+    r'opinion|verdict|'
+    r'worth watching|is it good|is it bad|'
+    r'spoiler|spoiler.?free|no spoiler|without spoiler|'
+    r'honest review|full review|movie review|film review'
+    r')\b',
+    flags=_re.IGNORECASE
+)
+
+
 def _is_likely_english_title(title: str) -> bool:
     """Return False if the video title contains non-Latin scripts or explicit language tags."""
     if not title:
@@ -91,11 +131,30 @@ def _is_likely_english_title(title: str) -> bool:
     return True
 
 
+def _is_review_video(title: str) -> bool:
+    """
+    Return True only if the title looks like a genuine movie review.
+
+    Rejects: trailers, teasers, clips, songs, OSTs, interviews,
+             behind-the-scenes, making-of, music videos.
+    Requires: at least one review/analysis/reaction signal word.
+    """
+    if not title:
+        return False
+    # Reject non-review content types
+    if _NON_REVIEW_PATTERN.search(title):
+        return False
+    # Require at least one review signal word
+    if not _REVIEW_SIGNALS.search(title):
+        return False
+    return True
+
+
 # ---------------------------------------------------------------------------
 # Main search function
 # ---------------------------------------------------------------------------
 
-def search_movie_reviews(query: str, max_results: int = 20) -> list:
+def search_movie_reviews(query: str, max_results: int = 50) -> list:
     """
     Search YouTube Data API v3 for movie review videos.
 
@@ -104,7 +163,7 @@ def search_movie_reviews(query: str, max_results: int = 20) -> list:
     query : str
         Movie name entered by the user.
     max_results : int
-        Number of videos to retrieve from API (default 20).
+        Number of videos to retrieve from API (default 50).
         We request more than needed so that after title pre-filtering
         we still have enough candidates for the subtitle pipeline.
 
@@ -139,15 +198,15 @@ def search_movie_reviews(query: str, max_results: int = 20) -> list:
         youtube = build('youtube', 'v3', developerKey=api_key)
 
         # Step 1: Search for video IDs
-        # videoCaption='closedCaption' — only return videos that have captions.
-        # relevanceLanguage='en'       — bias results toward English content.
+        # relevanceLanguage='en' — bias results toward English content.
+        # We removed videoCaption='closedCaption' because it strictly filters for MANUAL captions,
+        # which excludes videos that only have auto-generated captions (which we support).
         search_response = youtube.search().list(
             q=search_query,
             part='id,snippet',
             type='video',
             maxResults=max_results,
             relevanceLanguage='en',
-            videoCaption='closedCaption',   # Only videos with captions
             videoDuration='medium',         # 4–20 minutes — typical review length
         ).execute()
 
@@ -182,6 +241,11 @@ def search_movie_reviews(query: str, max_results: int = 20) -> list:
             audio_lang = snippet.get('defaultAudioLanguage', '') or ''
             if audio_lang and audio_lang.split('-')[0] in _EXPLICIT_LANGUAGES_KNOWN:
                 continue
+
+            # Layer 3 pre-filter: reject non-review content (trailers, clips, songs, etc.)
+            if not _is_review_video(title):
+                continue
+
 
             # Pick best available thumbnail (high → medium → default)
             thumbs    = snippet.get('thumbnails', {})

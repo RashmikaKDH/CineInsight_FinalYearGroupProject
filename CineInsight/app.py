@@ -309,9 +309,9 @@ def api_search():
     except RuntimeError as e:
         return jsonify({'error': str(e)}), 500
 
-    # --- Step 1: YouTube Data API v3 search → top 20 videos ---
+    # --- Step 1: YouTube Data API v3 search → top 50 videos ---
     try:
-        candidates = search_movie_reviews(query, max_results=20)
+        candidates = search_movie_reviews(query, max_results=50)
     except (ValueError, RuntimeError) as e:
         return jsonify({'error': str(e)}), 500
 
