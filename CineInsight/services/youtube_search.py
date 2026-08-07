@@ -195,6 +195,8 @@ def search_movie_reviews(query: str, max_results: int = 50) -> list:
         search_query = query.strip()
 
     try:
+        from services.trace_logger import logger
+        logger.start_trace(query)
         youtube = build('youtube', 'v3', developerKey=api_key)
 
         # Step 1: Search for video IDs
@@ -232,19 +234,57 @@ def search_movie_reviews(query: str, max_results: int = 50) -> list:
             details  = item.get('contentDetails', {})
 
             title = snippet.get('title', '')
+            
+            # Setup trace log for this video
+            video_log = {
+                "video_id": video_id,
+                "title": title,
+                "channel": snippet.get('channelTitle', ''),
+                "layer1_title_pass": None,
+                "layer1_reason": "",
+                "layer2_audio_pass": None,
+                "layer2_reason": "",
+                "layer3_content_pass": None,
+                "layer3_reason": "",
+                "subtitle_status": "none",
+                "transcript_snippet": "",
+                "layer4_lang_pass": None,
+                "layer4_score": 0.0,
+                "layer4_detected_lang": "",
+                "final_status": "rejected"
+            }
 
             # Layer 1 pre-filter: reject non-English titles immediately
-            if not _is_likely_english_title(title):
+            is_eng_title = _is_likely_english_title(title)
+            video_log["layer1_title_pass"] = is_eng_title
+            if not is_eng_title:
+                video_log["layer1_reason"] = "Failed non-Latin script or foreign language tag check."
+                logger.add_video_log(video_id, video_log)
                 continue
+            else:
+                video_log["layer1_reason"] = "Passed"
 
             # Layer 2 pre-filter: reject videos with explicit non-English audio language
             audio_lang = snippet.get('defaultAudioLanguage', '') or ''
-            if audio_lang and audio_lang.split('-')[0] in _EXPLICIT_LANGUAGES_KNOWN:
+            is_explicit_foreign = audio_lang and audio_lang.split('-')[0] in _EXPLICIT_LANGUAGES_KNOWN
+            video_log["layer2_audio_pass"] = not is_explicit_foreign
+            if is_explicit_foreign:
+                video_log["layer2_reason"] = f"Failed. Explicit foreign audio language detected: {audio_lang}"
+                logger.add_video_log(video_id, video_log)
                 continue
+            else:
+                video_log["layer2_reason"] = f"Passed. Audio lang: {audio_lang or 'Not specified'}"
 
             # Layer 3 pre-filter: reject non-review content (trailers, clips, songs, etc.)
-            if not _is_review_video(title):
+            is_review = _is_review_video(title)
+            video_log["layer3_content_pass"] = is_review
+            if not is_review:
+                video_log["layer3_reason"] = "Failed. Non-review content (e.g. trailer, song) or no review signal."
+                logger.add_video_log(video_id, video_log)
                 continue
+            else:
+                video_log["layer3_reason"] = "Passed"
+                logger.add_video_log(video_id, video_log)
 
 
             # Pick best available thumbnail (high → medium → default)

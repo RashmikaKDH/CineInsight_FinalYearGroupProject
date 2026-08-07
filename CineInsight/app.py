@@ -16,6 +16,7 @@ from services.youtube_search import search_movie_reviews
 from services.subtitle_service import download_subtitles, cleanup_subtitle_files
 from services.subtitle_parser import parse_vtt_to_text
 from services.language_detector import get_detector
+from services.trace_logger import logger
 
 
 app = Flask(__name__)
@@ -327,21 +328,30 @@ def api_search():
 
             video_id = video['video_id']
             total_processed += 1
+            
+            # Fetch the log dictionary created by youtube_search.py
+            vlog = logger.get_video_log(video_id)
+            if not vlog:
+                continue
 
             # --- Step 2: Download subtitles (no video download) ---
             try:
                 vtt_path, subtitle_type = download_subtitles(video_id, tmp_dir)
+                vlog["subtitle_status"] = subtitle_type
             except Exception:
+                vlog["subtitle_status"] = "error"
                 continue   # Network/permission error — skip this video
 
             if vtt_path is None:
                 # No subtitles available — skip
+                vlog["subtitle_status"] = "none"
                 cleanup_subtitle_files(tmp_dir, video_id)
                 continue
 
             # --- Step 3: Parse .vtt → plain text ---
             try:
                 transcript = parse_vtt_to_text(vtt_path)
+                vlog["transcript_snippet"] = transcript[:500] if transcript else ""
             except Exception:
                 cleanup_subtitle_files(tmp_dir, video_id)
                 continue
@@ -353,16 +363,21 @@ def api_search():
 
             # --- Step 4: fastText language detection ---
             try:
-                is_english = detector.is_english(transcript)
+                lang_info = detector.detect_with_score(transcript)
+                vlog["layer4_detected_lang"] = lang_info.get('lang', 'unknown')
+                vlog["layer4_score"] = lang_info.get('score', 0.0)
+                vlog["layer4_lang_pass"] = (vlog["layer4_detected_lang"] == 'en')
             except Exception:
+                vlog["layer4_lang_pass"] = False
                 cleanup_subtitle_files(tmp_dir, video_id)
                 continue
 
-            if not is_english:
+            if not vlog["layer4_lang_pass"]:
                 cleanup_subtitle_files(tmp_dir, video_id)
                 continue
 
             # --- Step 5: English video confirmed — add to results ---
+            vlog["final_status"] = "accepted"
             results.append({
                 'video_id':     video_id,
                 'title':        video['title'],
@@ -371,12 +386,13 @@ def api_search():
                 'duration':     video['duration'],
                 'published':    video['published'],
                 'url':          video['url'],
-                'language':     'English',
-                'transcript':   transcript[:300] + '...' if len(transcript) > 300 else transcript,
-                'subtitle_type': subtitle_type,
+                'transcript':   transcript
             })
-
+            
             cleanup_subtitle_files(tmp_dir, video_id)
+
+    # Save the trace to disk for debug_app to read
+    logger.save_trace()
 
     return jsonify({
         'query':           query,

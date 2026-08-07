@@ -79,6 +79,24 @@ class LanguageDetector:
         except Exception:
             return 'unknown'
 
+    def detect_with_score(self, text: str) -> dict:
+        """
+        Return the full dictionary containing the detected language and the confidence score.
+        E.g., {'lang': 'en', 'score': 0.92}
+        Returns {'lang': 'unknown', 'score': 0.0} on failure.
+        """
+        if not text or not text.strip():
+            return {'lang': 'unknown', 'score': 0.0}
+        try:
+            sample = text[:500].replace('\n', ' ').strip()
+            result = self._detect(sample, low_memory=False)
+            return {
+                'lang': result.get('lang', 'unknown'),
+                'score': result.get('score', 0.0)
+            }
+        except Exception:
+            return {'lang': 'unknown', 'score': 0.0}
+
 
 # ---------------------------------------------------------------------------
 # Module-level singleton — created once, reused across all requests
