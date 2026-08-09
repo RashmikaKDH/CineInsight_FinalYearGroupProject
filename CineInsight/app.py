@@ -1,4 +1,5 @@
 import os
+import tempfile
 from functools import wraps
 
 import mysql.connector
@@ -8,11 +9,24 @@ import yt_dlp
 import json
 from main import process_youtube_review_generator
 
+# ---------------------------------------------------------------------------
+# Search pipeline service imports
+# ---------------------------------------------------------------------------
+from services.youtube_search import search_movie_reviews
+from services.subtitle_service import download_subtitles, cleanup_subtitle_files
+from services.subtitle_parser import parse_vtt_to_text
+from services.language_detector import get_detector
+from services.trace_logger import logger
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'cineinsight-dev-secret-key')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
+# YouTube Data API v3 key (set in environment or .env file)
+YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
+
 
 
 # ---------------------------------------------------------------------------
@@ -271,62 +285,121 @@ def google_login():
 
 @app.route('/api/search')
 def api_search():
+    """
+    New search pipeline:
+      1. YouTube Data API v3  → top 20 movie review videos
+      2. yt-dlp               → subtitle download only (no video)
+      3. subtitle_parser      → .vtt → plain text
+      4. fastText             → English detection
+      5. Return first 8 English videos
+    """
     query = request.args.get('q', '')
-    limit = request.args.get('limit', '8')  # Default to 8 results
-    
     if not query:
         return jsonify({'error': 'No query provided'}), 400
 
-    ydl_opts = {
-        'quiet': True,
-        'extract_flat': True,
-        'force_generic_extractor': False
-    }
-    
+    # --- Check API key ---
+    if not YOUTUBE_API_KEY:
+        return jsonify({
+            'error': 'YOUTUBE_API_KEY is not configured. '
+                     'Set it as an environment variable.'
+        }), 500
+
+    # --- Load fastText detector (lazy, singleton) ---
     try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            # ytsearchN fetches exactly N results
-            search_query = f"ytsearch{limit}:{query}"
-            info = ydl.extract_info(search_query, download=False)
-            
-            results = []
-            if 'entries' in info:
-                for entry in info['entries']:
-                    duration = entry.get('duration')
-                    if duration:
-                        m, s = divmod(int(duration), 60)
-                        h, m = divmod(m, 60)
-                        if h > 0:
-                            duration_str = f"{h}:{m:02d}:{s:02d}"
-                        else:
-                            duration_str = f"{m}:{s:02d}"
-                    else:
-                        duration_str = "N/A"
-                        
-                    views = entry.get('view_count')
-                    view_str = "0 views"
-                    if views:
-                        if views >= 1000000:
-                            view_str = f"{(views/1000000):.1f}M views"
-                        elif views >= 1000:
-                            view_str = f"{(views/1000):.1f}K views"
-                        else:
-                            view_str = f"{views} views"
-
-                    thumbs = entry.get('thumbnails', [])
-                    thumb_url = thumbs[-1]['url'] if thumbs else '../static/assets/dune_thumb.png'
-
-                    results.append({
-                        'id': entry.get('id'),
-                        'title': entry.get('title'),
-                        'url': entry.get('url'),
-                        'duration_str': duration_str,
-                        'view_str': view_str,
-                        'thumbnail': thumb_url
-                    })
-            return jsonify({'results': results})
-    except Exception as e:
+        detector = get_detector()
+    except RuntimeError as e:
         return jsonify({'error': str(e)}), 500
+
+    # --- Step 1: YouTube Data API v3 search → top 50 videos ---
+    try:
+        candidates = search_movie_reviews(query, max_results=50)
+    except (ValueError, RuntimeError) as e:
+        return jsonify({'error': str(e)}), 500
+
+    results          = []
+    total_processed  = 0
+    TARGET           = 8
+
+    # Use a single temp directory for all subtitle downloads this request
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        for video in candidates:
+            if len(results) >= TARGET:
+                break
+
+            video_id = video['video_id']
+            total_processed += 1
+            
+            # Fetch the log dictionary created by youtube_search.py
+            vlog = logger.get_video_log(video_id)
+            if not vlog:
+                continue
+
+            # --- Step 2: Download subtitles (no video download) ---
+            try:
+                vtt_path, subtitle_type = download_subtitles(video_id, tmp_dir)
+                vlog["subtitle_status"] = subtitle_type
+            except Exception:
+                vlog["subtitle_status"] = "error"
+                continue   # Network/permission error — skip this video
+
+            if vtt_path is None:
+                # No subtitles available — skip
+                vlog["subtitle_status"] = "none"
+                cleanup_subtitle_files(tmp_dir, video_id)
+                continue
+
+            # --- Step 3: Parse .vtt → plain text ---
+            try:
+                transcript = parse_vtt_to_text(vtt_path)
+                vlog["transcript_snippet"] = transcript[:500] if transcript else ""
+            except Exception:
+                cleanup_subtitle_files(tmp_dir, video_id)
+                continue
+
+            if not transcript or len(transcript.strip()) < 30:
+                # Empty or near-empty transcript — skip
+                cleanup_subtitle_files(tmp_dir, video_id)
+                continue
+
+            # --- Step 4: fastText language detection ---
+            try:
+                lang_info = detector.detect_with_score(transcript)
+                vlog["layer4_detected_lang"] = lang_info.get('lang', 'unknown')
+                vlog["layer4_score"] = lang_info.get('score', 0.0)
+                vlog["layer4_lang_pass"] = (vlog["layer4_detected_lang"] == 'en')
+            except Exception:
+                vlog["layer4_lang_pass"] = False
+                cleanup_subtitle_files(tmp_dir, video_id)
+                continue
+
+            if not vlog["layer4_lang_pass"]:
+                cleanup_subtitle_files(tmp_dir, video_id)
+                continue
+
+            # --- Step 5: English video confirmed — add to results ---
+            vlog["final_status"] = "accepted"
+            results.append({
+                'video_id':     video_id,
+                'title':        video['title'],
+                'channel':      video['channel'],
+                'thumbnail':    video['thumbnail'],
+                'duration':     video['duration'],
+                'published':    video['published'],
+                'url':          video['url'],
+                'transcript':   transcript
+            })
+            
+            cleanup_subtitle_files(tmp_dir, video_id)
+
+    # Save the trace to disk for debug_app to read
+    logger.save_trace()
+
+    return jsonify({
+        'query':           query,
+        'total_processed': total_processed,
+        'english_videos':  len(results),
+        'results':         results,
+    })
 
 
 import re

@@ -701,3 +701,51 @@ html, body {
         justify-content: center;
     }
 }
+
+/* ==========================================================================
+   Subtitle Type Badge (manual / auto)
+   ========================================================================== */
+
+.card-image-wrapper {
+    position: relative;
+}
+
+.subtitle-badge {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    line-height: 1.4;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Manual subtitles — green tint */
+.subtitle-badge.badge-manual {
+    background: rgba(22, 163, 74, 0.80);
+    color: #DCFCE7;
+    border: 1px solid rgba(34, 197, 94, 0.40);
+}
+
+/* Auto-generated subtitles — amber tint */
+.subtitle-badge.badge-auto {
+    background: rgba(180, 83, 9, 0.80);
+    color: #FEF3C7;
+    border: 1px solid rgba(245, 158, 11, 0.40);
+}
+
+/* Channel name in meta row */
+.meta-channel {
+    font-weight: 500;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+}

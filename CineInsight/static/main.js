@@ -161,49 +161,75 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (sectionTitle) sectionTitle.textContent = `Search Results for "${trimmed}"`;
-        
-        // Hide existing cards, show loader
-        Array.from(reviewsGrid.children).forEach(child => {
-            if (child.id !== 'search-loader') child.style.display = 'none';
-        });
-        if (searchLoader) searchLoader.style.display = 'block';
+        if (sectionTitle) sectionTitle.textContent = `Searching for "${trimmed}"...`;
+
+        // Remove previous search results
+        document.querySelectorAll('.dynamic-search-card').forEach(c => c.remove());
+
+        // Show loader with pipeline-aware message
+        if (searchLoader) {
+            searchLoader.style.display = 'block';
+            const loaderMsg = searchLoader.querySelector('p');
+            if (loaderMsg) {
+                loaderMsg.textContent = 'Searching YouTube & verifying English subtitles... (~20-40s)';
+            }
+        }
 
         try {
-            // You can change limit=8 to any number you want!
-            const response = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8`);
+            const response = await fetch(`/api/search?q=${encodeURIComponent(trimmed)}`);
             const data = await response.json();
 
             if (searchLoader) searchLoader.style.display = 'none';
 
             if (data.error) {
-                alert("Error searching YouTube: " + data.error);
+                if (sectionTitle) sectionTitle.textContent = 'Search failed';
+                alert('Search error: ' + data.error);
                 return;
             }
 
-            // Remove previous search results if any
-            document.querySelectorAll('.dynamic-search-card').forEach(c => c.remove());
+            const count = data.english_videos || 0;
+            if (sectionTitle) {
+                sectionTitle.textContent = count > 0
+                    ? `Results for "${data.query || trimmed}" — ${count} English review${count !== 1 ? 's' : ''} found`
+                    : `No English reviews found for "${trimmed}"`;
+            }
 
             if (data.results && data.results.length > 0) {
                 data.results.forEach(video => {
+                    const safeTitle   = (video.title   || '').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+                    const safeChannel = (video.channel || 'Unknown Channel').replace(/</g, '&lt;');
+                    const badgeClass  = video.subtitle_type === 'manual' ? 'badge-manual' : 'badge-auto';
+                    const badgeLabel  = video.subtitle_type === 'manual' ? '📝 Manual' : '🤖 Auto';
+                    const analyzeUrl  = encodeURIComponent(video.url);
+
                     const cardHTML = `
                     <article class="review-card dynamic-search-card">
                         <div class="card-image-wrapper">
-                            <img src="${video.thumbnail}" alt="${video.title.replace(/"/g, '&quot;')}" class="card-thumb" style="object-fit: cover; width: 100%; height: 100%;">
-                            <span class="duration-badge">${video.duration_str}</span>
+                            <img src="${video.thumbnail}" alt="${safeTitle}" class="card-thumb" style="object-fit: cover; width: 100%; height: 100%;">
+                            <span class="duration-badge">${video.duration || 'N/A'}</span>
+                            <span class="subtitle-badge ${badgeClass}">${badgeLabel}</span>
                         </div>
                         <div class="card-body">
-                            <h3 class="card-title" title="${video.title.replace(/"/g, '&quot;')}">${video.title}</h3>
+                            <h3 class="card-title" title="${safeTitle}">${safeTitle}</h3>
                             <div class="card-meta">
-                                <span class="meta-item">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                        <circle cx="12" cy="12" r="3"/>
+                                <span class="meta-item meta-channel">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
                                     </svg>
-                                    <span>${video.view_str}</span>
+                                    <span>${safeChannel}</span>
+                                </span>
+                                <span class="meta-item">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                        <line x1="16" y1="2" x2="16" y2="6"/>
+                                        <line x1="8" y1="2" x2="8" y2="6"/>
+                                        <line x1="3" y1="10" x2="21" y2="10"/>
+                                    </svg>
+                                    <span>${video.published || ''}</span>
                                 </span>
                             </div>
-                            <button type="button" class="btn-analyze-card" onclick="window.location.href='/analysis?url=${encodeURIComponent(video.url)}'">
+                            <button type="button" class="btn-analyze-card" onclick="window.location.href='/analysis?url=${analyzeUrl}'">
                                 <svg class="analyze-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="18" y1="20" x2="18" y2="10"/>
                                     <line x1="12" y1="20" x2="12" y2="4"/>
@@ -217,12 +243,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     reviewsGrid.insertAdjacentHTML('beforeend', cardHTML);
                 });
             } else {
-                reviewsGrid.insertAdjacentHTML('beforeend', '<p class="dynamic-search-card" style="grid-column: 1/-1; color: white;">No results found.</p>');
+                reviewsGrid.insertAdjacentHTML('beforeend',
+                    '<p class="dynamic-search-card" style="grid-column:1/-1;color:#94A3B8;text-align:center;padding:40px 0;">'
+                    + '🎬 No English movie reviews with subtitles found. Try a different film name.</p>'
+                );
             }
         } catch (error) {
-            console.error("Search error:", error);
+            console.error('Search error:', error);
             if (searchLoader) searchLoader.style.display = 'none';
-            alert("Failed to connect to the server.");
+            if (sectionTitle) sectionTitle.textContent = 'Search Results';
+            alert('Failed to connect to the server.');
         }
     };
 
