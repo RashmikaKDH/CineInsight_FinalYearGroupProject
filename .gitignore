@@ -219,3 +219,6 @@ __marimo__/
 
 # FastText language model
 lid.176.bin
+
+# Debug logs
+debug_trace.json
