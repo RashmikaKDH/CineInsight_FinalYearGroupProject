@@ -40,7 +40,7 @@
 
             <!-- User Panel -->
             <div class="user-panel">
-                <span class="welcome-text">Welcome, Alex</span>
+                <span class="welcome-text">Welcome, {{ session.get('user_name', 'User').split()[0] }}</span>
                 <div class="avatar-circle"></div>
             </div>
         </div>

@@ -2,16 +2,16 @@ import json
 from pipeline import download_video, get_text_tensor, get_audio_tensor, get_video_tensor
 
 def process_youtube_review_generator(url):
-    yield json.dumps({"status": "progress", "message": "⏳ 1. Video eka download wenawa (Downloading video)..."})
+    yield json.dumps({"status": "progress", "message": "⏳ 1. Downloading video and extracting metadata..."})
     video_path = download_video(url)
     
-    yield json.dumps({"status": "progress", "message": "⏳ 2. Text (Subtitles) AI Tensor ekata harawanawa (Extracting Text)..."})
+    yield json.dumps({"status": "progress", "message": "⏳ 2. Processing subtitles to generate text tensors..."})
     text_tensor, raw_text = get_text_tensor(url)
     
-    yield json.dumps({"status": "progress", "message": "⏳ 3. Audio voice features AI Tensor ekata harawanawa (Extracting Audio)..."})
+    yield json.dumps({"status": "progress", "message": "⏳ 3. Analyzing audio features to generate audio tensors..."})
     audio_tensor = get_audio_tensor(video_path)
     
-    yield json.dumps({"status": "progress", "message": "⏳ 4. Video frames expressions AI Tensor ekata harawanawa (Extracting Video)..."})
+    yield json.dumps({"status": "progress", "message": "⏳ 4. Processing video frames to generate visual tensors..."})
     video_tensor = get_video_tensor(video_path)
     
     final_data = {
