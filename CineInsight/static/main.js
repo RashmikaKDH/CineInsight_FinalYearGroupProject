@@ -147,6 +147,70 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchLoader = document.getElementById('search-loader');
     const sectionTitle = document.getElementById('section-title');
 
+    // --- Duration Dropdown Logic ---
+    let selectedDuration = 'medium'; // default
+    const durationBtn     = document.getElementById('duration-chip-btn');
+    const durationDropdown = document.getElementById('duration-dropdown');
+    const durationLabel   = document.getElementById('duration-chip-label');
+
+    if (durationBtn && durationDropdown) {
+        // Toggle dropdown open/close
+        durationBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = durationDropdown.classList.toggle('open');
+            durationBtn.classList.toggle('open', isOpen);
+            durationBtn.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Select an option
+        durationDropdown.querySelectorAll('.duration-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                selectedDuration = opt.dataset.value;
+                if (durationLabel) durationLabel.textContent = opt.dataset.label;
+
+                // Update selected state
+                durationDropdown.querySelectorAll('.duration-option').forEach(o => {
+                    o.classList.toggle('selected', o === opt);
+                    const tick = o.querySelector('svg');
+                    if (!o.querySelector('svg')) return;
+                    o.querySelector('svg').style.opacity = (o === opt) ? '1' : '0';
+                });
+
+                // Close dropdown
+                durationDropdown.classList.remove('open');
+                durationBtn.classList.remove('open');
+                durationBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Close on outside click
+        document.addEventListener('click', () => {
+            durationDropdown.classList.remove('open');
+            durationBtn.classList.remove('open');
+            durationBtn.setAttribute('aria-expanded', 'false');
+        });
+    }
+    // --- End Duration Dropdown ---
+
+    // --- Cancel Search Logic ---
+    const cancelBtn = document.getElementById('btn-cancel-search');
+    let searchAbortController = null;
+
+    const setSearching = (isSearching) => {
+        if (btnSearch)   btnSearch.style.display  = isSearching ? 'none'  : 'inline-flex';
+        if (cancelBtn)   cancelBtn.style.display  = isSearching ? 'inline-flex' : 'none';
+        if (reviewInput) reviewInput.disabled = isSearching;
+    };
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+            if (searchAbortController) {
+                searchAbortController.abort();
+            }
+        });
+    }
+    // --- End Cancel Logic ---
+
     const performSearch = async (query) => {
         if (!query || query.trim() === "") {
             alert("Please enter a valid movie keyword or YouTube video URL.");
@@ -175,11 +239,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Setup abort controller for this request
+        searchAbortController = new AbortController();
+        setSearching(true);
+
         try {
-            const response = await fetch(`/api/search?q=${encodeURIComponent(trimmed)}`);
+            const response = await fetch(
+                `/api/search?q=${encodeURIComponent(trimmed)}&duration=${selectedDuration}`,
+                { signal: searchAbortController.signal }
+            );
             const data = await response.json();
 
             if (searchLoader) searchLoader.style.display = 'none';
+            setSearching(false);
 
             if (data.error) {
                 if (sectionTitle) sectionTitle.textContent = 'Search failed';
@@ -249,10 +321,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
             }
         } catch (error) {
-            console.error('Search error:', error);
-            if (searchLoader) searchLoader.style.display = 'none';
-            if (sectionTitle) sectionTitle.textContent = 'Search Results';
-            alert('Failed to connect to the server.');
+            if (error.name === 'AbortError') {
+                // User cancelled — reload to restore initial trending reviews state
+                window.location.reload();
+            } else {
+                console.error('Search error:', error);
+                if (searchLoader) searchLoader.style.display = 'none';
+                if (sectionTitle) sectionTitle.textContent = 'Search Results';
+                alert('Failed to connect to the server.');
+            }
+            setSearching(false);
         }
     };
 

@@ -85,9 +85,70 @@
                             </svg>
                             <span>Search</span>
                         </button>
+                        <button type="button" class="btn-cancel-search" id="btn-cancel-search" style="display:none;" title="Cancel search">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                            <span>Cancel</span>
+                        </button>
                     </div>
                 </div>
             </section>
+
+            <!-- Active Filter Chips -->
+            <div class="active-filters-row">
+                <span class="filters-applied-label">Active filters:</span>
+
+                <div class="active-filter-chip" title="Only English-language movie review videos are returned. Non-English videos are rejected at multiple layers.">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                    Language: English
+                </div>
+
+                <div class="active-filter-chip" title="Only genuine review, analysis, reaction, and breakdown videos are shown. Trailers, songs, interviews, and clips are rejected.">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="23 7 16 12 23 17 23 7"/>
+                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                    </svg>
+                    Content: Reviews Only
+                </div>
+
+                <!-- Duration Dropdown Chip -->
+                <div class="duration-chip-wrapper" id="duration-chip-wrapper">
+                    <button class="active-filter-chip duration-chip-btn" id="duration-chip-btn" aria-haspopup="true" aria-expanded="false">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span id="duration-chip-label">Length: 4–20 min</span>
+                        <svg class="chip-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+
+                    <div class="duration-dropdown" id="duration-dropdown" role="menu">
+                        <button class="duration-option selected" data-value="medium" data-label="Length: 4–20 min" role="menuitem">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            Medium (4–20 min)
+                        </button>
+                        <button class="duration-option" data-value="short" data-label="Length: &lt;4 min" role="menuitem">
+                            Short (&lt;4 min)
+                        </button>
+                        <button class="duration-option" data-value="long" data-label="Length: &gt;20 min" role="menuitem">
+                            Long (&gt;20 min)
+                        </button>
+                        <button class="duration-option" data-value="any" data-label="Length: Any" role="menuitem">
+                            Any Length
+                        </button>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Trending Reviews Section -->
             <section class="trending-section">

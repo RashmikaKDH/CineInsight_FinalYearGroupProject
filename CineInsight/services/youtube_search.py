@@ -154,7 +154,7 @@ def _is_review_video(title: str) -> bool:
 # Main search function
 # ---------------------------------------------------------------------------
 
-def search_movie_reviews(query: str, max_results: int = 50) -> list:
+def search_movie_reviews(query: str, max_results: int = 50, video_duration: str = 'medium') -> list:
     """
     Search YouTube Data API v3 for movie review videos.
 
@@ -166,6 +166,9 @@ def search_movie_reviews(query: str, max_results: int = 50) -> list:
         Number of videos to retrieve from API (default 50).
         We request more than needed so that after title pre-filtering
         we still have enough candidates for the subtitle pipeline.
+    video_duration : str
+        YouTube API duration filter: 'any', 'short' (<4 min), 'medium' (4-20 min), 'long' (>20 min).
+        Defaults to 'medium' (typical review length).
 
     Returns
     -------
@@ -209,7 +212,7 @@ def search_movie_reviews(query: str, max_results: int = 50) -> list:
             type='video',
             maxResults=max_results,
             relevanceLanguage='en',
-            videoDuration='medium',         # 4–20 minutes — typical review length
+            videoDuration=video_duration,   # 'any' | 'short' | 'medium' | 'long'
         ).execute()
 
         video_ids = [

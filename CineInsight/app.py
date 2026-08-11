@@ -294,6 +294,10 @@ def api_search():
       5. Return first 8 English videos
     """
     query = request.args.get('q', '')
+    duration = request.args.get('duration', 'medium')  # 'any','short','medium','long'
+    # Validate to prevent arbitrary API params
+    if duration not in ('any', 'short', 'medium', 'long'):
+        duration = 'medium'
     if not query:
         return jsonify({'error': 'No query provided'}), 400
 
@@ -312,7 +316,7 @@ def api_search():
 
     # --- Step 1: YouTube Data API v3 search → top 50 videos ---
     try:
-        candidates = search_movie_reviews(query, max_results=50)
+        candidates = search_movie_reviews(query, max_results=50, video_duration=duration)
     except (ValueError, RuntimeError) as e:
         return jsonify({'error': str(e)}), 500
 
