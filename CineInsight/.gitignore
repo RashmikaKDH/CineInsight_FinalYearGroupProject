@@ -52,3 +52,4 @@ temp_video.mp4.ytdl
 *.ytdl
 *.webm
 *.mkv
+debug_trace.json
