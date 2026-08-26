@@ -1,0 +1,5434 @@
+{
+  "url": "https://www.youtube.com/watch?v=8tDwMmTKlW0",
+  "total_segments": 91,
+  "detected_count": 9,
+  "general_count": 82,
+  "aspect_counts": {
+    "acting": 0,
+    "plot": 7,
+    "cgi": 0,
+    "direction": 0,
+    "music": 0,
+    "dialogue": 3
+  },
+  "aspects_dict": {
+    "acting": [
+      "acting",
+      "actor",
+      "actress",
+      "performance",
+      "cast",
+      "played"
+    ],
+    "plot": [
+      "plot",
+      "story",
+      "script",
+      "writing",
+      "narrative",
+      "storyline"
+    ],
+    "cgi": [
+      "cgi",
+      "visual effects",
+      "vfx",
+      "effects",
+      "animation",
+      "graphics",
+      "visuals"
+    ],
+    "direction": [
+      "director",
+      "direction",
+      "directed",
+      "filmmaking",
+      "cinematography"
+    ],
+    "music": [
+      "music",
+      "soundtrack",
+      "score",
+      "songs",
+      "background music",
+      "bgm"
+    ],
+    "dialogue": [
+      "dialogue",
+      "dialog",
+      "lines",
+      "conversation"
+    ]
+  },
+  "segments": [
+    {
+      "segment_id": "seg_0000",
+      "start": 6.45,
+      "end": 7.85,
+      "text": "Iron Man.",
+      "text_lower": "iron man.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0001",
+      "start": 7.85,
+      "end": 12.25,
+      "text": "Okay, so what's safe to say that Iron Man 2 has some pretty huge shoes to fill.",
+      "text_lower": "okay, so what's safe to say that iron man 2 has some pretty huge shoes to fill.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0002",
+      "start": 12.25,
+      "end": 16.17,
+      "text": "Not only was Iron Man 1 in my opinion, one of the coolest movies of 08, but one of the",
+      "text_lower": "not only was iron man 1 in my opinion, one of the coolest movies of 08, but one of the",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0003",
+      "start": 16.17,
+      "end": 18.37,
+      "text": "coolest comic book movies ever made.",
+      "text_lower": "coolest comic book movies ever made.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0004",
+      "start": 18.37,
+      "end": 23.17,
+      "text": "So now the expectations for Iron Man 2 are just bigger than just... yeah, they're enormous.",
+      "text_lower": "so now the expectations for iron man 2 are just bigger than just... yeah, they're enormous.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0005",
+      "start": 23.17,
+      "end": 27.21,
+      "text": "And it's safe to say that any movie to meet those expectations would pretty much be impressive",
+      "text_lower": "and it's safe to say that any movie to meet those expectations would pretty much be impressive",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0006",
+      "start": 27.21,
+      "end": 29.05,
+      "text": "if not really freaking difficult.",
+      "text_lower": "if not really freaking difficult.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0007",
+      "start": 29.05,
+      "end": 32.01,
+      "text": "Now Iron Man 2 did have its good and bad.",
+      "text_lower": "now iron man 2 did have its good and bad.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0008",
+      "start": 32.01,
+      "end": 33.69,
+      "text": "Like I said, Robert Downey Jr.",
+      "text_lower": "like i said, robert downey jr.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0009",
+      "start": 33.69,
+      "end": 34.69,
+      "text": "He's just great.",
+      "text_lower": "he's just great.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0010",
+      "start": 34.69,
+      "end": 38.45,
+      "text": "So for the character Tony Stark, I wasn't really a fan of, but I mean, the guy delivers.",
+      "text_lower": "so for the character tony stark, i wasn't really a fan of, but i mean, the guy delivers.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0011",
+      "start": 38.45,
+      "end": 39.45,
+      "text": "What can you say?",
+      "text_lower": "what can you say?",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0012",
+      "start": 39.45,
+      "end": 41.81,
+      "text": "And Sam Rockwell plays an arms dealer who's like the opponent of Tony Stark.",
+      "text_lower": "and sam rockwell plays an arms dealer who's like the opponent of tony stark.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0013",
+      "start": 41.81,
+      "end": 43.01,
+      "text": "I thought he was really good in the movie.",
+      "text_lower": "i thought he was really good in the movie.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0014",
+      "start": 43.01,
+      "end": 46.89,
+      "text": "He delivers one of the funniest monologues in the entire movie as he's showing off a bunch",
+      "text_lower": "he delivers one of the funniest monologues in the entire movie as he's showing off a bunch",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0015",
+      "start": 46.89,
+      "end": 48.29,
+      "text": "of weapons I laughed out loud.",
+      "text_lower": "of weapons i laughed out loud.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0016",
+      "start": 48.29,
+      "end": 49.89,
+      "text": "Props to you, Sam Rockwell.",
+      "text_lower": "props to you, sam rockwell.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0017",
+      "start": 49.89,
+      "end": 51.29,
+      "text": "You were also great Ninja Turtles.",
+      "text_lower": "you were also great ninja turtles.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0018",
+      "start": 51.29,
+      "end": 55.61,
+      "text": "And Scarlett Johansson, she's pretty much the hottest woman on the face of the planet.",
+      "text_lower": "and scarlett johansson, she's pretty much the hottest woman on the face of the planet.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0019",
+      "start": 55.61,
+      "end": 58.53,
+      "text": "Yeah, she's gonna be on your mind after this movie.",
+      "text_lower": "yeah, she's gonna be on your mind after this movie.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0020",
+      "start": 58.53,
+      "end": 60.45,
+      "text": "This chick, old news, but Scarlett?",
+      "text_lower": "this chick, old news, but scarlett?",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0021",
+      "start": 60.45,
+      "end": 61.45,
+      "text": "Yeah.",
+      "text_lower": "yeah.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0022",
+      "start": 61.45,
+      "end": 64.17,
+      "text": "And I don't feel bad about saying that because that's the reason she was thrown",
+      "text_lower": "and i don't feel bad about saying that because that's the reason she was thrown",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0023",
+      "start": 64.17,
+      "end": 65.17,
+      "text": "in the movie.",
+      "text_lower": "in the movie.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0024",
+      "start": 65.17,
+      "end": 68.33,
+      "text": "Her job in Iron Man 2 is to be hot, period, and she does her job well.",
+      "text_lower": "her job in iron man 2 is to be hot, period, and she does her job well.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0025",
+      "start": 68.33,
+      "end": 71.37,
+      "text": "And Mickey Rourke was cool, and the scene that he did anything in.",
+      "text_lower": "and mickey rourke was cool, and the scene that he did anything in.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0026",
+      "start": 71.37,
+      "end": 73.13,
+      "text": "The same goes with Don Cheatle as Rodi.",
+      "text_lower": "the same goes with don cheatle as rodi.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0027",
+      "start": 73.13,
+      "end": 75.17,
+      "text": "But Sam Rockwell's like the bad guy in this movie.",
+      "text_lower": "but sam rockwell's like the bad guy in this movie.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0028",
+      "start": 75.17,
+      "end": 78.29,
+      "text": "And some of the things I didn't like, well, the story does seem pretty convoluted.",
+      "text_lower": "and some of the things i didn't like, well, the story does seem pretty convoluted.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": true,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "plot"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0029",
+      "start": 78.29,
+      "end": 80.41,
+      "text": "And I don't think it's because of all the characters that are in the movie.",
+      "text_lower": "and i don't think it's because of all the characters that are in the movie.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0030",
+      "start": 80.41,
+      "end": 82.53,
+      "text": "It's all the story arcs that are in the movie.",
+      "text_lower": "it's all the story arcs that are in the movie.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": true,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "plot"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0031",
+      "start": 82.53,
+      "end": 85.85,
+      "text": "I mean, if Tony Stark were just battling the bean counters in Washington DC and trying",
+      "text_lower": "i mean, if tony stark were just battling the bean counters in washington dc and trying",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0032",
+      "start": 85.85,
+      "end": 88.97,
+      "text": "to keep the Iron Man suit out of the hands of the arms dealers, I mean, that would have been",
+      "text_lower": "to keep the iron man suit out of the hands of the arms dealers, i mean, that would have been",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0033",
+      "start": 88.97,
+      "end": 92.13,
+      "text": "just fine right there, but there are about four to five other plotlines that Tony Stark's",
+      "text_lower": "just fine right there, but there are about four to five other plotlines that tony stark's",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": true,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": true,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "plot",
+        "dialogue"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0034",
+      "start": 92.13,
+      "end": 93.61,
+      "text": "dealing with in the movie also.",
+      "text_lower": "dealing with in the movie also.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0035",
+      "start": 93.61,
+      "end": 95.85,
+      "text": "It just makes it feel all cluttered.",
+      "text_lower": "it just makes it feel all cluttered.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0036",
+      "start": 95.85,
+      "end": 97.09,
+      "text": "I mean, look at Iron Man 1.",
+      "text_lower": "i mean, look at iron man 1.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0037",
+      "start": 97.09,
+      "end": 100.73,
+      "text": "Iron Man 1 was the story of one guy with a bit of a narcissistic nature, but that's why",
+      "text_lower": "iron man 1 was the story of one guy with a bit of a narcissistic nature, but that's why",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": true,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "plot"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0038",
+      "start": 100.73,
+      "end": 101.73,
+      "text": "we love him.",
+      "text_lower": "we love him.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0039",
+      "start": 101.73,
+      "end": 104.21,
+      "text": "Who finds out the dark side of the business he deals in, so he makes a personal change",
+      "text_lower": "who finds out the dark side of the business he deals in, so he makes a personal change",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0040",
+      "start": 104.21,
+      "end": 106.09,
+      "text": "within himself while he's in captivity.",
+      "text_lower": "within himself while he's in captivity.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0041",
+      "start": 106.09,
+      "end": 107.57,
+      "text": "And makes an oath when he gets out.",
+      "text_lower": "and makes an oath when he gets out.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0042",
+      "start": 107.57,
+      "end": 109.89,
+      "text": "I want to protect the people I put in harm's way.",
+      "text_lower": "i want to protect the people i put in harm's way.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0043",
+      "start": 109.89,
+      "end": 110.89,
+      "text": "Sounds good.",
+      "text_lower": "sounds good.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0044",
+      "start": 110.89,
+      "end": 113.93,
+      "text": "But the whole time he doesn't lose that Han Soloism that makes him him.",
+      "text_lower": "but the whole time he doesn't lose that han soloism that makes him him.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0045",
+      "start": 113.93,
+      "end": 117.81,
+      "text": "He's like Han Solo, if Han Solo was a billionaire weapons expert.",
+      "text_lower": "he's like han solo, if han solo was a billionaire weapons expert.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0046",
+      "start": 117.81,
+      "end": 121.37,
+      "text": "But in one of the overly abundant story arcs in Iron Man 2, he shows Tony Stark being",
+      "text_lower": "but in one of the overly abundant story arcs in iron man 2, he shows tony stark being",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": true,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "plot"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0047",
+      "start": 121.37,
+      "end": 124.05,
+      "text": "all self-destructive and drunk, you know, it's kind of pathetic to watch.",
+      "text_lower": "all self-destructive and drunk, you know, it's kind of pathetic to watch.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0048",
+      "start": 124.05,
+      "end": 125.05,
+      "text": "You just watch it.",
+      "text_lower": "you just watch it.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0049",
+      "start": 125.05,
+      "end": 129.69,
+      "text": "You're like, Tony Stark, there's a respect for Tony Stark, isn't that Tony Stark?",
+      "text_lower": "you're like, tony stark, there's a respect for tony stark, isn't that tony stark?",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0050",
+      "start": 129.69,
+      "end": 134.81,
+      "text": "Not Iron Man, it's like Iron Man's drunk douchey stepbrother twice removed.",
+      "text_lower": "not iron man, it's like iron man's drunk douchey stepbrother twice removed.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0051",
+      "start": 134.81,
+      "end": 137.97,
+      "text": "And I will say this now, even though I know I'm going to get comments about it later.",
+      "text_lower": "and i will say this now, even though i know i'm going to get comments about it later.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0052",
+      "start": 137.97,
+      "end": 141.33,
+      "text": "I know that this is a story arc that's dealt with in the comic books and I know that there's",
+      "text_lower": "i know that this is a story arc that's dealt with in the comic books and i know that there's",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": true,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "plot"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0053",
+      "start": 141.33,
+      "end": 143.61,
+      "text": "a story-based reason for it happening in the movie.",
+      "text_lower": "a story-based reason for it happening in the movie.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": true,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "plot"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0054",
+      "start": 143.61,
+      "end": 147.41,
+      "text": "I'm just saying watching Tony Stark, the character that we all loved and connected with in the",
+      "text_lower": "i'm just saying watching tony stark, the character that we all loved and connected with in the",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0055",
+      "start": 147.41,
+      "end": 151.21,
+      "text": "first one, all down in the dumps in the dark part of his life, all self-destructive",
+      "text_lower": "first one, all down in the dumps in the dark part of his life, all self-destructive",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0056",
+      "start": 151.21,
+      "end": 154.61,
+      "text": "style for an hour and 45 minutes is just kind of a drag.",
+      "text_lower": "style for an hour and 45 minutes is just kind of a drag.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0057",
+      "start": 154.61,
+      "end": 158.05,
+      "text": "And yes, I know that in sequels, the character needs to be challenged in ways that he wasn't",
+      "text_lower": "and yes, i know that in sequels, the character needs to be challenged in ways that he wasn't",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0058",
+      "start": 158.05,
+      "end": 159.25,
+      "text": "challenged in the first one.",
+      "text_lower": "challenged in the first one.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0059",
+      "start": 159.25,
+      "end": 162.57,
+      "text": "But you can challenge him without making him kind of douchey, that's all.",
+      "text_lower": "but you can challenge him without making him kind of douchey, that's all.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0060",
+      "start": 162.57,
+      "end": 165.17,
+      "text": "His attitude in this movie is that he doesn't give a fuck.",
+      "text_lower": "his attitude in this movie is that he doesn't give a fuck.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0061",
+      "start": 165.17,
+      "end": 167.73,
+      "text": "And because of that, you don't either, it's all I'm saying.",
+      "text_lower": "and because of that, you don't either, it's all i'm saying.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0062",
+      "start": 167.73,
+      "end": 170.85,
+      "text": "And okay, now the dialogue, there are scenes where the dialogue is well written and well",
+      "text_lower": "and okay, now the dialogue, there are scenes where the dialogue is well written and well",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": true,
+          "dialog": true,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "dialogue"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0063",
+      "start": 170.85,
+      "end": 171.85,
+      "text": "delivered in this movie.",
+      "text_lower": "delivered in this movie.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0064",
+      "start": 171.85,
+      "end": 175.33,
+      "text": "But then there are other scenes where the dialogue is being delivered at the same time,",
+      "text_lower": "but then there are other scenes where the dialogue is being delivered at the same time,",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": true,
+          "dialog": true,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "dialogue"
+      ],
+      "is_general": false
+    },
+    {
+      "segment_id": "seg_0065",
+      "start": 175.33,
+      "end": 179.29,
+      "text": "like two people are talking at the exact same time and just feels like this.",
+      "text_lower": "like two people are talking at the exact same time and just feels like this.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0066",
+      "start": 179.29,
+      "end": 180.29,
+      "text": "Are you listening to me?",
+      "text_lower": "are you listening to me?",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0067",
+      "start": 180.45,
+      "end": 184.13,
+      "text": "Okay, then go to the press conference, you know, you can't get the press conference,",
+      "text_lower": "okay, then go to the press conference, you know, you can't get the press conference,",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0068",
+      "start": 184.13,
+      "end": 189.25,
+      "text": "you have to go to the stage, or Iron Man, or you need to go be a hero and you can't have.",
+      "text_lower": "you have to go to the stage, or iron man, or you need to go be a hero and you can't have.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0069",
+      "start": 189.25,
+      "end": 194.13,
+      "text": "I'm listening to you, or you listen to me, or you have to talk to me, she's crazy.",
+      "text_lower": "i'm listening to you, or you listen to me, or you have to talk to me, she's crazy.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0070",
+      "start": 194.13,
+      "end": 198.13,
+      "text": "Oh my gosh, I got you, I got you, I got you, I got you, I got you, I got you.",
+      "text_lower": "oh my gosh, i got you, i got you, i got you, i got you, i got you, i got you.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0071",
+      "start": 198.13,
+      "end": 199.33,
+      "text": "The climax of the movie was cool.",
+      "text_lower": "the climax of the movie was cool.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0072",
+      "start": 199.33,
+      "end": 202.53,
+      "text": "We all saw it in a trailer where War Machine and Iron Man had just thrown down with a bunch",
+      "text_lower": "we all saw it in a trailer where war machine and iron man had just thrown down with a bunch",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0073",
+      "start": 202.53,
+      "end": 203.53,
+      "text": "of mechs.",
+      "text_lower": "of mechs.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0074",
+      "start": 203.53,
+      "end": 207.37,
+      "text": "It was cool, fun, exciting, until it abruptly ended in a 45 second fight with the main",
+      "text_lower": "it was cool, fun, exciting, until it abruptly ended in a 45 second fight with the main",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0075",
+      "start": 207.37,
+      "end": 208.37,
+      "text": "bad guy.",
+      "text_lower": "bad guy.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0076",
+      "start": 208.37,
+      "end": 211.33,
+      "text": "I don't tell you not to see this movie, that would be impossible.",
+      "text_lower": "i don't tell you not to see this movie, that would be impossible.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0077",
+      "start": 211.33,
+      "end": 214.93,
+      "text": "Everyone's going to see this movie, you have to, after watching Iron Man 1.",
+      "text_lower": "everyone's going to see this movie, you have to, after watching iron man 1.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0078",
+      "start": 214.93,
+      "end": 218.37,
+      "text": "And it's not horrible, it's not like Spider-Man 3 or anything, it's just not like Spider-Man",
+      "text_lower": "and it's not horrible, it's not like spider-man 3 or anything, it's just not like spider-man",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0079",
+      "start": 218.37,
+      "end": 224.61,
+      "text": "1, 2, X-Men 1, 2, Iron Man 1, either the Nolan Batman's, better than X-Men 3, I think.",
+      "text_lower": "1, 2, x-men 1, 2, iron man 1, either the nolan batman's, better than x-men 3, i think.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0080",
+      "start": 224.61,
+      "end": 228.77,
+      "text": "Whereas the first one stands out, you think cool comic book movie or cool comic book hero,",
+      "text_lower": "whereas the first one stands out, you think cool comic book movie or cool comic book hero,",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0081",
+      "start": 228.77,
+      "end": 229.77,
+      "text": "you think Iron Man.",
+      "text_lower": "you think iron man.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0082",
+      "start": 229.77,
+      "end": 233.05,
+      "text": "But in a world where sequels are rarely as good as the original, this one's just kind of",
+      "text_lower": "but in a world where sequels are rarely as good as the original, this one's just kind of",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0083",
+      "start": 233.05,
+      "end": 234.05,
+      "text": "part of the course.",
+      "text_lower": "part of the course.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0084",
+      "start": 234.05,
+      "end": 237.41,
+      "text": "So it's a fun movie that's a bit convoluted, and if you're skeptical about the movie because",
+      "text_lower": "so it's a fun movie that's a bit convoluted, and if you're skeptical about the movie because",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0085",
+      "start": 237.41,
+      "end": 241.53,
+      "text": "the studio made John Favreau rush it out in two years instead of three, which actually",
+      "text_lower": "the studio made john favreau rush it out in two years instead of three, which actually",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0086",
+      "start": 241.53,
+      "end": 243.97,
+      "text": "did happen, then it might just be what you expect.",
+      "text_lower": "did happen, then it might just be what you expect.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0087",
+      "start": 243.97,
+      "end": 247.05,
+      "text": "But if you're thinking right now, okay, but what movie does this Jeremy Guy like?",
+      "text_lower": "but if you're thinking right now, okay, but what movie does this jeremy guy like?",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0088",
+      "start": 247.05,
+      "end": 248.05,
+      "text": "What movie doesn't he like?",
+      "text_lower": "what movie doesn't he like?",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0089",
+      "start": 248.05,
+      "end": 249.05,
+      "text": "Is he a total douchebag?",
+      "text_lower": "is he a total douchebag?",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    },
+    {
+      "segment_id": "seg_0090",
+      "start": 249.05,
+      "end": 250.61,
+      "text": "And watch my other videos by clicking here.",
+      "text_lower": "and watch my other videos by clicking here.",
+      "keyword_hits": {
+        "acting": {
+          "acting": false,
+          "actor": false,
+          "actress": false,
+          "performance": false,
+          "cast": false,
+          "played": false
+        },
+        "plot": {
+          "plot": false,
+          "story": false,
+          "script": false,
+          "writing": false,
+          "narrative": false,
+          "storyline": false
+        },
+        "cgi": {
+          "cgi": false,
+          "visual effects": false,
+          "vfx": false,
+          "effects": false,
+          "animation": false,
+          "graphics": false,
+          "visuals": false
+        },
+        "direction": {
+          "director": false,
+          "direction": false,
+          "directed": false,
+          "filmmaking": false,
+          "cinematography": false
+        },
+        "music": {
+          "music": false,
+          "soundtrack": false,
+          "score": false,
+          "songs": false,
+          "background music": false,
+          "bgm": false
+        },
+        "dialogue": {
+          "dialogue": false,
+          "dialog": false,
+          "lines": false,
+          "conversation": false
+        }
+      },
+      "aspects": [
+        "general"
+      ],
+      "is_general": true
+    }
+  ]
+}

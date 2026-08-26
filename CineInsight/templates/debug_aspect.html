@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aspect Detection Debugger — CineInsight</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0b1120;
+            --bg-card: #1a2236;
+            --bg-card2: #0f1929;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #6366f1;
+            --accent-soft: rgba(99,102,241,0.15);
+            --success: #22c55e;
+            --success-soft: rgba(34,197,94,0.12);
+            --danger: #ef4444;
+            --danger-soft: rgba(239,68,68,0.12);
+            --warning: #f59e0b;
+            --warning-soft: rgba(245,158,11,0.12);
+            --border: #243047;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── Top Bar ─────────────────────────────────── */
+        .topbar {
+            background: var(--bg-card2);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .topbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: #E35614; }
+        .topbar-title { color: var(--text-muted); font-size: 0.9rem; margin-left: auto; }
+        .port-badge {
+            background: var(--accent-soft);
+            color: #a5b4fc;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid rgba(99,102,241,0.3);
+        }
+
+        /* ── Main layout ─────────────────────────────── */
+        .main { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+
+        h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+
+        /* ── Input panel ─────────────────────────────── */
+        .input-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        .input-group { flex: 1; min-width: 260px; }
+        .input-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            font-family: var(--mono);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus { border-color: var(--accent); }
+        .input-group input::placeholder { color: #4a5568; }
+
+        .btn-run {
+            padding: 0.75rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-run:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-run:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; transform: none; }
+
+        .btn-load-last {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: transparent;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-load-last:hover { border-color: var(--accent); color: #a5b4fc; }
+        .btn-load-last:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* ── Terminal loader ─────────────────────────── */
+        #loader {
+            display: none;
+            background: var(--bg-card2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            font-family: var(--mono);
+            font-size: 0.875rem;
+        }
+        .loader-header { display: flex; gap: 6px; margin-bottom: 1rem; }
+        .loader-dot { width: 12px; height: 12px; border-radius: 50%; }
+        #loader-text { color: #10B981; line-height: 1.9; }
+
+        /* ── Stats bar ───────────────────────────────── */
+        #stats-bar {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: none;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .stat-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+        }
+        .stat-num { font-weight: 700; font-size: 1.1rem; }
+        .stat-label { color: var(--text-muted); font-size: 0.8rem; }
+        .aspect-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-left: auto; }
+        .aspect-chip {
+            padding: 0.2rem 0.6rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--accent-soft);
+            color: #a5b4fc;
+            border: 1px solid rgba(99,102,241,0.25);
+        }
+
+        /* ── Filter bar ──────────────────────────────── */
+        #filter-bar {
+            display: none;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .filter-btn {
+            padding: 0.45rem 1.1rem;
+            border-radius: 99px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+        .filter-btn:hover:not(.active) { border-color: var(--accent); color: #a5b4fc; }
+
+        /* ── Segment cards ───────────────────────────── */
+        #results { display: grid; gap: 1rem; }
+
+        .seg-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            border-left: 5px solid var(--border);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        .seg-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
+        .seg-card.detected { border-left-color: var(--success); }
+        .seg-card.general { border-left-color: var(--danger); }
+
+        .seg-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1.25rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .seg-id {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            min-width: 70px;
+        }
+        .seg-time {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: #64748b;
+            white-space: nowrap;
+        }
+        .seg-text {
+            flex: 1;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+        .seg-aspects { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .asp-badge {
+            padding: 0.18rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .asp-badge.detected-asp { background: var(--success-soft); color: var(--success); border: 1px solid rgba(34,197,94,0.25); }
+        .asp-badge.general-asp { background: var(--danger-soft); color: var(--danger); border: 1px solid rgba(239,68,68,0.25); }
+        .expand-icon { color: var(--text-muted); font-size: 0.8rem; transition: transform 0.2s; }
+        .seg-card.open .expand-icon { transform: rotate(180deg); }
+
+        /* ── Keyword breakdown table ─────────────────── */
+        .seg-body {
+            display: none;
+            padding: 0 1.25rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+        .seg-card.open .seg-body { display: block; }
+        .kw-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.83rem; }
+        .kw-table th {
+            text-align: left;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.4rem 0.7rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .kw-table td { padding: 0.4rem 0.7rem; border-bottom: 1px solid rgba(36,48,71,0.5); }
+        .kw-table tr:last-child td { border-bottom: none; }
+        .aspect-name-cell { font-weight: 600; color: #cbd5e1; text-transform: capitalize; }
+        .kw-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .kw-pill {
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+        }
+        .kw-pill.hit { background: var(--success-soft); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
+        .kw-pill.miss { background: rgba(0,0,0,0.2); color: #475569; border: 1px solid #1e2d3d; }
+        .verbatim-box {
+            margin-top: 0.75rem;
+            background: var(--bg-dark);
+            border-radius: 6px;
+            padding: 0.6rem 0.9rem;
+            font-family: var(--mono);
+            font-size: 0.82rem;
+            color: #a7f3d0;
+            border: 1px solid #0d2618;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+    <div class="topbar-logo">
+        <div class="logo-dot"></div>
+        CineInsight
+    </div>
+    <span style="color:#475569; font-size:0.85rem;">/ Aspect Detection Debugger</span>
+    <span class="topbar-title">debug tool</span>
+    <span class="port-badge">:5002</span>
+</div>
+
+<div class="main">
+    <h1>🔬 Aspect Detection Debugger</h1>
+    <p class="subtitle">
+        Paste a YouTube movie review URL below. The tool will download, transcribe via Whisper,
+        then show exactly which keywords matched (or didn't) in every segment.
+    </p>
+
+    <!-- Input panel -->
+    <div class="input-panel">
+        <div class="input-group">
+            <label>YouTube Review URL</label>
+            <input type="text" id="urlInput" placeholder="https://youtu.be/..." />
+        </div>
+        <button class="btn-run" id="runBtn" onclick="runDebug()">▶ Run Debug</button>
+        <button class="btn-load-last" id="loadLastBtn" onclick="loadLastTrace()" title="Load trace from last main-app analysis">
+            📂 Load Last Analysis
+        </button>
+    </div>
+
+    <!-- Terminal loader -->
+    <div id="loader">
+        <div class="loader-header">
+            <div class="loader-dot" style="background:#ef4444;"></div>
+            <div class="loader-dot" style="background:#f59e0b;"></div>
+            <div class="loader-dot" style="background:#22c55e;"></div>
+        </div>
+        <div id="loader-text"></div>
+    </div>
+
+    <!-- Stats bar -->
+    <div id="stats-bar"></div>
+
+    <!-- Filter bar -->
+    <div id="filter-bar">
+        <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">Show All</button>
+        <button class="filter-btn" data-filter="detected" onclick="applyFilter('detected', this)">✅ Detected Only</button>
+        <button class="filter-btn" data-filter="general" onclick="applyFilter('general', this)">🔴 General Only</button>
+    </div>
+
+    <!-- Results -->
+    <div id="results"></div>
+</div>
+
+<script>
+    let allSegments = [];
+    let aspectsDict = {};
+    let loaderInterval = null;
+
+    function renderResults(data) {
+        const statsBar = document.getElementById('stats-bar');
+        const filterBar = document.getElementById('filter-bar');
+
+        allSegments = data.segments;
+        aspectsDict = data.aspects_dict;
+
+        const aspectChips = Object.entries(data.aspect_counts)
+            .filter(([, c]) => c > 0)
+            .map(([a, c]) => `<span class="aspect-chip">${a}: ${c}</span>`)
+            .join('');
+
+        const urlInfo = data.url ? `<span style="font-family:var(--mono);font-size:0.75rem;color:#475569;">${data.url.slice(0, 60)}${data.url.length > 60 ? '...' : ''}</span>` : '';
+
+        statsBar.innerHTML = `
+            <div class="stat-chip">
+                <span class="stat-num">${data.total_segments}</span>
+                <span class="stat-label">total segments</span>
+            </div>
+            <div class="stat-chip" style="color:var(--success);">
+                <span class="stat-num" style="color:var(--success);">${data.detected_count}</span>
+                <span class="stat-label">aspect detected</span>
+            </div>
+            <div class="stat-chip" style="color:var(--danger);">
+                <span class="stat-num" style="color:var(--danger);">${data.general_count}</span>
+                <span class="stat-label">general (no match)</span>
+            </div>
+            ${urlInfo}
+            <div class="aspect-chips">${aspectChips || '<span style="color:#475569;font-size:0.8rem;">no aspects detected</span>'}</div>
+        `;
+        statsBar.style.display = 'flex';
+
+        filterBar.style.display = 'flex';
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-filter="all"]').classList.add('active');
+
+        renderSegments(allSegments);
+    }
+
+    const loaderMessages = [
+        '> Downloading video via yt-dlp...',
+        '> Extracting 16kHz mono WAV via FFmpeg...',
+        '> Loading Whisper base model (CPU)...',
+        '> Transcribing audio segments (VAD filter active)...',
+        '> Running aspect keyword detection...',
+        '> Building debug trace...',
+    ];
+
+    function startLoaderAnimation() {
+        const el = document.getElementById('loader-text');
+        let i = 0;
+        el.innerHTML = '';
+        loaderInterval = setInterval(() => {
+            if (i < loaderMessages.length) {
+                el.innerHTML += loaderMessages[i] + '<br>';
+                i++;
+            }
+        }, 3500);
+    }
+
+    function stopLoaderAnimation() {
+        if (loaderInterval) { clearInterval(loaderInterval); loaderInterval = null; }
+    }
+
+    async function loadLastTrace() {
+        const loadLastBtn = document.getElementById('loadLastBtn');
+        const loader = document.getElementById('loader');
+        const statsBar = document.getElementById('stats-bar');
+        const filterBar = document.getElementById('filter-bar');
+        const results = document.getElementById('results');
+
+        loadLastBtn.disabled = true;
+        loader.style.display = 'block';
+        document.getElementById('loader-text').innerHTML = '> Loading saved trace from last main-app analysis...';
+        statsBar.style.display = 'none';
+        filterBar.style.display = 'none';
+        results.innerHTML = '';
+
+        try {
+            const res = await fetch('/api/load-last-trace');
+            const data = await res.json();
+            loader.style.display = 'none';
+
+            if (data.error) {
+                results.innerHTML = `<div style="background:#1a1a2e;border:1px solid #ef4444;border-radius:10px;padding:1.5rem;color:#ef4444;font-family:var(--mono);">[ERROR] ${data.error}</div>`;
+                return;
+            }
+
+            // Pre-fill the URL input for reference
+            if (data.url) document.getElementById('urlInput').value = data.url;
+
+            renderResults(data);
+        } catch (err) {
+            loader.style.display = 'none';
+            results.innerHTML = `<div style="color:var(--danger); padding:2rem;">[ERROR] ${err.message}</div>`;
+        } finally {
+            loadLastBtn.disabled = false;
+        }
+    }
+
+    async function runDebug() {
+        const url = document.getElementById('urlInput').value.trim();
+        if (!url) { alert('Please enter a YouTube URL.'); return; }
+
+        const runBtn = document.getElementById('runBtn');
+        const loader = document.getElementById('loader');
+        const statsBar = document.getElementById('stats-bar');
+        const filterBar = document.getElementById('filter-bar');
+        const results = document.getElementById('results');
+
+        runBtn.disabled = true;
+        loader.style.display = 'block';
+        statsBar.style.display = 'none';
+        filterBar.style.display = 'none';
+        results.innerHTML = '';
+        allSegments = [];
+        startLoaderAnimation();
+
+        try {
+            const res = await fetch(`/api/run-aspect-debug?url=${encodeURIComponent(url)}`);
+            const data = await res.json();
+
+            stopLoaderAnimation();
+            loader.style.display = 'none';
+
+            if (data.error) {
+                results.innerHTML = `<div style="color:var(--danger); padding:2rem; font-family:var(--mono);">[ERROR] ${data.error}</div>`;
+                return;
+            }
+
+            renderResults(data);
+
+        } catch (err) {
+            stopLoaderAnimation();
+            loader.style.display = 'none';
+            results.innerHTML = `<div style="color:var(--danger); padding:2rem; font-family:var(--mono);">[ERROR] Could not connect: ${err.message}</div>`;
+        } finally {
+            runBtn.disabled = false;
+        }
+    }
+
+    function renderSegments(segments) {
+        const results = document.getElementById('results');
+        results.innerHTML = '';
+
+        if (segments.length === 0) {
+            results.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:3rem 0;">No segments match this filter.</p>';
+            return;
+        }
+
+        segments.forEach((seg, idx) => {
+            const card = document.createElement('div');
+            card.className = `seg-card ${seg.is_general ? 'general' : 'detected'}`;
+            card.dataset.idx = idx;
+
+            const aspectBadges = seg.aspects.map(a =>
+                `<span class="asp-badge ${a === 'general' ? 'general-asp' : 'detected-asp'}">${a}</span>`
+            ).join('');
+
+            // Build keyword breakdown table rows
+            let tableRows = '';
+            for (const [aspect, kwMap] of Object.entries(seg.keyword_hits)) {
+                const pills = Object.entries(kwMap).map(([kw, hit]) =>
+                    `<span class="kw-pill ${hit ? 'hit' : 'miss'}">${hit ? '✓ ' : ''}${kw}</span>`
+                ).join('');
+                tableRows += `
+                    <tr>
+                        <td class="aspect-name-cell">${aspect}</td>
+                        <td><div class="kw-pills">${pills}</div></td>
+                    </tr>`;
+            }
+
+            card.innerHTML = `
+                <div class="seg-header" onclick="toggleCard(this)">
+                    <span class="seg-id">${seg.segment_id}</span>
+                    <span class="seg-time">[${seg.start}s → ${seg.end}s]</span>
+                    <span class="seg-text">${escapeHtml(seg.text)}</span>
+                    <div class="seg-aspects">${aspectBadges}</div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="seg-body">
+                    <div class="verbatim-box">${escapeHtml(seg.text_lower)}</div>
+                    <table class="kw-table">
+                        <thead>
+                            <tr>
+                                <th style="width:120px;">Aspect</th>
+                                <th>Keywords Checked (✓ = hit, grey = miss)</th>
+                            </tr>
+                        </thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                </div>
+            `;
+            results.appendChild(card);
+        });
+    }
+
+    function toggleCard(header) {
+        const card = header.closest('.seg-card');
+        card.classList.toggle('open');
+    }
+
+    function applyFilter(filter, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        let filtered = allSegments;
+        if (filter === 'detected') filtered = allSegments.filter(s => !s.is_general);
+        if (filter === 'general')  filtered = allSegments.filter(s => s.is_general);
+        renderSegments(filtered);
+    }
+
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    // Allow pressing Enter to run
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('urlInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') runDebug();
+        });
+    });
+</script>
+</body>
+</html>

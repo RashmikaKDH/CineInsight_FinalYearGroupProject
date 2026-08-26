@@ -215,10 +215,15 @@
                         <li><strong style="color: #E35614;">📝 Text Tensor Shape:</strong> <span id="text-shape">...</span></li>
                         <li><strong style="color: #E35614;">🔊 Audio Tensor Shape:</strong> <span id="audio-shape">...</span></li>
                         <li><strong style="color: #E35614;">🎬 Video Tensor Shape:</strong> <span id="video-shape">...</span></li>
+                        <li><strong style="color: #10B981;">🎙️ Whisper Segments:</strong> <span id="whisper-segments">...</span></li>
                     </ul>
                     <div style="margin-top: 20px; border-top: 1px solid #334155; padding-top: 15px;">
                         <span style="color: #94A3B8; font-size: 13px; font-weight: 600;">EXTRACTED SUBTITLES SNIPPET:</span>
                         <p id="raw-text-snippet" style="color: #CBD5E1; font-style: italic; margin-top: 8px; font-size: 14px;">...</p>
+                    </div>
+                    <div style="margin-top: 20px; border-top: 1px solid #334155; padding-top: 15px;">
+                        <span style="color: #94A3B8; font-size: 13px; font-weight: 600;">AI ASPECT DETECTION SAMPLE:</span>
+                        <p id="sample-segment-snippet" style="color: #CBD5E1; font-style: italic; margin-top: 8px; font-size: 14px;">...</p>
                     </div>
                 </div>
             </section>
@@ -289,6 +294,16 @@
                             document.getElementById('audio-shape').textContent = data.audio_shape;
                             document.getElementById('video-shape').textContent = data.video_shape;
                             document.getElementById('raw-text-snippet').textContent = '"' + data.raw_text_snippet + '"';
+                            
+                            if (data.total_segments_found !== undefined) {
+                                document.getElementById('whisper-segments').textContent = data.total_segments_found + ' segments extracted';
+                            }
+                            if (data.sample_segment) {
+                                document.getElementById('sample-segment-snippet').innerHTML = 
+                                    '[' + data.sample_segment.start + 's - ' + data.sample_segment.end + 's] ' + 
+                                    '"' + data.sample_segment.text + '" <br><strong style="color: #10B981;">Detected Aspects:</strong> ' + 
+                                    data.sample_segment.aspects.join(', ');
+                            }
                             
                             // Transition UI
                             setTimeout(() => {
