@@ -1,7 +1,7 @@
 import json
 from pipeline import download_video, get_text_tensor, get_audio_tensor, get_video_tensor
 from src.transcriber import extract_audio, generate_transcript
-from src.aspect_extractor import extract_aspects_from_segments, ASPECTS_DICT
+from src.extractors.keyword_extractor import extract_aspects_from_segments, ASPECTS_DICT
 
 DEBUG_ASPECT_TRACE_FILE = "debug_aspect_trace.json"
 

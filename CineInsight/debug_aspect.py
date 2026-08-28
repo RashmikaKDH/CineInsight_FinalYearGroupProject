@@ -6,7 +6,7 @@ from flask import Flask, jsonify, render_template, request
 sys.path.insert(0, str(Path(__file__).parent))
 from pipeline import download_video
 from src.transcriber import extract_audio, generate_transcript
-from src.aspect_extractor import ASPECTS_DICT
+from src.extractors.keyword_extractor import ASPECTS_DICT
 
 DEBUG_ASPECT_TRACE_FILE = "debug_aspect_trace.json"
 
