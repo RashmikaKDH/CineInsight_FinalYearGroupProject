@@ -2,6 +2,14 @@ import json
 from pipeline import download_video, get_text_tensor, get_audio_tensor, get_video_tensor
 from src.transcriber import extract_audio, generate_transcript
 from src.extractors.keyword_extractor import extract_aspects_from_segments, ASPECTS_DICT
+from src.extractors.llm_aspect_extractor import extract_aspects_from_segments_llm
+
+# ============================================================
+# ⭐ ASPECT EXTRACTOR MODE — meka line eka change karannama method switch karanna
+# True  = LLM  (Gemini API haraha — context-aware, accurate)
+# False = Keyword Dictionary (fast, offline, no API cost)
+# ============================================================
+USE_LLM_EXTRACTOR = True
 
 DEBUG_ASPECT_TRACE_FILE = "debug_aspect_trace.json"
 
@@ -59,7 +67,14 @@ def process_youtube_review_generator(url):
     transcript_segments = generate_transcript(audio_path)
     
     yield json.dumps({"status": "progress", "message": "⏳ 5. Detecting movie aspects..."})
-    aspect_segments = extract_aspects_from_segments(transcript_segments)
+    if USE_LLM_EXTRACTOR:
+        try:
+            aspect_segments = extract_aspects_from_segments_llm(transcript_segments)
+        except RuntimeError as e:
+            yield json.dumps({"status": "aspect_error", "message": str(e)})
+            aspect_segments = []  # Pipeline continues with empty segments
+    else:
+        aspect_segments = extract_aspects_from_segments(transcript_segments)
     _save_aspect_debug_trace(url, aspect_segments)
 
     yield json.dumps({"status": "progress", "message": "⏳ 6. Analyzing audio features to generate audio tensors..."})

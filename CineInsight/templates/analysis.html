@@ -233,6 +233,60 @@
         </div>
     </main>
 
+    <!-- API Error Toast Popup -->
+    <div id="aspect-error-toast" style="
+        display: none;
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 9999;
+        max-width: 420px;
+        background: #1E293B;
+        border: 1px solid #EF4444;
+        border-left: 4px solid #EF4444;
+        border-radius: 12px;
+        padding: 18px 20px;
+        box-shadow: 0 8px 32px rgba(239,68,68,0.25), 0 2px 8px rgba(0,0,0,0.5);
+        animation: toastSlideIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+        font-family: 'Inter', sans-serif;
+    ">
+        <style>
+            @keyframes toastSlideIn {
+                from { opacity: 0; transform: translateX(60px); }
+                to   { opacity: 1; transform: translateX(0); }
+            }
+            @keyframes toastSlideOut {
+                from { opacity: 1; transform: translateX(0); }
+                to   { opacity: 0; transform: translateX(60px); }
+            }
+            #aspect-error-toast.dismissing {
+                animation: toastSlideOut 0.3s ease forwards;
+            }
+        </style>
+        <div style="display:flex; align-items:flex-start; gap:12px;">
+            <!-- Warning Icon -->
+            <svg style="flex-shrink:0; margin-top:2px;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <div style="flex:1;">
+                <p style="margin:0 0 4px 0; font-weight:700; font-size:14px; color:#FCA5A5;">&#9888;&#65039; Aspect Extraction Failed</p>
+                <p id="aspect-error-msg" style="margin:0; font-size:13px; color:#94A3B8; line-height:1.5;">Gemini API error.</p>
+            </div>
+            <!-- Close Button -->
+            <button onclick="dismissToast()" style="
+                background:none; border:none; cursor:pointer;
+                color:#64748B; padding:0; line-height:1;
+                font-size:18px; flex-shrink:0;
+            " title="Close">&times;</button>
+        </div>
+        <!-- Auto-dismiss progress bar -->
+        <div style="margin-top:12px; height:3px; background:#334155; border-radius:2px; overflow:hidden;">
+            <div id="toast-progress" style="height:100%; background:#EF4444; width:100%; transition:width 5s linear;"></div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="dashboard-footer">
         <div class="container footer-container">
@@ -285,6 +339,21 @@
                             terminalOutput.appendChild(span);
                             terminalOutput.appendChild(document.createElement('br'));
                         } 
+                        else if (data.status === 'aspect_error') {
+                            // Show popup toast for Gemini API failure
+                            const toast = document.getElementById('aspect-error-toast');
+                            const msgEl = document.getElementById('aspect-error-msg');
+                            const progress = document.getElementById('toast-progress');
+                            if (toast && msgEl) {
+                                msgEl.textContent = data.message || 'Gemini API call failed.';
+                                toast.style.display = 'block';
+                                // Trigger progress bar animation
+                                setTimeout(() => { if (progress) progress.style.width = '0%'; }, 50);
+                                // Auto-dismiss after 5s
+                                setTimeout(() => dismissToast(), 5000);
+                            }
+                            // Pipeline continues — terminal still shows remaining steps
+                        }
                         else if (data.status === 'completed') {
                             // Close connection
                             eventSource.close();
@@ -338,6 +407,14 @@
                 if (resultsDiv) resultsDiv.style.display = 'block';
             }
         });
+
+        // Toast dismiss helper
+        function dismissToast() {
+            const toast = document.getElementById('aspect-error-toast');
+            if (!toast) return;
+            toast.classList.add('dismissing');
+            setTimeout(() => { toast.style.display = 'none'; toast.classList.remove('dismissing'); }, 300);
+        }
     </script>
 </body>
 </html>
