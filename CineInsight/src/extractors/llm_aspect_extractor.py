@@ -1,132 +1,343 @@
-﻿"""
+"""
 llm_aspect_extractor.py
 -----------------------
-LLM-based movie aspect extractor using Google Gemini API.
+Production-safe LLM aspect extractor using google-genai (google.genai) package.
 
-Switch between LLM and keyword extraction by changing USE_LLM_EXTRACTOR
-in main.py -- no changes needed here.
+Quota-efficient design:
+  - Character-limited batches (MAX_CHARS_PER_REQUEST) instead of fixed segment counts.
+  - Asks Gemini to return ONLY non-general segments, skipping filler/greetings.
+  - Assigns ["general"] locally by default; LLM output only overrides clear matches.
+  - Structured JSON output via response_mime_type + response_schema.
+  - Exponential backoff + jitter on 429 / 503 / transient errors.
+  - Falls back to keyword extractor if LLM cannot complete.
 
-Valid aspects: acting, plot, cgi, direction, music, dialogue, general
+Toggle: set USE_LLM_EXTRACTOR in main.py.
 """
 
-import os
 import json
+import logging
+import os
+import random
+import re
+import time
+from typing import Optional
 
 try:
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types as genai_types
+    _GENAI_AVAILABLE = True
 except ImportError:
-    genai = None
+    _GENAI_AVAILABLE = False
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
-# Gemini API Key -- same pattern as YOUTUBE_API_KEY in app.py
+# Configuration (overridable via environment variables)
 # ---------------------------------------------------------------------------
-GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+MODEL_NAME: str = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
 
-# Batch size: number of segments per single Gemini API call
-_BATCH_SIZE = 10
+VALID_ASPECTS = frozenset({
+    "acting", "plot", "cgi", "direction", "music", "dialogue", "general",
+})
+# Aspects the LLM is allowed to return (never ask it to return "general")
+_LLM_ASPECTS = frozenset(VALID_ASPECTS - {"general"})
 
-VALID_ASPECTS = {"acting", "plot", "cgi", "direction", "music", "dialogue", "general"}
+MAX_CHARS_PER_REQUEST: int = 7000
+MAX_RETRIES: int = 4
+BASE_BACKOFF_SECONDS: float = 3.0
+REQUEST_GAP_SECONDS: float = 2.5
+MAX_SEGMENT_CHARS: int = 1200
+
+# ---------------------------------------------------------------------------
+# Retryable error patterns (case-insensitive match on error string)
+# ---------------------------------------------------------------------------
+_RETRYABLE_PATTERNS = re.compile(
+    r"429|resource_exhausted|quota|rate.?limit|503|service.?unavailable"
+    r"|deadline.?exceeded|timeout|temporarily.?unavailable",
+    re.IGNORECASE,
+)
+
+# ---------------------------------------------------------------------------
+# Response schema for structured output
+# ---------------------------------------------------------------------------
+_RESPONSE_SCHEMA = {
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required": ["index", "aspects"],
+        "properties": {
+            "index": {"type": "integer"},
+            "aspects": {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "enum": sorted(_LLM_ASPECTS),
+                },
+            },
+        },
+    },
+}
 
 
-def _build_prompt(segments_batch: list) -> str:
-    """Build a single prompt for a batch of transcript segments."""
-    lines = []
-    for i, seg in enumerate(segments_batch):
-        text = seg.get("text", "").strip()
-        lines.append(f'Segment {i}: "{text}"')
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
 
-    segments_text = "\n".join(lines)
-
-    prompt = f"""You are a film review analyst. Classify each transcript segment below into one or more of these movie review aspects:
-- acting: mentions of actors, performances, cast
-- plot: story, script, narrative, writing
-- cgi: visual effects, animation, graphics, VFX
-- direction: director, filmmaking, cinematography, pacing
-- music: soundtrack, score, songs, background music
-- dialogue: spoken lines, conversations, script dialogue
-- general: anything that does not clearly fit any of the above
-
-For EACH segment, return a JSON object with the segment index and its aspects list.
-Return ONLY a valid JSON array, no markdown, no explanation.
-
-Example output:
-[
-  {{"index": 0, "aspects": ["acting"]}},
-  {{"index": 1, "aspects": ["plot", "dialogue"]}},
-  {{"index": 2, "aspects": ["general"]}}
-]
-
-Segments to classify:
-{segments_text}
-"""
-    return prompt
+def _clean_text(text) -> str:
+    """Normalize whitespace and safely cap to MAX_SEGMENT_CHARS."""
+    if not text:
+        return ""
+    text = " ".join(str(text).split())
+    return text[:MAX_SEGMENT_CHARS]
 
 
-def _parse_response(response_text: str, batch_size: int) -> list:
-    """Parse Gemini JSON response into a list of aspect lists."""
+def _make_batches(segments: list) -> list[list[dict]]:
+    """
+    Group segments into character-limited batches.
+    Stores original_index in each item so we can map results back.
+    Empty-text segments are excluded from batches (they get ["general"] by default).
+    Returns a list of batches; each batch is a list of dicts with
+    keys: original_index, text.
+    """
+    batches: list[list[dict]] = []
+    current_batch: list[dict] = []
+    current_chars: int = 0
+
+    for i, seg in enumerate(segments):
+        text = _clean_text(seg.get("text", ""))
+        if not text:
+            continue
+        row_len = len(str(i)) + 2 + len(text) + 1  # "N: text\n"
+        if current_batch and current_chars + row_len > MAX_CHARS_PER_REQUEST:
+            batches.append(current_batch)
+            current_batch = []
+            current_chars = 0
+        current_batch.append({"original_index": i, "text": text})
+        current_chars += row_len
+
+    if current_batch:
+        batches.append(current_batch)
+
+    return batches
+
+
+def _build_prompt(batch: list[dict]) -> str:
+    """
+    Concise prompt that instructs the model to return only clearly relevant segments.
+    """
+    rows = "\n".join(f'{item["original_index"]}: "{item["text"]}"' for item in batch)
+    allowed = ", ".join(sorted(_LLM_ASPECTS))
+    return (
+        f"You are a movie-review analyst. "
+        f"Classify each numbered transcript segment into one or more of these aspects: {allowed}.\n"
+        f"Rules:\n"
+        f"- Return ONLY segments with clearly relevant movie-review content.\n"
+        f"- Omit generic greetings, sponsor messages, filler, unrelated statements, and uncertain cases.\n"
+        f"- Use only the exact labels listed above.\n"
+        f"- Return a JSON array. Each entry: {{\"index\": <int>, \"aspects\": [<label>, ...]}}.\n"
+        f"- If no segment qualifies, return an empty array [].\n\n"
+        f"Segments:\n{rows}"
+    )
+
+
+def _is_retryable(error: Exception) -> bool:
+    return bool(_RETRYABLE_PATTERNS.search(str(error)))
+
+
+def _parse_response(
+    response_text: Optional[str],
+    valid_indices: set[int],
+) -> dict[int, list[str]]:
+    """
+    Parse Gemini JSON response into {original_index: [aspects]} dict.
+    Defensively handles markdown fences, malformed entries, invalid indices/aspects.
+    """
+    if not response_text:
+        return {}
+
     text = response_text.strip()
+
+    # Strip markdown code fences if present
     if text.startswith("```"):
-        text = text.split("```")[1]
+        parts = text.split("```")
+        text = parts[1] if len(parts) > 1 else text
         if text.startswith("json"):
             text = text[4:]
         text = text.strip()
 
-    parsed = json.loads(text)
+    # Locate outer JSON array
+    start = text.find("[")
+    end = text.rfind("]")
+    if start == -1 or end == -1 or end <= start:
+        return {}
+    text = text[start : end + 1]
 
-    aspect_map = {}
-    for item in parsed:
-        idx = item.get("index", -1)
-        aspects = item.get("aspects", ["general"])
-        valid = [a for a in aspects if a in VALID_ASPECTS]
-        aspect_map[idx] = valid if valid else ["general"]
+    try:
+        parsed = json.loads(text)
+    except json.JSONDecodeError:
+        logger.warning("LLM response JSON parse failed; treating as empty.")
+        return {}
 
-    return [aspect_map.get(i, ["general"]) for i in range(batch_size)]
+    if not isinstance(parsed, list):
+        return {}
 
+    result: dict[int, list[str]] = {}
+    for entry in parsed:
+        if not isinstance(entry, dict):
+            continue
+        idx = entry.get("index")
+        aspects_raw = entry.get("aspects", [])
+        if not isinstance(idx, int) or idx not in valid_indices:
+            continue
+        if not isinstance(aspects_raw, list):
+            continue
+        # Validate, strip "general" from LLM output, deduplicate
+        clean = list(dict.fromkeys(
+            a for a in aspects_raw
+            if isinstance(a, str) and a in _LLM_ASPECTS
+        ))
+        if clean:
+            result[idx] = clean
+
+    return result
+
+
+def _call_with_retry(
+    client,
+    prompt: str,
+    batch_num: int,
+    total_batches: int,
+) -> Optional[str]:
+    """Call Gemini with exponential backoff; returns response text or None on final failure."""
+    for attempt in range(MAX_RETRIES + 1):
+        try:
+            response = client.models.generate_content(
+                model=MODEL_NAME,
+                contents=prompt,
+                config=genai_types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    response_schema=_RESPONSE_SCHEMA,
+                    max_output_tokens=2048,
+                ),
+            )
+            logger.info(
+                "Batch %d/%d completed (attempt %d).",
+                batch_num, total_batches, attempt + 1,
+            )
+            return response.text if response and response.text else None
+
+        except Exception as e:
+            err_str = str(e)
+            if GEMINI_API_KEY and GEMINI_API_KEY in err_str:
+                err_str = err_str.replace(GEMINI_API_KEY, "[REDACTED]")
+
+            if _is_retryable(e):
+                if attempt < MAX_RETRIES:
+                    delay = BASE_BACKOFF_SECONDS * (2 ** attempt) + random.uniform(0, 1.5)
+                    logger.warning(
+                        "Batch %d/%d transient error (attempt %d/%d), retrying in %.1fs: %s",
+                        batch_num, total_batches, attempt + 1, MAX_RETRIES + 1,
+                        delay, err_str[:120],
+                    )
+                    time.sleep(delay)
+                    continue
+                logger.error(
+                    "Batch %d/%d quota/rate error after %d retries.",
+                    batch_num, total_batches, MAX_RETRIES + 1,
+                )
+                raise RuntimeError(
+                    f"Gemini quota or rate-limit error on batch {batch_num}/{total_batches}."
+                ) from e
+            else:
+                logger.error(
+                    "Batch %d/%d non-retryable error: %s",
+                    batch_num, total_batches, err_str[:200],
+                )
+                raise RuntimeError(
+                    f"Gemini API error on batch {batch_num}/{total_batches} (non-retryable)."
+                ) from e
+
+    return None  # Should not reach here
+
+
+# ---------------------------------------------------------------------------
+# Public function
+# ---------------------------------------------------------------------------
 
 def extract_aspects_from_segments_llm(transcript_segments: list) -> list:
     """
-    Classify transcript segments into movie aspects using Gemini LLM.
+    Classify transcript segments into movie aspects using Gemini.
 
     Args:
-        transcript_segments: list of segment dicts with keys:
-                             segment_id, start, end, text
+        transcript_segments: list of dicts with keys: segment_id, start, end, text
 
     Returns:
-        Same list with 'aspects' key added to each segment.
+        Shallow copies of each segment with "aspects" key added.
 
     Raises:
-        RuntimeError: if Gemini API is unavailable or the call fails.
-                      Caught in main.py to send SSE aspect_error event.
+        RuntimeError: only if the very first batch fails with no results at all.
+                      main.py catches this and falls back to keyword extraction.
     """
-    if genai is None:
+    if not _GENAI_AVAILABLE:
         raise RuntimeError(
-            "google-generativeai package is not installed. "
-            "Run: pip install google-generativeai"
+            "google-genai package is not installed. Run: pip install google-genai"
         )
 
     if not GEMINI_API_KEY:
         raise RuntimeError(
-            "GEMINI_API_KEY is not set. "
-            "Set it as an environment variable: $env:GEMINI_API_KEY='your_key'"
+            "GEMINI_API_KEY environment variable is not set."
         )
 
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-2.0-flash")
+    # Shallow copy all segments; pre-assign ["general"] to every one
+    output_segments = [dict(seg, aspects=["general"]) for seg in transcript_segments]
 
-    analyzed_segments = []
+    batches = _make_batches(transcript_segments)
+    if not batches:
+        logger.info("No text segments to classify via LLM; all assigned ['general'].")
+        return output_segments
 
-    for batch_start in range(0, len(transcript_segments), _BATCH_SIZE):
-        batch = transcript_segments[batch_start: batch_start + _BATCH_SIZE]
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    total_batches = len(batches)
+    logger.info("LLM aspect extraction: %d segments, %d batch(es).", len(transcript_segments), total_batches)
+
+    any_success = False
+    first_batch_error: Optional[Exception] = None
+
+    for batch_idx, batch in enumerate(batches):
+        batch_num = batch_idx + 1
+        valid_indices = {item["original_index"] for item in batch}
+        prompt = _build_prompt(batch)
 
         try:
-            prompt = _build_prompt(batch)
-            response = model.generate_content(prompt)
-            aspects_list = _parse_response(response.text, len(batch))
-        except Exception as e:
-            raise RuntimeError(f"Gemini API call failed: {e}") from e
+            response_text = _call_with_retry(client, prompt, batch_num, total_batches)
+            if response_text:
+                classifications = _parse_response(response_text, valid_indices)
+                for orig_idx, aspects in classifications.items():
+                    output_segments[orig_idx]["aspects"] = aspects
+                any_success = True
+            else:
+                logger.warning("Batch %d/%d returned empty response.", batch_num, total_batches)
 
-        for seg, aspects in zip(batch, aspects_list):
-            seg["aspects"] = aspects
-            analyzed_segments.append(seg)
+        except RuntimeError as e:
+            if batch_idx == 0 and not any_success:
+                first_batch_error = e
+                break
+            else:
+                err_str = str(e)
+                if GEMINI_API_KEY and GEMINI_API_KEY in err_str:
+                    err_str = err_str.replace(GEMINI_API_KEY, "[REDACTED]")
+                logger.warning(
+                    "Batch %d/%d failed after earlier batches succeeded; "
+                    "leaving those segments as ['general']. Error: %s",
+                    batch_num, total_batches, err_str[:120],
+                )
 
-    return analyzed_segments
+        # Gap between requests (skip after final batch)
+        if batch_num < total_batches:
+            time.sleep(REQUEST_GAP_SECONDS)
+
+    if not any_success and first_batch_error is not None:
+        raise first_batch_error
+
+    return output_segments

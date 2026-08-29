@@ -529,6 +529,29 @@ def api_analyze():
     return Response(stream_with_context(generate()), mimetype='text/event-stream')
 
 
+# ---------------------------------------------------------------------------
+# Debug — LLM Aspect Extraction Viewer
+# ---------------------------------------------------------------------------
+
+@app.route('/debug/aspect')
+def debug_aspect():
+    """Standalone debug UI to inspect the last LLM aspect extraction result."""
+    return render_template('debug_aspect.html')
+
+
+@app.route('/api/debug/aspect-data')
+def api_debug_aspect_data():
+    """Return the latest debug_aspect_trace.json written by the pipeline."""
+    trace_path = os.path.join(os.path.dirname(__file__), 'debug_aspect_trace.json')
+    if not os.path.exists(trace_path):
+        return jsonify({'error': 'No trace file found. Run an analysis first.'}), 404
+    try:
+        with open(trace_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': f'Could not read trace: {str(e)}'}), 500
+
 
 # ---------------------------------------------------------------------------
 # Profile & Admin Routes

@@ -287,6 +287,35 @@
         </div>
     </div>
 
+    <!-- Aspect Fallback Toast (amber) -->
+    <div id="aspect-fallback-toast" style="
+        display: none;
+        position: fixed;
+        top: 100px;
+        right: 24px;
+        z-index: 9998;
+        max-width: 420px;
+        background: #1E293B;
+        border: 1px solid #F59E0B;
+        border-left: 4px solid #F59E0B;
+        border-radius: 12px;
+        padding: 16px 20px;
+        box-shadow: 0 8px 32px rgba(245,158,11,0.2), 0 2px 8px rgba(0,0,0,0.4);
+        animation: toastSlideIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+        font-family: 'Inter', sans-serif;
+    ">
+        <div style="display:flex; align-items:flex-start; gap:12px;">
+            <svg style="flex-shrink:0; margin-top:2px;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <div style="flex:1;">
+                <p style="margin:0 0 4px 0; font-weight:700; font-size:13px; color:#FDE68A;">&#128296; Offline Extraction Active</p>
+                <p id="aspect-fallback-msg" style="margin:0; font-size:12px; color:#94A3B8; line-height:1.5;">Using offline keyword extraction.</p>
+            </div>
+            <button onclick="dismissFallbackToast()" style="background:none;border:none;cursor:pointer;color:#64748B;padding:0;font-size:18px;flex-shrink:0;" title="Close">&times;</button>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="dashboard-footer">
         <div class="container footer-container">
@@ -345,14 +374,24 @@
                             const msgEl = document.getElementById('aspect-error-msg');
                             const progress = document.getElementById('toast-progress');
                             if (toast && msgEl) {
-                                msgEl.textContent = data.message || 'Gemini API call failed.';
+                                msgEl.textContent = data.message || 'Gemini aspect extraction failed; offline extraction was used.';
                                 toast.style.display = 'block';
                                 // Trigger progress bar animation
                                 setTimeout(() => { if (progress) progress.style.width = '0%'; }, 50);
                                 // Auto-dismiss after 5s
                                 setTimeout(() => dismissToast(), 5000);
                             }
-                            // Pipeline continues — terminal still shows remaining steps
+                            // Pipeline continues with offline extraction
+                        }
+                        else if (data.status === 'aspect_fallback') {
+                            // Show informational amber toast: offline extraction was used
+                            const toast = document.getElementById('aspect-fallback-toast');
+                            const msgEl = document.getElementById('aspect-fallback-msg');
+                            if (toast && msgEl) {
+                                msgEl.textContent = data.message || 'Using offline keyword extraction.';
+                                toast.style.display = 'block';
+                                setTimeout(() => dismissFallbackToast(), 5000);
+                            }
                         }
                         else if (data.status === 'completed') {
                             // Close connection
@@ -408,12 +447,17 @@
             }
         });
 
-        // Toast dismiss helper
+        // Toast dismiss helpers
         function dismissToast() {
             const toast = document.getElementById('aspect-error-toast');
             if (!toast) return;
             toast.classList.add('dismissing');
             setTimeout(() => { toast.style.display = 'none'; toast.classList.remove('dismissing'); }, 300);
+        }
+        function dismissFallbackToast() {
+            const toast = document.getElementById('aspect-fallback-toast');
+            if (!toast) return;
+            toast.style.display = 'none';
         }
     </script>
 </body>

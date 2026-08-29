@@ -1,586 +1,441 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aspect Detection Debugger — CineInsight</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>LLM Aspect Extraction Debugger — CineInsight</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0b1120;
-            --bg-card: #1a2236;
-            --bg-card2: #0f1929;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
+            --bg: #080f1e;
+            --card: #111827;
+            --card2: #0d1625;
+            --border: #1e2d45;
+            --text: #f0f6ff;
+            --muted: #64748b;
             --accent: #6366f1;
             --accent-soft: rgba(99,102,241,0.15);
-            --success: #22c55e;
-            --success-soft: rgba(34,197,94,0.12);
-            --danger: #ef4444;
-            --danger-soft: rgba(239,68,68,0.12);
-            --warning: #f59e0b;
-            --warning-soft: rgba(245,158,11,0.12);
-            --border: #243047;
+            --green: #22c55e;
+            --green-soft: rgba(34,197,94,0.12);
+            --orange: #f97316;
+            --orange-soft: rgba(249,115,22,0.12);
+            --blue: #38bdf8;
+            --blue-soft: rgba(56,189,248,0.12);
+            --purple: #a78bfa;
+            --purple-soft: rgba(167,139,250,0.12);
+            --yellow: #fbbf24;
+            --yellow-soft: rgba(251,191,36,0.12);
+            --pink: #f472b6;
+            --pink-soft: rgba(244,114,182,0.12);
+            --slate: #94a3b8;
+            --slate-soft: rgba(148,163,184,0.10);
             --mono: 'JetBrains Mono', monospace;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-main);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* ── Top Bar ─────────────────────────────────── */
+        /* ── Topbar ── */
         .topbar {
-            background: var(--bg-card2);
+            background: var(--card2);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
+            padding: 0.9rem 2rem;
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-        .topbar-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
+        .logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1rem; color: var(--text); text-decoration: none; }
         .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: #E35614; }
-        .topbar-title { color: var(--text-muted); font-size: 0.9rem; margin-left: auto; }
-        .port-badge {
-            background: var(--accent-soft);
-            color: #a5b4fc;
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            border: 1px solid rgba(99,102,241,0.3);
+        .topbar-tag { background: var(--accent-soft); color: #a5b4fc; font-family: var(--mono); font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; }
+        .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 0.75rem; }
+        .btn-refresh {
+            background: var(--accent-soft); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 8px; padding: 0.4rem 1rem; font-size: 0.8rem; font-family: 'Inter', sans-serif;
+            cursor: pointer; transition: all 0.2s; font-weight: 600;
         }
+        .btn-refresh:hover { background: var(--accent); color: white; }
+        .mode-badge { font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; }
+        .mode-llm { background: var(--green-soft); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+        .mode-keyword { background: var(--yellow-soft); color: var(--yellow); border: 1px solid rgba(251,191,36,0.25); }
 
-        /* ── Main layout ─────────────────────────────── */
-        .main { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+        /* ── Layout ── */
+        .page { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
-        h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.3rem; }
-        .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
-
-        /* ── Input panel ─────────────────────────────── */
-        .input-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            display: flex;
+        /* ── Stats Bar ── */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 1rem;
-            align-items: flex-end;
-            flex-wrap: wrap;
-        }
-        .input-group { flex: 1; min-width: 260px; }
-        .input-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .input-group input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
-            font-family: var(--mono);
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-dark);
-            color: var(--text-main);
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .input-group input:focus { border-color: var(--accent); }
-        .input-group input::placeholder { color: #4a5568; }
-
-        .btn-run {
-            padding: 0.75rem 2rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border-radius: 8px;
-            border: none;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .btn-run:hover { opacity: 0.88; transform: translateY(-1px); }
-        .btn-run:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; transform: none; }
-
-        .btn-load-last {
-            padding: 0.75rem 1.5rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background: transparent;
-            color: #94a3b8;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .btn-load-last:hover { border-color: var(--accent); color: #a5b4fc; }
-        .btn-load-last:disabled { opacity: 0.4; cursor: not-allowed; }
-
-        /* ── Terminal loader ─────────────────────────── */
-        #loader {
-            display: none;
-            background: var(--bg-card2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
             margin-bottom: 2rem;
-            font-family: var(--mono);
-            font-size: 0.875rem;
         }
-        .loader-header { display: flex; gap: 6px; margin-bottom: 1rem; }
-        .loader-dot { width: 12px; height: 12px; border-radius: 50%; }
-        #loader-text { color: #10B981; line-height: 1.9; }
-
-        /* ── Stats bar ───────────────────────────────── */
-        #stats-bar {
-            display: none;
-            background: var(--bg-card);
+        .stat-card {
+            background: var(--card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 1.5rem;
-            display: none;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            align-items: center;
+            padding: 1rem 1.25rem;
         }
-        .stat-chip {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.9rem;
-        }
-        .stat-num { font-weight: 700; font-size: 1.1rem; }
-        .stat-label { color: var(--text-muted); font-size: 0.8rem; }
-        .aspect-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-left: auto; }
-        .aspect-chip {
-            padding: 0.2rem 0.6rem;
-            border-radius: 99px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: var(--accent-soft);
-            color: #a5b4fc;
-            border: 1px solid rgba(99,102,241,0.25);
-        }
+        .stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+        .stat-value { font-size: 1.6rem; font-weight: 800; font-family: var(--mono); }
 
-        /* ── Filter bar ──────────────────────────────── */
-        #filter-bar {
-            display: none;
+        /* ── Aspect Filter Bar ── */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
+            align-items: center;
         }
+        .filter-label { font-size: 0.75rem; color: var(--muted); margin-right: 0.25rem; }
         .filter-btn {
-            padding: 0.45rem 1.1rem;
-            border-radius: 99px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 0.83rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s;
+            border: none; border-radius: 20px; padding: 0.3rem 0.9rem;
+            font-size: 0.75rem; font-weight: 600; cursor: pointer;
+            transition: all 0.2s; font-family: 'Inter', sans-serif;
         }
-        .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }
-        .filter-btn:hover:not(.active) { border-color: var(--accent); color: #a5b4fc; }
+        .filter-btn.active { transform: scale(1.05); }
 
-        /* ── Segment cards ───────────────────────────── */
-        #results { display: grid; gap: 1rem; }
+        /* ── Search Box ── */
+        .search-box {
+            margin-left: auto;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 8px; padding: 0.4rem 0.8rem;
+            color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.8rem;
+            width: 220px; outline: none;
+        }
+        .search-box:focus { border-color: var(--accent); }
+
+        /* ── Segments Grid ── */
+        .segments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 0.9rem;
+        }
 
         .seg-card {
-            background: var(--bg-card);
+            background: var(--card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            border-left: 5px solid var(--border);
-            overflow: hidden;
-            transition: box-shadow 0.2s;
+            padding: 1rem 1.2rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            animation: fadeIn 0.3s ease;
         }
-        .seg-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
-        .seg-card.detected { border-left-color: var(--success); }
-        .seg-card.general { border-left-color: var(--danger); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .seg-card:hover { border-color: #2d4060; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .seg-card.is-general { opacity: 0.55; }
+        .seg-card.is-general:hover { opacity: 1; }
 
         .seg-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 0.85rem 1.25rem;
-            cursor: pointer;
-            user-select: none;
+            gap: 0.5rem;
+            margin-bottom: 0.65rem;
         }
-        .seg-id {
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            min-width: 70px;
-        }
-        .seg-time {
-            font-family: var(--mono);
-            font-size: 0.78rem;
-            color: #64748b;
-            white-space: nowrap;
-        }
-        .seg-text {
-            flex: 1;
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
-        .seg-aspects { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-        .asp-badge {
-            padding: 0.18rem 0.55rem;
-            border-radius: 4px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .asp-badge.detected-asp { background: var(--success-soft); color: var(--success); border: 1px solid rgba(34,197,94,0.25); }
-        .asp-badge.general-asp { background: var(--danger-soft); color: var(--danger); border: 1px solid rgba(239,68,68,0.25); }
-        .expand-icon { color: var(--text-muted); font-size: 0.8rem; transition: transform 0.2s; }
-        .seg-card.open .expand-icon { transform: rotate(180deg); }
+        .seg-id { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
+        .seg-time { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); background: var(--accent-soft); padding: 0.1rem 0.4rem; border-radius: 4px; }
+        .seg-text { font-size: 0.82rem; color: #cbd5e1; line-height: 1.55; margin-bottom: 0.75rem; }
 
-        /* ── Keyword breakdown table ─────────────────── */
-        .seg-body {
-            display: none;
-            padding: 0 1.25rem 1.25rem;
-            border-top: 1px solid var(--border);
+        .aspect-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .badge {
+            font-size: 0.68rem; font-weight: 700; padding: 0.2rem 0.55rem;
+            border-radius: 20px; text-transform: uppercase; letter-spacing: 0.06em;
         }
-        .seg-card.open .seg-body { display: block; }
-        .kw-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.83rem; }
-        .kw-table th {
-            text-align: left;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0.4rem 0.7rem;
-            border-bottom: 1px solid var(--border);
+        .badge-acting   { background: var(--blue-soft);   color: var(--blue);   }
+        .badge-plot     { background: var(--green-soft);  color: var(--green);  }
+        .badge-cgi      { background: var(--purple-soft); color: var(--purple); }
+        .badge-direction{ background: var(--orange-soft); color: var(--orange); }
+        .badge-music    { background: var(--pink-soft);   color: var(--pink);   }
+        .badge-dialogue { background: var(--yellow-soft); color: var(--yellow); }
+        .badge-general  { background: var(--slate-soft);  color: var(--slate);  }
+
+        /* ── Aspect Legend Bar ── */
+        .legend {
+            display: flex; flex-wrap: wrap; gap: 0.6rem;
+            margin-bottom: 1.5rem;
         }
-        .kw-table td { padding: 0.4rem 0.7rem; border-bottom: 1px solid rgba(36,48,71,0.5); }
-        .kw-table tr:last-child td { border-bottom: none; }
-        .aspect-name-cell { font-weight: 600; color: #cbd5e1; text-transform: capitalize; }
-        .kw-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-        .kw-pill {
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            font-family: var(--mono);
-            font-size: 0.75rem;
+        .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--muted); }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+        /* ── Source URL strip ── */
+        .url-strip {
+            background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+            padding: 0.7rem 1.1rem; margin-bottom: 1.5rem;
+            font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 0.6rem;
+            font-family: var(--mono); word-break: break-all;
         }
-        .kw-pill.hit { background: var(--success-soft); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
-        .kw-pill.miss { background: rgba(0,0,0,0.2); color: #475569; border: 1px solid #1e2d3d; }
-        .verbatim-box {
-            margin-top: 0.75rem;
-            background: var(--bg-dark);
-            border-radius: 6px;
-            padding: 0.6rem 0.9rem;
-            font-family: var(--mono);
-            font-size: 0.82rem;
-            color: #a7f3d0;
-            border: 1px solid #0d2618;
+        .url-label { color: var(--accent); flex-shrink: 0; font-weight: 600; font-family: 'Inter', sans-serif; }
+
+        /* ── Empty / Error states ── */
+        .state-box {
+            text-align: center; padding: 4rem 2rem;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px;
         }
+        .state-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .state-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .state-sub { font-size: 0.85rem; color: var(--muted); }
+
+        /* ── Aspect donut chart ── */
+        .chart-section {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .chart-title { font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+        .aspect-bars { display: flex; flex-direction: column; gap: 0.6rem; }
+        .aspect-bar-row { display: flex; align-items: center; gap: 0.75rem; }
+        .aspect-bar-label { width: 80px; font-size: 0.75rem; font-weight: 600; text-transform: capitalize; }
+        .aspect-bar-track { flex: 1; background: var(--border); border-radius: 4px; height: 8px; overflow: hidden; }
+        .aspect-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+        .aspect-bar-count { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); width: 28px; text-align: right; }
+
+        .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.6s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<!-- Top bar -->
-<div class="topbar">
-    <div class="topbar-logo">
-        <div class="logo-dot"></div>
+<nav class="topbar">
+    <a href="/" class="logo">
+        <span class="logo-dot"></span>
         CineInsight
+    </a>
+    <span class="topbar-tag">LLM Aspect Debugger</span>
+    <div class="topbar-right">
+        <span id="mode-badge" class="mode-badge" style="display:none;"></span>
+        <button class="btn-refresh" onclick="loadData()">↺ Refresh</button>
     </div>
-    <span style="color:#475569; font-size:0.85rem;">/ Aspect Detection Debugger</span>
-    <span class="topbar-title">debug tool</span>
-    <span class="port-badge">:5002</span>
-</div>
+</nav>
 
-<div class="main">
-    <h1>🔬 Aspect Detection Debugger</h1>
-    <p class="subtitle">
-        Paste a YouTube movie review URL below. The tool will download, transcribe via Whisper,
-        then show exactly which keywords matched (or didn't) in every segment.
-    </p>
+<div class="page">
 
-    <!-- Input panel -->
-    <div class="input-panel">
-        <div class="input-group">
-            <label>YouTube Review URL</label>
-            <input type="text" id="urlInput" placeholder="https://youtu.be/..." />
+    <!-- Loading state -->
+    <div id="state-loading" class="state-box">
+        <div class="spinner" style="margin: 0 auto 1rem;"></div>
+        <div class="state-title">Loading extraction data...</div>
+        <div class="state-sub">Fetching the latest debug_aspect_trace.json</div>
+    </div>
+
+    <!-- Error state -->
+    <div id="state-error" class="state-box" style="display:none;">
+        <div class="state-icon">⚠️</div>
+        <div class="state-title" id="error-title">No data found</div>
+        <div class="state-sub" id="error-sub">Run an analysis first via the main app, then refresh.</div>
+    </div>
+
+    <!-- Main content (hidden until data loaded) -->
+    <div id="main-content" style="display:none;">
+
+        <!-- Source URL -->
+        <div class="url-strip">
+            <span class="url-label">Source URL</span>
+            <span id="trace-url">—</span>
         </div>
-        <button class="btn-run" id="runBtn" onclick="runDebug()">▶ Run Debug</button>
-        <button class="btn-load-last" id="loadLastBtn" onclick="loadLastTrace()" title="Load trace from last main-app analysis">
-            📂 Load Last Analysis
-        </button>
-    </div>
 
-    <!-- Terminal loader -->
-    <div id="loader">
-        <div class="loader-header">
-            <div class="loader-dot" style="background:#ef4444;"></div>
-            <div class="loader-dot" style="background:#f59e0b;"></div>
-            <div class="loader-dot" style="background:#22c55e;"></div>
+        <!-- Stats -->
+        <div class="stats-bar" id="stats-bar"></div>
+
+        <!-- Aspect distribution bar chart -->
+        <div class="chart-section">
+            <div class="chart-title">Aspect Distribution</div>
+            <div class="aspect-bars" id="aspect-bars"></div>
         </div>
-        <div id="loader-text"></div>
+
+        <!-- Legend + Filters -->
+        <div class="legend" id="legend"></div>
+
+        <div class="filter-bar">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-btn active" id="filter-all" onclick="setFilter('all')"
+                style="background:#1e2d45; color:#94a3b8; border:1px solid #2d4060;">All</button>
+            <button class="filter-btn" id="filter-acting" onclick="setFilter('acting')"
+                style="background:var(--blue-soft); color:var(--blue); border:1px solid rgba(56,189,248,0.3);">Acting</button>
+            <button class="filter-btn" id="filter-plot" onclick="setFilter('plot')"
+                style="background:var(--green-soft); color:var(--green); border:1px solid rgba(34,197,94,0.3);">Plot</button>
+            <button class="filter-btn" id="filter-cgi" onclick="setFilter('cgi')"
+                style="background:var(--purple-soft); color:var(--purple); border:1px solid rgba(167,139,250,0.3);">CGI</button>
+            <button class="filter-btn" id="filter-direction" onclick="setFilter('direction')"
+                style="background:var(--orange-soft); color:var(--orange); border:1px solid rgba(249,115,22,0.3);">Direction</button>
+            <button class="filter-btn" id="filter-music" onclick="setFilter('music')"
+                style="background:var(--pink-soft); color:var(--pink); border:1px solid rgba(244,114,182,0.3);">Music</button>
+            <button class="filter-btn" id="filter-dialogue" onclick="setFilter('dialogue')"
+                style="background:var(--yellow-soft); color:var(--yellow); border:1px solid rgba(251,191,36,0.3);">Dialogue</button>
+            <button class="filter-btn" id="filter-general" onclick="setFilter('general')"
+                style="background:var(--slate-soft); color:var(--slate); border:1px solid rgba(148,163,184,0.25);">General</button>
+            <input class="search-box" id="search-box" type="text" placeholder="Search segment text..." oninput="renderSegments()">
+        </div>
+
+        <!-- Segments grid -->
+        <div class="segments-grid" id="segments-grid"></div>
+
+        <!-- Empty filter result -->
+        <div id="state-empty-filter" class="state-box" style="display:none; margin-top:1rem;">
+            <div class="state-icon">🔍</div>
+            <div class="state-title">No segments match</div>
+            <div class="state-sub">Try a different filter or search term.</div>
+        </div>
+
     </div>
-
-    <!-- Stats bar -->
-    <div id="stats-bar"></div>
-
-    <!-- Filter bar -->
-    <div id="filter-bar">
-        <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">Show All</button>
-        <button class="filter-btn" data-filter="detected" onclick="applyFilter('detected', this)">✅ Detected Only</button>
-        <button class="filter-btn" data-filter="general" onclick="applyFilter('general', this)">🔴 General Only</button>
-    </div>
-
-    <!-- Results -->
-    <div id="results"></div>
 </div>
 
 <script>
+    const ASPECT_COLORS = {
+        acting:    { color: '#38bdf8', bg: 'var(--blue-soft)',    bar: '#38bdf8' },
+        plot:      { color: '#22c55e', bg: 'var(--green-soft)',   bar: '#22c55e' },
+        cgi:       { color: '#a78bfa', bg: 'var(--purple-soft)',  bar: '#a78bfa' },
+        direction: { color: '#f97316', bg: 'var(--orange-soft)',  bar: '#f97316' },
+        music:     { color: '#f472b6', bg: 'var(--pink-soft)',    bar: '#f472b6' },
+        dialogue:  { color: '#fbbf24', bg: 'var(--yellow-soft)',  bar: '#fbbf24' },
+        general:   { color: '#94a3b8', bg: 'var(--slate-soft)',   bar: '#94a3b8' },
+    };
+
     let allSegments = [];
-    let aspectsDict = {};
-    let loaderInterval = null;
+    let activeFilter = 'all';
 
-    function renderResults(data) {
+    function fmtTime(s) {
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return `${m}:${sec.toString().padStart(2,'0')}`;
+    }
+
+    async function loadData() {
+        document.getElementById('state-loading').style.display = 'block';
+        document.getElementById('state-error').style.display = 'none';
+        document.getElementById('main-content').style.display = 'none';
+
+        try {
+            const res = await fetch('/api/debug/aspect-data');
+            const data = await res.json();
+
+            if (data.error) {
+                showError(data.error, 'Run an analysis first, then refresh this page.');
+                return;
+            }
+
+            renderAll(data);
+        } catch (e) {
+            showError('Failed to fetch trace data', e.message);
+        }
+    }
+
+    function showError(title, sub) {
+        document.getElementById('state-loading').style.display = 'none';
+        document.getElementById('state-error').style.display = 'block';
+        document.getElementById('error-title').textContent = title;
+        document.getElementById('error-sub').textContent = sub || '';
+    }
+
+    function renderAll(data) {
+        document.getElementById('state-loading').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+
+        allSegments = data.segments || [];
+
+        // URL strip
+        document.getElementById('trace-url').textContent = data.url || '—';
+
+        // Mode badge
+        const badge = document.getElementById('mode-badge');
+        const isLLM = allSegments.some(s => !s.keyword_hits || Object.keys(s.keyword_hits || {}).length === 0 || s.aspects.some(a => a !== 'general' && !(s.keyword_hits || {})[a]));
+        badge.textContent = isLLM ? 'LLM Mode' : 'Keyword Mode';
+        badge.className = 'mode-badge ' + (isLLM ? 'mode-llm' : 'mode-keyword');
+        badge.style.display = 'inline-block';
+
+        // Stats
+        const total = data.total_segments || 0;
+        const detected = data.detected_count || 0;
+        const general = data.general_count || 0;
+        const aspectCounts = data.aspect_counts || {};
+
         const statsBar = document.getElementById('stats-bar');
-        const filterBar = document.getElementById('filter-bar');
-
-        allSegments = data.segments;
-        aspectsDict = data.aspects_dict;
-
-        const aspectChips = Object.entries(data.aspect_counts)
-            .filter(([, c]) => c > 0)
-            .map(([a, c]) => `<span class="aspect-chip">${a}: ${c}</span>`)
-            .join('');
-
-        const urlInfo = data.url ? `<span style="font-family:var(--mono);font-size:0.75rem;color:#475569;">${data.url.slice(0, 60)}${data.url.length > 60 ? '...' : ''}</span>` : '';
-
         statsBar.innerHTML = `
-            <div class="stat-chip">
-                <span class="stat-num">${data.total_segments}</span>
-                <span class="stat-label">total segments</span>
-            </div>
-            <div class="stat-chip" style="color:var(--success);">
-                <span class="stat-num" style="color:var(--success);">${data.detected_count}</span>
-                <span class="stat-label">aspect detected</span>
-            </div>
-            <div class="stat-chip" style="color:var(--danger);">
-                <span class="stat-num" style="color:var(--danger);">${data.general_count}</span>
-                <span class="stat-label">general (no match)</span>
-            </div>
-            ${urlInfo}
-            <div class="aspect-chips">${aspectChips || '<span style="color:#475569;font-size:0.8rem;">no aspects detected</span>'}</div>
+            <div class="stat-card"><div class="stat-label">Total Segments</div><div class="stat-value" style="color:#6366f1;">${total}</div></div>
+            <div class="stat-card"><div class="stat-label">Classified</div><div class="stat-value" style="color:#22c55e;">${detected}</div></div>
+            <div class="stat-card"><div class="stat-label">General</div><div class="stat-value" style="color:#64748b;">${general}</div></div>
+            <div class="stat-card"><div class="stat-label">Hit Rate</div><div class="stat-value" style="color:#f97316;">${total ? Math.round((detected/total)*100) : 0}%</div></div>
         `;
-        statsBar.style.display = 'flex';
 
-        filterBar.style.display = 'flex';
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-filter="all"]').classList.add('active');
-
-        renderSegments(allSegments);
-    }
-
-    const loaderMessages = [
-        '> Downloading video via yt-dlp...',
-        '> Extracting 16kHz mono WAV via FFmpeg...',
-        '> Loading Whisper base model (CPU)...',
-        '> Transcribing audio segments (VAD filter active)...',
-        '> Running aspect keyword detection...',
-        '> Building debug trace...',
-    ];
-
-    function startLoaderAnimation() {
-        const el = document.getElementById('loader-text');
-        let i = 0;
-        el.innerHTML = '';
-        loaderInterval = setInterval(() => {
-            if (i < loaderMessages.length) {
-                el.innerHTML += loaderMessages[i] + '<br>';
-                i++;
-            }
-        }, 3500);
-    }
-
-    function stopLoaderAnimation() {
-        if (loaderInterval) { clearInterval(loaderInterval); loaderInterval = null; }
-    }
-
-    async function loadLastTrace() {
-        const loadLastBtn = document.getElementById('loadLastBtn');
-        const loader = document.getElementById('loader');
-        const statsBar = document.getElementById('stats-bar');
-        const filterBar = document.getElementById('filter-bar');
-        const results = document.getElementById('results');
-
-        loadLastBtn.disabled = true;
-        loader.style.display = 'block';
-        document.getElementById('loader-text').innerHTML = '> Loading saved trace from last main-app analysis...';
-        statsBar.style.display = 'none';
-        filterBar.style.display = 'none';
-        results.innerHTML = '';
-
-        try {
-            const res = await fetch('/api/load-last-trace');
-            const data = await res.json();
-            loader.style.display = 'none';
-
-            if (data.error) {
-                results.innerHTML = `<div style="background:#1a1a2e;border:1px solid #ef4444;border-radius:10px;padding:1.5rem;color:#ef4444;font-family:var(--mono);">[ERROR] ${data.error}</div>`;
-                return;
-            }
-
-            // Pre-fill the URL input for reference
-            if (data.url) document.getElementById('urlInput').value = data.url;
-
-            renderResults(data);
-        } catch (err) {
-            loader.style.display = 'none';
-            results.innerHTML = `<div style="color:var(--danger); padding:2rem;">[ERROR] ${err.message}</div>`;
-        } finally {
-            loadLastBtn.disabled = false;
-        }
-    }
-
-    async function runDebug() {
-        const url = document.getElementById('urlInput').value.trim();
-        if (!url) { alert('Please enter a YouTube URL.'); return; }
-
-        const runBtn = document.getElementById('runBtn');
-        const loader = document.getElementById('loader');
-        const statsBar = document.getElementById('stats-bar');
-        const filterBar = document.getElementById('filter-bar');
-        const results = document.getElementById('results');
-
-        runBtn.disabled = true;
-        loader.style.display = 'block';
-        statsBar.style.display = 'none';
-        filterBar.style.display = 'none';
-        results.innerHTML = '';
-        allSegments = [];
-        startLoaderAnimation();
-
-        try {
-            const res = await fetch(`/api/run-aspect-debug?url=${encodeURIComponent(url)}`);
-            const data = await res.json();
-
-            stopLoaderAnimation();
-            loader.style.display = 'none';
-
-            if (data.error) {
-                results.innerHTML = `<div style="color:var(--danger); padding:2rem; font-family:var(--mono);">[ERROR] ${data.error}</div>`;
-                return;
-            }
-
-            renderResults(data);
-
-        } catch (err) {
-            stopLoaderAnimation();
-            loader.style.display = 'none';
-            results.innerHTML = `<div style="color:var(--danger); padding:2rem; font-family:var(--mono);">[ERROR] Could not connect: ${err.message}</div>`;
-        } finally {
-            runBtn.disabled = false;
-        }
-    }
-
-    function renderSegments(segments) {
-        const results = document.getElementById('results');
-        results.innerHTML = '';
-
-        if (segments.length === 0) {
-            results.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:3rem 0;">No segments match this filter.</p>';
-            return;
-        }
-
-        segments.forEach((seg, idx) => {
-            const card = document.createElement('div');
-            card.className = `seg-card ${seg.is_general ? 'general' : 'detected'}`;
-            card.dataset.idx = idx;
-
-            const aspectBadges = seg.aspects.map(a =>
-                `<span class="asp-badge ${a === 'general' ? 'general-asp' : 'detected-asp'}">${a}</span>`
-            ).join('');
-
-            // Build keyword breakdown table rows
-            let tableRows = '';
-            for (const [aspect, kwMap] of Object.entries(seg.keyword_hits)) {
-                const pills = Object.entries(kwMap).map(([kw, hit]) =>
-                    `<span class="kw-pill ${hit ? 'hit' : 'miss'}">${hit ? '✓ ' : ''}${kw}</span>`
-                ).join('');
-                tableRows += `
-                    <tr>
-                        <td class="aspect-name-cell">${aspect}</td>
-                        <td><div class="kw-pills">${pills}</div></td>
-                    </tr>`;
-            }
-
-            card.innerHTML = `
-                <div class="seg-header" onclick="toggleCard(this)">
-                    <span class="seg-id">${seg.segment_id}</span>
-                    <span class="seg-time">[${seg.start}s → ${seg.end}s]</span>
-                    <span class="seg-text">${escapeHtml(seg.text)}</span>
-                    <div class="seg-aspects">${aspectBadges}</div>
-                    <span class="expand-icon">▼</span>
-                </div>
-                <div class="seg-body">
-                    <div class="verbatim-box">${escapeHtml(seg.text_lower)}</div>
-                    <table class="kw-table">
-                        <thead>
-                            <tr>
-                                <th style="width:120px;">Aspect</th>
-                                <th>Keywords Checked (✓ = hit, grey = miss)</th>
-                            </tr>
-                        </thead>
-                        <tbody>${tableRows}</tbody>
-                    </table>
+        // Aspect distribution bars
+        const barsEl = document.getElementById('aspect-bars');
+        const aspects = ['acting','plot','cgi','direction','music','dialogue'];
+        const maxCount = Math.max(...aspects.map(a => aspectCounts[a] || 0), 1);
+        barsEl.innerHTML = aspects.map(a => {
+            const cnt = aspectCounts[a] || 0;
+            const w = Math.round((cnt / maxCount) * 100);
+            const c = ASPECT_COLORS[a];
+            return `
+                <div class="aspect-bar-row">
+                    <span class="aspect-bar-label" style="color:${c.color}">${a}</span>
+                    <div class="aspect-bar-track">
+                        <div class="aspect-bar-fill" style="width:${w}%; background:${c.bar};"></div>
+                    </div>
+                    <span class="aspect-bar-count">${cnt}</span>
                 </div>
             `;
-            results.appendChild(card);
-        });
+        }).join('');
+
+        // Legend
+        document.getElementById('legend').innerHTML = Object.entries(ASPECT_COLORS).map(([a, c]) =>
+            `<div class="legend-item"><div class="legend-dot" style="background:${c.bar};"></div><span>${a}</span></div>`
+        ).join('');
+
+        renderSegments();
     }
 
-    function toggleCard(header) {
-        const card = header.closest('.seg-card');
-        card.classList.toggle('open');
-    }
-
-    function applyFilter(filter, btn) {
+    function setFilter(f) {
+        activeFilter = f;
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        let filtered = allSegments;
-        if (filter === 'detected') filtered = allSegments.filter(s => !s.is_general);
-        if (filter === 'general')  filtered = allSegments.filter(s => s.is_general);
-        renderSegments(filtered);
+        const btn = document.getElementById('filter-' + f);
+        if (btn) btn.classList.add('active');
+        renderSegments();
     }
 
-    function escapeHtml(str) {
-        return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
+    function renderSegments() {
+        const q = (document.getElementById('search-box').value || '').toLowerCase();
+        let segs = allSegments;
+
+        if (activeFilter !== 'all') {
+            segs = segs.filter(s => s.aspects && s.aspects.includes(activeFilter));
+        }
+        if (q) {
+            segs = segs.filter(s => (s.text || '').toLowerCase().includes(q));
+        }
+
+        const grid = document.getElementById('segments-grid');
+        const emptyEl = document.getElementById('state-empty-filter');
+
+        if (!segs.length) {
+            grid.innerHTML = '';
+            emptyEl.style.display = 'block';
+            return;
+        }
+        emptyEl.style.display = 'none';
+
+        grid.innerHTML = segs.map(seg => {
+            const aspects = seg.aspects || ['general'];
+            const isGeneral = aspects.length === 1 && aspects[0] === 'general';
+            const badges = aspects.map(a =>
+                `<span class="badge badge-${a}">${a}</span>`
+            ).join('');
+            const timeStr = (seg.start !== undefined && seg.end !== undefined)
+                ? `${fmtTime(seg.start)} – ${fmtTime(seg.end)}`
+                : '';
+            return `
+                <div class="seg-card ${isGeneral ? 'is-general' : ''}">
+                    <div class="seg-header">
+                        <span class="seg-id">#${seg.segment_id ?? '?'}</span>
+                        ${timeStr ? `<span class="seg-time">${timeStr}</span>` : ''}
+                    </div>
+                    <div class="seg-text">${escHtml(seg.text || '')}</div>
+                    <div class="aspect-badges">${badges}</div>
+                </div>
+            `;
+        }).join('');
     }
 
-    // Allow pressing Enter to run
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('urlInput').addEventListener('keydown', e => {
-            if (e.key === 'Enter') runDebug();
-        });
-    });
+    function escHtml(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    loadData();
 </script>
 </body>
 </html>

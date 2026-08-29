@@ -1,8 +1,8 @@
 {
   "url": "https://www.youtube.com/watch?v=gxsccoJSP9A",
-  "total_segments": 102,
+  "total_segments": 55,
   "detected_count": 7,
-  "general_count": 95,
+  "general_count": 48,
   "aspect_counts": {
     "acting": 5,
     "plot": 2,
@@ -63,9 +63,9 @@
     {
       "segment_id": "seg_0000",
       "start": 0.0,
-      "end": 5.44,
-      "text": "Spider-Man's back in a fourth film, finally, technically speaking, Toby.",
-      "text_lower": "spider-man's back in a fourth film, finally, technically speaking, toby.",
+      "end": 14.0,
+      "text": "Spider-Man's back in a fourth film, finally. Technically speaking, Toby. Peter too was in Spider-Man no way home, and that was a fourth appearance, but he was still a guest in another Spider-Man's movie, to be honest and fair.",
+      "text_lower": "spider-man's back in a fourth film, finally. technically speaking, toby. peter too was in spider-man no way home, and that was a fourth appearance, but he was still a guest in another spider-man's movie, to be honest and fair.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -121,10 +121,10 @@
     },
     {
       "segment_id": "seg_0001",
-      "start": 5.44,
-      "end": 10.94,
-      "text": "Peter too was in Spider-Man no way home, and that was a fourth appearance, but he was still",
-      "text_lower": "peter too was in spider-man no way home, and that was a fourth appearance, but he was still",
+      "start": 14.0,
+      "end": 20.0,
+      "text": "But Tom Holland Spider-Man's back for a brand new day in a brand new day, it is indeed a brand new day, so let's talk about it.",
+      "text_lower": "but tom holland spider-man's back for a brand new day in a brand new day, it is indeed a brand new day, so let's talk about it.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -180,10 +180,10 @@
     },
     {
       "segment_id": "seg_0002",
-      "start": 10.94,
-      "end": 14.08,
-      "text": "a guest in another Spider-Man's movie, to be honest and fair.",
-      "text_lower": "a guest in another spider-man's movie, to be honest and fair.",
+      "start": 20.0,
+      "end": 35.23,
+      "text": "So Spider-Man brand new day is a new Spider-Man in the Tom Holland Spider-Man continuity, and it does feel like a brand new day, the previous films feel like a very linked trilogy.",
+      "text_lower": "so spider-man brand new day is a new spider-man in the tom holland spider-man continuity, and it does feel like a brand new day, the previous films feel like a very linked trilogy.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -239,10 +239,10 @@
     },
     {
       "segment_id": "seg_0003",
-      "start": 14.08,
-      "end": 18.24,
-      "text": "But Tom Holland's Spider-Man's back for a brand new day in a brand new day, it is indeed",
-      "text_lower": "but tom holland's spider-man's back for a brand new day in a brand new day, it is indeed",
+      "start": 35.23,
+      "end": 43.23,
+      "text": "A trilogy prequel that existed to make Spider-Man Spider-Man in Manhattan. To make him Spider-Man as we know him, and now here we are.",
+      "text_lower": "a trilogy prequel that existed to make spider-man spider-man in manhattan. to make him spider-man as we know him, and now here we are.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -298,10 +298,10 @@
     },
     {
       "segment_id": "seg_0004",
-      "start": 18.24,
-      "end": 20.44,
-      "text": "a brand new day, so let's talk about it.",
-      "text_lower": "a brand new day, so let's talk about it.",
+      "start": 43.23,
+      "end": 50.23,
+      "text": "It's been a couple years since Dr. Strange and Peter Parker collaborated to brainwash the entire world into forgetting Peter Parker.",
+      "text_lower": "it's been a couple years since dr. strange and peter parker collaborated to brainwash the entire world into forgetting peter parker.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -357,10 +357,10 @@
     },
     {
       "segment_id": "seg_0005",
-      "start": 20.44,
-      "end": 30.51,
-      "text": "So Spider-Man brand new day is a new Spider-Man in the Tom Holland's Spider-Man continuity,",
-      "text_lower": "so spider-man brand new day is a new spider-man in the tom holland's spider-man continuity,",
+      "start": 50.23,
+      "end": 59.23,
+      "text": "Doesn't mean he's not still pining for his friends now though, and he's having some stuff going on with his powers, this movie really does capitalize the word Spider and Man.",
+      "text_lower": "doesn't mean he's not still pining for his friends now though, and he's having some stuff going on with his powers, this movie really does capitalize the word spider and man.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -416,10 +416,10 @@
     },
     {
       "segment_id": "seg_0006",
-      "start": 30.51,
-      "end": 32.43,
-      "text": "and it does feel like a brand new day.",
-      "text_lower": "and it does feel like a brand new day.",
+      "start": 59.23,
+      "end": 68.23,
+      "text": "Spider because his powers are going on in the fritz because of his emotional state. Man because everyone thinks he's fine, but he's just suffering the emotional weight in silence.",
+      "text_lower": "spider because his powers are going on in the fritz because of his emotional state. man because everyone thinks he's fine, but he's just suffering the emotional weight in silence.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -475,10 +475,10 @@
     },
     {
       "segment_id": "seg_0007",
-      "start": 32.43,
-      "end": 38.11,
-      "text": "The previous films feel like a very linked trilogy, a trilogy prequel that existed to make",
-      "text_lower": "the previous films feel like a very linked trilogy, a trilogy prequel that existed to make",
+      "start": 68.23,
+      "end": 83.23,
+      "text": "Now the new threat looms, we have a new Spider-Man movie, how vague is this review going to be? There's a whole thing in this movie, otherwise known as the plot of the film that's wrapped in spoilers, so I can't really talk about it.",
+      "text_lower": "now the new threat looms, we have a new spider-man movie, how vague is this review going to be? there's a whole thing in this movie, otherwise known as the plot of the film that's wrapped in spoilers, so i can't really talk about it.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -489,7 +489,7 @@
           "played": false
         },
         "plot": {
-          "plot": false,
+          "plot": true,
           "story": false,
           "script": false,
           "writing": false,
@@ -528,16 +528,16 @@
         }
       },
       "aspects": [
-        "general"
+        "plot"
       ],
-      "is_general": true
+      "is_general": false
     },
     {
       "segment_id": "seg_0008",
-      "start": 38.11,
-      "end": 43.27,
-      "text": "Spider-Man, Spider-Man in Manhattan, to make him Spider-Man as we know him, and now here",
-      "text_lower": "spider-man, spider-man in manhattan, to make him spider-man as we know him, and now here",
+      "start": 83.23,
+      "end": 90.23,
+      "text": "This is going to be spoiler free. Spoiler talk video will be coming later this week, but until then, here are my very vague Spider-Man thoughts.",
+      "text_lower": "this is going to be spoiler free. spoiler talk video will be coming later this week, but until then, here are my very vague spider-man thoughts.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -593,10 +593,10 @@
     },
     {
       "segment_id": "seg_0009",
-      "start": 43.27,
-      "end": 44.27,
-      "text": "we are.",
-      "text_lower": "we are.",
+      "start": 90.23,
+      "end": 97.23,
+      "text": "First of all, right out the gate, Tom Holland is carrying this movie as Peter Parker, a Spider-Man, and he's in the zone man. He has this down.",
+      "text_lower": "first of all, right out the gate, tom holland is carrying this movie as peter parker, a spider-man, and he's in the zone man. he has this down.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -652,14 +652,14 @@
     },
     {
       "segment_id": "seg_0010",
-      "start": 44.27,
-      "end": 47.95,
-      "text": "It's been a couple years since Dr. Strange and Peter Parker collaborated to brainwash",
-      "text_lower": "it's been a couple years since dr. strange and peter parker collaborated to brainwash",
+      "start": 97.23,
+      "end": 103.23,
+      "text": "Every actor has brought their own energy, their own angle, their own fame, to the role of Peter Parker.",
+      "text_lower": "every actor has brought their own energy, their own angle, their own fame, to the role of peter parker.",
       "keyword_hits": {
         "acting": {
           "acting": false,
-          "actor": false,
+          "actor": true,
           "actress": false,
           "performance": false,
           "cast": false,
@@ -705,16 +705,16 @@
         }
       },
       "aspects": [
-        "general"
+        "acting"
       ],
-      "is_general": true
+      "is_general": false
     },
     {
       "segment_id": "seg_0011",
-      "start": 47.95,
-      "end": 50.55,
-      "text": "the entire world into forgetting Peter Parker.",
-      "text_lower": "the entire world into forgetting peter parker.",
+      "start": 103.23,
+      "end": 113.23,
+      "text": "This is a very emotionally weighty, yeah that works. I'm rolling with it. A story for Peter Parker, and Tom Holland absolutely sells it.",
+      "text_lower": "this is a very emotionally weighty, yeah that works. i'm rolling with it. a story for peter parker, and tom holland absolutely sells it.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -726,7 +726,7 @@
         },
         "plot": {
           "plot": false,
-          "story": false,
+          "story": true,
           "script": false,
           "writing": false,
           "narrative": false,
@@ -764,16 +764,16 @@
         }
       },
       "aspects": [
-        "general"
+        "plot"
       ],
-      "is_general": true
+      "is_general": false
     },
     {
       "segment_id": "seg_0012",
-      "start": 50.55,
-      "end": 54.11,
-      "text": "Doesn't mean he's not still pining for his friends now, though, and he's having some",
-      "text_lower": "doesn't mean he's not still pining for his friends now, though, and he's having some",
+      "start": 114.23,
+      "end": 121.23,
+      "text": "It probably helps that he's not going to space, or for the most part, dealing with the bigger MCU here.",
+      "text_lower": "it probably helps that he's not going to space, or for the most part, dealing with the bigger mcu here.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -829,10 +829,10 @@
     },
     {
       "segment_id": "seg_0013",
-      "start": 54.11,
-      "end": 60.15,
-      "text": "stuff going on with his powers, this movie really does capitalize the word Spider-Man.",
-      "text_lower": "stuff going on with his powers, this movie really does capitalize the word spider-man.",
+      "start": 121.23,
+      "end": 127.23,
+      "text": "It's very friendly neighborhood Spider-Man here, otherwise known as why people love Spider-Man in the first place.",
+      "text_lower": "it's very friendly neighborhood spider-man here, otherwise known as why people love spider-man in the first place.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -888,10 +888,10 @@
     },
     {
       "segment_id": "seg_0014",
-      "start": 60.15,
-      "end": 63.95,
-      "text": "Spider, because his powers are going on the fritz because of his emotional state, man",
-      "text_lower": "spider, because his powers are going on the fritz because of his emotional state, man",
+      "start": 127.23,
+      "end": 132.23,
+      "text": "Because that's what this film hits home, well it's Spider-Man's life, it's why people connect with Spider-Man.",
+      "text_lower": "because that's what this film hits home, well it's spider-man's life, it's why people connect with spider-man.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -947,10 +947,10 @@
     },
     {
       "segment_id": "seg_0015",
-      "start": 63.95,
-      "end": 68.75,
-      "text": "because everyone thinks he's fine, but he's just suffering the emotional weight and silence.",
-      "text_lower": "because everyone thinks he's fine, but he's just suffering the emotional weight and silence.",
+      "start": 132.23,
+      "end": 141.23,
+      "text": "Because we all know deep down there's a difference between the perception of someone and the private weight they actually do carry in their lives.",
+      "text_lower": "because we all know deep down there's a difference between the perception of someone and the private weight they actually do carry in their lives.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1006,10 +1006,10 @@
     },
     {
       "segment_id": "seg_0016",
-      "start": 68.75,
-      "end": 73.31,
-      "text": "Now the new threat looms, we have a new Spider-Man movie, how vague is this review going",
-      "text_lower": "now the new threat looms, we have a new spider-man movie, how vague is this review going",
+      "start": 141.23,
+      "end": 148.23,
+      "text": "If you feel like you've seen those moments before in Spider-Man, will you have? In fact, this movie's very close to the inspiration of Ramy's Spider-Man.",
+      "text_lower": "if you feel like you've seen those moments before in spider-man, will you have? in fact, this movie's very close to the inspiration of ramy's spider-man.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1065,10 +1065,10 @@
     },
     {
       "segment_id": "seg_0017",
-      "start": 73.31,
-      "end": 74.31,
-      "text": "to be?",
-      "text_lower": "to be?",
+      "start": 148.23,
+      "end": 156.23,
+      "text": "Spider-Man feels a certain way, his body's manifesting those feelings physically. When he has questions, he goes and talks to an iconic professor of the world.",
+      "text_lower": "spider-man feels a certain way, his body's manifesting those feelings physically. when he has questions, he goes and talks to an iconic professor of the world.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1124,10 +1124,10 @@
     },
     {
       "segment_id": "seg_0018",
-      "start": 74.31,
-      "end": 80.59,
-      "text": "There's a whole thing, thing in this movie, otherwise known as the plot of the film that's wrapped",
-      "text_lower": "there's a whole thing, thing in this movie, otherwise known as the plot of the film that's wrapped",
+      "start": 156.23,
+      "end": 161.23,
+      "text": "Well in Spider-Man too, I guess he went to a random doctor, but later in Spider-Man 3, he went to Dr. Connors.",
+      "text_lower": "well in spider-man too, i guess he went to a random doctor, but later in spider-man 3, he went to dr. connors.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1138,7 +1138,7 @@
           "played": false
         },
         "plot": {
-          "plot": true,
+          "plot": false,
           "story": false,
           "script": false,
           "writing": false,
@@ -1177,16 +1177,16 @@
         }
       },
       "aspects": [
-        "plot"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0019",
-      "start": 80.59,
-      "end": 84.87,
-      "text": "in spoilers, so I can't really talk about it, this is going to be spoiler free.",
-      "text_lower": "in spoilers, so i can't really talk about it, this is going to be spoiler free.",
+      "start": 161.23,
+      "end": 169.23,
+      "text": "This time around Bruce Bannern, this movie does run into, are these characters in it for a point, or are they in it?",
+      "text_lower": "this time around bruce bannern, this movie does run into, are these characters in it for a point, or are they in it?",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1242,10 +1242,10 @@
     },
     {
       "segment_id": "seg_0020",
-      "start": 84.87,
-      "end": 89.59,
-      "text": "Spoiler talk video becoming later this week, but until then, here are my very vague",
-      "text_lower": "spoiler talk video becoming later this week, but until then, here are my very vague",
+      "start": 169.23,
+      "end": 174.23,
+      "text": "Specifically, in this case, so the Hulk can be in here. Little above, definitely that second one.",
+      "text_lower": "specifically, in this case, so the hulk can be in here. little above, definitely that second one.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1301,10 +1301,10 @@
     },
     {
       "segment_id": "seg_0021",
-      "start": 89.59,
-      "end": 91.19,
-      "text": "Spider-Man thoughts.",
-      "text_lower": "spider-man thoughts.",
+      "start": 174.23,
+      "end": 181.23,
+      "text": "The first act to, first half of this movie, you can argue the entire movie is this, but for me it was the first half or so.",
+      "text_lower": "the first act to, first half of this movie, you can argue the entire movie is this, but for me it was the first half or so.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1360,10 +1360,10 @@
     },
     {
       "segment_id": "seg_0022",
-      "start": 91.19,
-      "end": 95.15,
-      "text": "First of all, right out the gate, Tom Holland is carrying this movie as Peter Parker, a",
-      "text_lower": "first of all, right out the gate, tom holland is carrying this movie as peter parker, a",
+      "start": 181.23,
+      "end": 186.23,
+      "text": "Is the most Spider-Man feeling Spider-Man film since Ramy's Spider-Man 2?",
+      "text_lower": "is the most spider-man feeling spider-man film since ramy's spider-man 2?",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1419,10 +1419,10 @@
     },
     {
       "segment_id": "seg_0023",
-      "start": 95.15,
-      "end": 98.35,
-      "text": "Spider-Man, and he's in the zone, man, he has this down.",
-      "text_lower": "spider-man, and he's in the zone, man, he has this down.",
+      "start": 186.23,
+      "end": 193.23,
+      "text": "You got villains out there in costumes, there's no real explanation as to how they have their costumes or their outfits, they're just they're out there.",
+      "text_lower": "you got villains out there in costumes, there's no real explanation as to how they have their costumes or their outfits, they're just they're out there.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1478,14 +1478,14 @@
     },
     {
       "segment_id": "seg_0024",
-      "start": 98.35,
-      "end": 102.79,
-      "text": "Every actor has brought their own energy, their own angle, their own thing to the role",
-      "text_lower": "every actor has brought their own energy, their own angle, their own thing to the role",
+      "start": 193.23,
+      "end": 197.23,
+      "text": "I think that's an advantage that the MCU's given Spider-Man also, the PS4 game.",
+      "text_lower": "i think that's an advantage that the mcu's given spider-man also, the ps4 game.",
       "keyword_hits": {
         "acting": {
           "acting": false,
-          "actor": true,
+          "actor": false,
           "actress": false,
           "performance": false,
           "cast": false,
@@ -1531,16 +1531,16 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0025",
-      "start": 102.79,
-      "end": 103.79,
-      "text": "of Peter Parker.",
-      "text_lower": "of peter parker.",
+      "start": 197.23,
+      "end": 207.23,
+      "text": "Time was, cinematically speaking, you couldn't have a Spider-Man villain just have their costume and be the villain without a good explanation as to how.",
+      "text_lower": "time was, cinematically speaking, you couldn't have a spider-man villain just have their costume and be the villain without a good explanation as to how.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -1596,1602 +1596,9 @@
     },
     {
       "segment_id": "seg_0026",
-      "start": 103.79,
-      "end": 111.07,
-      "text": "This is a very emotionally weighty, yeah, that works, I'm rolling with it, a story for",
-      "text_lower": "this is a very emotionally weighty, yeah, that works, i'm rolling with it, a story for",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": true,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "plot"
-      ],
-      "is_general": false
-    },
-    {
-      "segment_id": "seg_0027",
-      "start": 111.07,
-      "end": 114.31,
-      "text": "Peter Parker, and Tom Holland absolutely sells it.",
-      "text_lower": "peter parker, and tom holland absolutely sells it.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0028",
-      "start": 114.31,
-      "end": 119.95,
-      "text": "It probably helps that he's not going to space or for the most part dealing with the",
-      "text_lower": "it probably helps that he's not going to space or for the most part dealing with the",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0029",
-      "start": 119.95,
-      "end": 120.95,
-      "text": "bigger MCU here.",
-      "text_lower": "bigger mcu here.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0030",
-      "start": 120.95,
-      "end": 126.39,
-      "text": "It's very friendly neighborhood Spider-Man here, otherwise known as why people love Spider-Man",
-      "text_lower": "it's very friendly neighborhood spider-man here, otherwise known as why people love spider-man",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0031",
-      "start": 126.39,
-      "end": 127.39,
-      "text": "in the first place.",
-      "text_lower": "in the first place.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0032",
-      "start": 127.39,
-      "end": 131.31,
-      "text": "Because that's what this film hits home is, well it's Spider-Man's life, it's why people",
-      "text_lower": "because that's what this film hits home is, well it's spider-man's life, it's why people",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0033",
-      "start": 131.31,
-      "end": 132.79,
-      "text": "connect with Spider-Man.",
-      "text_lower": "connect with spider-man.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0034",
-      "start": 132.79,
-      "end": 137.63,
-      "text": "Because we all know deep down there's a difference between the perception of someone",
-      "text_lower": "because we all know deep down there's a difference between the perception of someone",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0035",
-      "start": 137.63,
-      "end": 141.07,
-      "text": "and the private weight they actually do carry in their lives.",
-      "text_lower": "and the private weight they actually do carry in their lives.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0036",
-      "start": 141.07,
-      "end": 144.11,
-      "text": "If you feel like you've seen those moments before in Spider-Man, will you have?",
-      "text_lower": "if you feel like you've seen those moments before in spider-man, will you have?",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0037",
-      "start": 144.11,
-      "end": 148.19,
-      "text": "In fact, this movie's very close to the inspiration of Remy's Spider-Man.",
-      "text_lower": "in fact, this movie's very close to the inspiration of remy's spider-man.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0038",
-      "start": 148.19,
-      "end": 152.31,
-      "text": "Spider-Man feels a certain way, his body's manifesting those feelings physically.",
-      "text_lower": "spider-man feels a certain way, his body's manifesting those feelings physically.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0039",
-      "start": 152.31,
-      "end": 155.83,
-      "text": "When he has questions, he goes and talks to an iconic professor of the world.",
-      "text_lower": "when he has questions, he goes and talks to an iconic professor of the world.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0040",
-      "start": 155.83,
-      "end": 160.27,
-      "text": "Well in Spider-Man too, I guess he went to a random doctor, but later in Spider-Man 3,",
-      "text_lower": "well in spider-man too, i guess he went to a random doctor, but later in spider-man 3,",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0041",
-      "start": 160.27,
-      "end": 161.35,
-      "text": "he went to Dr. Connors.",
-      "text_lower": "he went to dr. connors.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0042",
-      "start": 161.35,
-      "end": 167.11,
-      "text": "This time around Bruce Banner, this movie does run into, are these characters in it for",
-      "text_lower": "this time around bruce banner, this movie does run into, are these characters in it for",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0043",
-      "start": 167.11,
-      "end": 172.03,
-      "text": "a point, or are they in it, specifically in this case, so the Hulk can be in here.",
-      "text_lower": "a point, or are they in it, specifically in this case, so the hulk can be in here.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0044",
-      "start": 172.03,
-      "end": 173.91,
-      "text": "Little above definitely that second one.",
-      "text_lower": "little above definitely that second one.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0045",
-      "start": 173.91,
-      "end": 178.91,
-      "text": "The first act to first half of this movie, you can argue the entire movie is this, but",
-      "text_lower": "the first act to first half of this movie, you can argue the entire movie is this, but",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0046",
-      "start": 178.91,
-      "end": 181.23,
-      "text": "for me it was the first half or so.",
-      "text_lower": "for me it was the first half or so.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0047",
-      "start": 181.23,
-      "end": 185.95,
-      "text": "Is the most Spider-Man feeling Spider-Man film since Remy's Spider-Man 2?",
-      "text_lower": "is the most spider-man feeling spider-man film since remy's spider-man 2?",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0048",
-      "start": 185.95,
-      "end": 190.51,
-      "text": "You got villains out there in costumes, there's no real explanation as to how they have",
-      "text_lower": "you got villains out there in costumes, there's no real explanation as to how they have",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0049",
-      "start": 190.51,
-      "end": 193.99,
-      "text": "their costumes or their outfits, they're just they're out there, I think that's an advantage",
-      "text_lower": "their costumes or their outfits, they're just they're out there, i think that's an advantage",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0050",
-      "start": 193.99,
-      "end": 197.91,
-      "text": "that the MCU's given Spider-Man also, the PS4 game.",
-      "text_lower": "that the mcu's given spider-man also, the ps4 game.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0051",
-      "start": 197.91,
-      "end": 204.07,
-      "text": "Time was, cinematically speaking, you couldn't have a Spider-Man villain just have their costume",
-      "text_lower": "time was, cinematically speaking, you couldn't have a spider-man villain just have their costume",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0052",
-      "start": 204.07,
-      "end": 207.11,
-      "text": "and be the villain without a good explanation as to how.",
-      "text_lower": "and be the villain without a good explanation as to how.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0053",
-      "start": 207.11,
-      "end": 212.15,
-      "text": "Granted Michael Mando was the character in Spider-Man Homecoming, but he wasn't Scorpion yet.",
+      "start": 207.23,
+      "end": 212.23,
+      "text": "Granted Michael Mando was the character in Spider-Man homecoming, but he wasn't scorpion yet.",
       "text_lower": "granted michael mando was the character in spider-man homecoming, but he wasn't scorpion yet.",
       "keyword_hits": {
         "acting": {
@@ -3247,11 +1654,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0054",
-      "start": 212.15,
-      "end": 216.31,
-      "text": "Now he's Scorpion, he has the tale, he has the suit, don't ask how, don't question",
-      "text_lower": "now he's scorpion, he has the tale, he has the suit, don't ask how, don't question",
+      "segment_id": "seg_0027",
+      "start": 212.23,
+      "end": 218.23,
+      "text": "Now he's scorpion, he has the tail, he has the suit, don't ask how, don't question it, just go with it, but you do go with it.",
+      "text_lower": "now he's scorpion, he has the tail, he has the suit, don't ask how, don't question it, just go with it, but you do go with it.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -3306,68 +1713,9 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0055",
-      "start": 216.31,
-      "end": 218.35,
-      "text": "it, just go with it, but you do go with it.",
-      "text_lower": "it, just go with it, but you do go with it.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0056",
-      "start": 218.35,
-      "end": 222.47,
+      "segment_id": "seg_0028",
+      "start": 218.23,
+      "end": 222.23,
       "text": "He's not in the movie that much, he is in the movie far more than Tombstone is.",
       "text_lower": "he's not in the movie that much, he is in the movie far more than tombstone is.",
       "keyword_hits": {
@@ -3424,70 +1772,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0057",
-      "start": 222.47,
-      "end": 224.75,
-      "text": "You know what really did work for me in here?",
-      "text_lower": "you know what really did work for me in here?",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0058",
-      "start": 224.75,
-      "end": 228.95,
-      "text": "Frank Castle and Spider-Man, do they got great chemistry?",
-      "text_lower": "frank castle and spider-man, do they got great chemistry?",
+      "segment_id": "seg_0029",
+      "start": 222.23,
+      "end": 227.23,
+      "text": "You know what really did work for me in here? Frank Castle and Spider-Man.",
+      "text_lower": "you know what really did work for me in here? frank castle and spider-man.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -3542,11 +1831,11 @@
       "is_general": false
     },
     {
-      "segment_id": "seg_0059",
-      "start": 228.95,
-      "end": 233.03,
-      "text": "That is to say John Bernthal and Tom Holland have great chemistry.",
-      "text_lower": "that is to say john bernthal and tom holland have great chemistry.",
+      "segment_id": "seg_0030",
+      "start": 227.23,
+      "end": 232.23,
+      "text": "Dude, they got great chemistry, that is to say John Bernthal and Tom Holland have great chemistry.",
+      "text_lower": "dude, they got great chemistry, that is to say john bernthal and tom holland have great chemistry.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -3601,11 +1890,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0060",
-      "start": 233.03,
-      "end": 238.31,
-      "text": "It felt like kind of a comic book buddy dynamic at a point and it works, because Frank Castle",
-      "text_lower": "it felt like kind of a comic book buddy dynamic at a point and it works, because frank castle",
+      "segment_id": "seg_0031",
+      "start": 232.23,
+      "end": 245.23,
+      "text": "It felt like kind of a comic book buddy dynamic at a point and it works because Frank Castle and Peter Parker have a very different perspective and ideology about criminal and how we deal with them.",
+      "text_lower": "it felt like kind of a comic book buddy dynamic at a point and it works because frank castle and peter parker have a very different perspective and ideology about criminal and how we deal with them.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -3660,11 +1949,11 @@
       "is_general": false
     },
     {
-      "segment_id": "seg_0061",
-      "start": 238.31,
-      "end": 244.67,
-      "text": "and Peter Parker have a very different perspective and ideology about criminal and how we deal",
-      "text_lower": "and peter parker have a very different perspective and ideology about criminal and how we deal",
+      "segment_id": "seg_0032",
+      "start": 245.23,
+      "end": 250.23,
+      "text": "That works and as much as there are characters in this movie that aren't in the movie as much as I thought they would be.",
+      "text_lower": "that works and as much as there are characters in this movie that aren't in the movie as much as i thought they would be.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -3719,129 +2008,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0062",
-      "start": 244.67,
-      "end": 245.67,
-      "text": "with them.",
-      "text_lower": "with them.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0063",
-      "start": 245.67,
-      "end": 248.45,
-      "text": "That works, and as much as there are characters in this movie that aren't in the movie",
-      "text_lower": "that works, and as much as there are characters in this movie that aren't in the movie",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0064",
-      "start": 248.45,
-      "end": 252.15,
-      "text": "as much as I thought they would be, Frank Castle is actually in the movie more than I",
-      "text_lower": "as much as i thought they would be, frank castle is actually in the movie more than i",
+      "segment_id": "seg_0033",
+      "start": 250.23,
+      "end": 254.23,
+      "text": "Frank Castle is actually in the movie more than I thought he'd be and I'm glad he was.",
+      "text_lower": "frank castle is actually in the movie more than i thought he'd be and i'm glad he was.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -3896,11 +2067,11 @@
       "is_general": false
     },
     {
-      "segment_id": "seg_0065",
-      "start": 252.15,
-      "end": 254.63,
-      "text": "thought he'd be, and I'm glad he was.",
-      "text_lower": "thought he'd be, and i'm glad he was.",
+      "segment_id": "seg_0034",
+      "start": 254.23,
+      "end": 261.23,
+      "text": "It can be that the characters work because the characters don't feel that they work and that friction is what makes them work.",
+      "text_lower": "it can be that the characters work because the characters don't feel that they work and that friction is what makes them work.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -3955,127 +2126,9 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0066",
-      "start": 254.63,
-      "end": 259.39,
-      "text": "It can be that the characters work because the characters don't feel that they work and",
-      "text_lower": "it can be that the characters work because the characters don't feel that they work and",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0067",
-      "start": 259.39,
-      "end": 261.11,
-      "text": "that friction is what makes them work.",
-      "text_lower": "that friction is what makes them work.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0068",
-      "start": 261.11,
-      "end": 265.63,
+      "segment_id": "seg_0035",
+      "start": 261.23,
+      "end": 265.23,
       "text": "Yeah they were great, give me an entire Frank Castle Spider-Man team up film in the future.",
       "text_lower": "yeah they were great, give me an entire frank castle spider-man team up film in the future.",
       "keyword_hits": {
@@ -4132,11 +2185,11 @@
       "is_general": false
     },
     {
-      "segment_id": "seg_0069",
-      "start": 265.63,
-      "end": 269.99,
-      "text": "As much as the emotional moments, there's a lot of emotional strain with Peter Parker",
-      "text_lower": "as much as the emotional moments, there's a lot of emotional strain with peter parker",
+      "segment_id": "seg_0036",
+      "start": 265.23,
+      "end": 274.23,
+      "text": "As much as the emotional moments as there's a lot of emotional strain with Peter Parker and his friends or his friends who don't remember they were his friends but he does that's the painful part.",
+      "text_lower": "as much as the emotional moments as there's a lot of emotional strain with peter parker and his friends or his friends who don't remember they were his friends but he does that's the painful part.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4191,11 +2244,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0070",
-      "start": 269.99,
-      "end": 273.83,
-      "text": "and his friends or his friends who don't remember they were his friends, but he does, that's",
-      "text_lower": "and his friends or his friends who don't remember they were his friends, but he does, that's",
+      "segment_id": "seg_0037",
+      "start": 274.23,
+      "end": 284.23,
+      "text": "As much as that does lead to some emotional moments that do hit, I do feel they probably could have trimmed some of that and made this movie closer to two hours.",
+      "text_lower": "as much as that does lead to some emotional moments that do hit, i do feel they probably could have trimmed some of that and made this movie closer to two hours.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4250,11 +2303,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0071",
-      "start": 273.83,
-      "end": 274.83,
-      "text": "the painful part.",
-      "text_lower": "the painful part.",
+      "segment_id": "seg_0038",
+      "start": 284.23,
+      "end": 288.23,
+      "text": "Two hours 25 minutes probably didn't need to be that long.",
+      "text_lower": "two hours 25 minutes probably didn't need to be that long.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4309,11 +2362,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0072",
-      "start": 274.83,
-      "end": 280.87,
-      "text": "As much as that does lead to some emotional moments that do hit, I do feel they probably",
-      "text_lower": "as much as that does lead to some emotional moments that do hit, i do feel they probably",
+      "segment_id": "seg_0039",
+      "start": 288.23,
+      "end": 295.23,
+      "text": "There is a post-credit scene thing is it's not a mid-credit scene, it's a post-very end of the credits credit scene.",
+      "text_lower": "there is a post-credit scene thing is it's not a mid-credit scene, it's a post-very end of the credits credit scene.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4368,11 +2421,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0073",
-      "start": 280.87,
-      "end": 284.95,
-      "text": "could have trimmed some of that and made this movie closer to two hours.",
-      "text_lower": "could have trimmed some of that and made this movie closer to two hours.",
+      "segment_id": "seg_0040",
+      "start": 295.23,
+      "end": 299.23,
+      "text": "Is it worth the wait? Not if you want to beat traffic, it does feel like an afterthought.",
+      "text_lower": "is it worth the wait? not if you want to beat traffic, it does feel like an afterthought.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4427,11 +2480,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0074",
-      "start": 284.95,
-      "end": 288.99,
-      "text": "Two hours 25 minutes, probably didn't need to be that long.",
-      "text_lower": "two hours 25 minutes, probably didn't need to be that long.",
+      "segment_id": "seg_0041",
+      "start": 299.23,
+      "end": 303.23,
+      "text": "Some of the critics in the auditorium and they all but I did hear a couple booze.",
+      "text_lower": "some of the critics in the auditorium and they all but i did hear a couple booze.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4486,11 +2539,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0075",
-      "start": 288.99,
-      "end": 294.19,
-      "text": "There is a post-credits scene thing is, it's not a mid-credits scene, it's a post-very",
-      "text_lower": "there is a post-credits scene thing is, it's not a mid-credits scene, it's a post-very",
+      "segment_id": "seg_0042",
+      "start": 303.23,
+      "end": 310.23,
+      "text": "I kind of don't blame them, they could have whipped this thing up yesterday to put in the movie and then sent it out to be on the new digital prints and that's that.",
+      "text_lower": "i kind of don't blame them, they could have whipped this thing up yesterday to put in the movie and then sent it out to be on the new digital prints and that's that.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4545,11 +2598,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0076",
-      "start": 294.19,
-      "end": 296.07,
-      "text": "end of the credits credits scene.",
-      "text_lower": "end of the credits credits scene.",
+      "segment_id": "seg_0043",
+      "start": 310.23,
+      "end": 315.23,
+      "text": "And I believe the reference itself if I'm seeing it correctly is really cool.",
+      "text_lower": "and i believe the reference itself if i'm seeing it correctly is really cool.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4604,11 +2657,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0077",
-      "start": 296.07,
-      "end": 300.43,
-      "text": "Is it worth the wait, not if you want to beat traffic, it does feel like an afterthought.",
-      "text_lower": "is it worth the wait, not if you want to beat traffic, it does feel like an afterthought.",
+      "segment_id": "seg_0044",
+      "start": 315.23,
+      "end": 323.23,
+      "text": "But you would be forgiven if you were like that put the mid in mid-credit scene doesn't really make sense because it is a post-credit scene, whatever.",
+      "text_lower": "but you would be forgiven if you were like that put the mid in mid-credit scene doesn't really make sense because it is a post-credit scene, whatever.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4663,11 +2716,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0078",
-      "start": 300.43,
-      "end": 304.27,
-      "text": "Some of the critics in the auditorium, and they all but, I did hear a couple booze.",
-      "text_lower": "some of the critics in the auditorium, and they all but, i did hear a couple booze.",
+      "segment_id": "seg_0045",
+      "start": 323.23,
+      "end": 332.23,
+      "text": "As a thing you really do feel in here that I like is that Spider-Man is this optimistic hopeful hero in New York that people love.",
+      "text_lower": "as a thing you really do feel in here that i like is that spider-man is this optimistic hopeful hero in new york that people love.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4722,11 +2775,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0079",
-      "start": 304.27,
-      "end": 307.83,
-      "text": "I kind of don't blame them, they could have whipped this thing up yesterday to put",
-      "text_lower": "i kind of don't blame them, they could have whipped this thing up yesterday to put",
+      "segment_id": "seg_0046",
+      "start": 332.23,
+      "end": 335.23,
+      "text": "No Jonah Jameson in this film, this is all positive.",
+      "text_lower": "no jonah jameson in this film, this is all positive.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4781,11 +2834,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0080",
-      "start": 307.83,
-      "end": 311.51,
-      "text": "in the movie and then sent it out to be on the new digital prints and that's that.",
-      "text_lower": "in the movie and then sent it out to be on the new digital prints and that's that.",
+      "segment_id": "seg_0047",
+      "start": 335.23,
+      "end": 344.23,
+      "text": "Except for the emotional turmoil he's dealing with but in terms of the public perception though, some things that didn't really land for me are wrapped up in spoilers.",
+      "text_lower": "except for the emotional turmoil he's dealing with but in terms of the public perception though, some things that didn't really land for me are wrapped up in spoilers.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4840,11 +2893,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0081",
-      "start": 311.51,
-      "end": 316.07,
-      "text": "And I believe the reference itself, if I'm seeing it correctly, is really cool.",
-      "text_lower": "and i believe the reference itself, if i'm seeing it correctly, is really cool.",
+      "segment_id": "seg_0048",
+      "start": 344.23,
+      "end": 347.23,
+      "text": "So I can't really talk about him right now.",
+      "text_lower": "so i can't really talk about him right now.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4899,11 +2952,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0082",
-      "start": 316.07,
-      "end": 321.23,
-      "text": "But you would be forgiven if you were like that, put the mid in mid-credits scene, doesn't",
-      "text_lower": "but you would be forgiven if you were like that, put the mid in mid-credits scene, doesn't",
+      "segment_id": "seg_0049",
+      "start": 347.23,
+      "end": 351.23,
+      "text": "But as for right now I thought Spider-Man brand new day was a fun Spider-Man movie.",
+      "text_lower": "but as for right now i thought spider-man brand new day was a fun spider-man movie.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -4958,11 +3011,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0083",
-      "start": 321.23,
-      "end": 323.79,
-      "text": "really make sense because it is a post-credits scene, whatever.",
-      "text_lower": "really make sense because it is a post-credits scene, whatever.",
+      "segment_id": "seg_0050",
+      "start": 351.23,
+      "end": 357.23,
+      "text": "That vibe of the friendly neighborhood Spider-Man that I feel this movie does re-inject into Spider-Man's world.",
+      "text_lower": "that vibe of the friendly neighborhood spider-man that i feel this movie does re-inject into spider-man's world.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -5017,11 +3070,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0084",
-      "start": 323.79,
-      "end": 329.87,
-      "text": "As a thing you really do feel in here that I like, is that Spider-Man is this optimistic,",
-      "text_lower": "as a thing you really do feel in here that i like, is that spider-man is this optimistic,",
+      "segment_id": "seg_0051",
+      "start": 357.23,
+      "end": 362.23,
+      "text": "It's a little too long but all in all I had myself a really good time with Spider-Man brand new day and the lock of hell required.",
+      "text_lower": "it's a little too long but all in all i had myself a really good time with spider-man brand new day and the lock of hell required.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -5076,11 +3129,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0085",
-      "start": 329.87,
-      "end": 333.07,
-      "text": "hopeful hero in New York that people love.",
-      "text_lower": "hopeful hero in new york that people love.",
+      "segment_id": "seg_0052",
+      "start": 362.23,
+      "end": 371.23,
+      "text": "Alright so Spider-Man brand new day, have you seen it? What did you think about it? You haven't seen it yet but in a few days that question won't feel so weird because you might have that point.",
+      "text_lower": "alright so spider-man brand new day, have you seen it? what did you think about it? you haven't seen it yet but in a few days that question won't feel so weird because you might have that point.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -5135,11 +3188,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0086",
-      "start": 333.07,
-      "end": 337.07,
-      "text": "No Jonah Jameson in this film, this is all positive, except for the emotional turmoil",
-      "text_lower": "no jonah jameson in this film, this is all positive, except for the emotional turmoil",
+      "segment_id": "seg_0053",
+      "start": 371.23,
+      "end": 374.23,
+      "text": "Or what your favorite Spider-Man movie or you can rank him, it's always fun to do.",
+      "text_lower": "or what your favorite spider-man movie or you can rank him, it's always fun to do.",
       "keyword_hits": {
         "acting": {
           "acting": false,
@@ -5194,837 +3247,11 @@
       "is_general": true
     },
     {
-      "segment_id": "seg_0087",
-      "start": 337.07,
-      "end": 340.51,
-      "text": "he's dealing with, but in terms of the public perception though.",
-      "text_lower": "he's dealing with, but in terms of the public perception though.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0088",
-      "start": 340.51,
-      "end": 346.03,
-      "text": "Some things that didn't really land for me are wrapped up in spoilers, so I can't",
-      "text_lower": "some things that didn't really land for me are wrapped up in spoilers, so i can't",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0089",
-      "start": 346.03,
-      "end": 347.43,
-      "text": "really talk about him right now.",
-      "text_lower": "really talk about him right now.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0090",
-      "start": 347.43,
-      "end": 351.27,
-      "text": "But as for right now, I thought Spider-Man Brand New Day was a fun Spider-Man movie.",
-      "text_lower": "but as for right now, i thought spider-man brand new day was a fun spider-man movie.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0091",
-      "start": 351.27,
-      "end": 356.07,
-      "text": "That vibe of the friendly neighborhood Spider-Man that I feel this movie does re-inject into",
-      "text_lower": "that vibe of the friendly neighborhood spider-man that i feel this movie does re-inject into",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0092",
-      "start": 356.07,
-      "end": 357.07,
-      "text": "Spider-Man's world.",
-      "text_lower": "spider-man's world.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0093",
-      "start": 357.07,
-      "end": 360.55,
-      "text": "It's a little too long, but all in all, I had myself a really good time with Spider-Man",
-      "text_lower": "it's a little too long, but all in all, i had myself a really good time with spider-man",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0094",
-      "start": 360.55,
-      "end": 362.31,
-      "text": "Brand New Day and the lock of hell required.",
-      "text_lower": "brand new day and the lock of hell required.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0095",
-      "start": 362.31,
-      "end": 364.63,
-      "text": "Alright, so Spider-Man Brand New Day, have you seen it?",
-      "text_lower": "alright, so spider-man brand new day, have you seen it?",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0096",
-      "start": 364.63,
-      "end": 365.63,
-      "text": "What did you think about it?",
-      "text_lower": "what did you think about it?",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0097",
-      "start": 365.63,
-      "end": 369.63,
-      "text": "I haven't seen it yet, but in a few days, that question won't feel so weird, because",
-      "text_lower": "i haven't seen it yet, but in a few days, that question won't feel so weird, because",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0098",
-      "start": 369.63,
-      "end": 371.35,
-      "text": "you might have that point.",
-      "text_lower": "you might have that point.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0099",
-      "start": 371.35,
-      "end": 374.75,
-      "text": "Or what your favorite Spider-Man movie, or you can rank them, it's always fun to do.",
-      "text_lower": "or what your favorite spider-man movie, or you can rank them, it's always fun to do.",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0100",
-      "start": 374.75,
-      "end": 377.27,
-      "text": "Whatever it is, whatever you think, comment below, let me know, and as always, you can",
-      "text_lower": "whatever it is, whatever you think, comment below, let me know, and as always, you can",
-      "keyword_hits": {
-        "acting": {
-          "acting": false,
-          "actor": false,
-          "actress": false,
-          "performance": false,
-          "cast": false,
-          "played": false
-        },
-        "plot": {
-          "plot": false,
-          "story": false,
-          "script": false,
-          "writing": false,
-          "narrative": false,
-          "storyline": false
-        },
-        "cgi": {
-          "cgi": false,
-          "visual effects": false,
-          "vfx": false,
-          "effects": false,
-          "animation": false,
-          "graphics": false,
-          "visuals": false
-        },
-        "direction": {
-          "director": false,
-          "direction": false,
-          "directed": false,
-          "filmmaking": false,
-          "cinematography": false
-        },
-        "music": {
-          "music": false,
-          "soundtrack": false,
-          "score": false,
-          "songs": false,
-          "background music": false,
-          "bgm": false
-        },
-        "dialogue": {
-          "dialogue": false,
-          "dialog": false,
-          "lines": false,
-          "conversation": false
-        }
-      },
-      "aspects": [
-        "general"
-      ],
-      "is_general": true
-    },
-    {
-      "segment_id": "seg_0101",
-      "start": 377.27,
-      "end": 379.87,
-      "text": "like what you've seen here, and you want to see more, click right here to see more.",
-      "text_lower": "like what you've seen here, and you want to see more, click right here to see more.",
+      "segment_id": "seg_0054",
+      "start": 374.23,
+      "end": 379.23,
+      "text": "Whatever it is, whatever you think comment below let me know and as always you could like what you've seen here and you want to see more click right here to see more.",
+      "text_lower": "whatever it is, whatever you think comment below let me know and as always you could like what you've seen here and you want to see more click right here to see more.",
       "keyword_hits": {
         "acting": {
           "acting": false,

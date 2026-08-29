@@ -71,8 +71,17 @@ def process_youtube_review_generator(url):
         try:
             aspect_segments = extract_aspects_from_segments_llm(transcript_segments)
         except RuntimeError as e:
-            yield json.dumps({"status": "aspect_error", "message": str(e)})
-            aspect_segments = []  # Pipeline continues with empty segments
+            # Emit compatible aspect_error event (safe message — no key/stack trace)
+            yield json.dumps({
+                "status": "aspect_error",
+                "message": "Gemini aspect extraction failed; offline extraction was used."
+            })
+            # Emit aspect_fallback for informational progress logging
+            yield json.dumps({
+                "status": "aspect_fallback",
+                "message": "LLM aspect extraction is unavailable. Using offline keyword extraction."
+            })
+            aspect_segments = extract_aspects_from_segments(transcript_segments)
     else:
         aspect_segments = extract_aspects_from_segments(transcript_segments)
     _save_aspect_debug_trace(url, aspect_segments)
