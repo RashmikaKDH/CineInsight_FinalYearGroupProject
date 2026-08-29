@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from pathlib import Path
 from flask import Flask, jsonify, render_template, request
@@ -9,6 +10,7 @@ from src.transcriber import extract_audio, generate_transcript
 from src.extractors.keyword_extractor import ASPECTS_DICT
 
 DEBUG_ASPECT_TRACE_FILE = "debug_aspect_trace.json"
+LLM_DEBUG_TRACE_FILE = "llm_debug_trace.json"
 
 app = Flask(__name__)
 
@@ -25,9 +27,7 @@ def extract_aspects_debug(transcript_segments):
         keyword_hits = {}
 
         for aspect, keywords in ASPECTS_DICT.items():
-            hits = {}
-            for kw in keywords:
-                hits[kw] = kw in text_lower
+            hits = {kw: kw in text_lower for kw in keywords}
             keyword_hits[aspect] = hits
             if any(hits.values()):
                 detected_aspects.append(aspect)
@@ -61,19 +61,11 @@ def api_run_aspect_debug():
         return jsonify({"error": "No URL provided. Add ?url=<youtube_url>"}), 400
 
     try:
-        # Step 1: Download video
         video_path = download_video(url)
-
-        # Step 2: Extract audio
         audio_path = extract_audio(video_path)
-
-        # Step 3: Transcribe
         transcript_segments = generate_transcript(audio_path)
-
-        # Step 4: Aspect detection with full debug trace
         debug_segments = extract_aspects_debug(transcript_segments)
 
-        # Build summary statistics
         total = len(debug_segments)
         general_count = sum(1 for s in debug_segments if s["is_general"])
         detected_count = total - general_count
@@ -98,18 +90,42 @@ def api_run_aspect_debug():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/api/load-last-trace")
-def api_load_last_trace():
-    """Load the trace saved by the main app's last analysis run."""
-    import os
-    if not os.path.exists(DEBUG_ASPECT_TRACE_FILE):
-        return jsonify({"error": "No trace file found. Please analyze a video in the main app first (http://localhost:5000)."}), 404
+def _load_json_file(filepath, not_found_msg):
+    if not os.path.exists(filepath):
+        return jsonify({"error": not_found_msg}), 404
     try:
-        with open(DEBUG_ASPECT_TRACE_FILE, "r", encoding="utf-8") as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
         return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/load-last-trace")
+def api_load_last_trace():
+    """Load the keyword aspect trace saved by the main app's last analysis run."""
+    return _load_json_file(
+        DEBUG_ASPECT_TRACE_FILE,
+        "No trace file found. Please analyze a video in the main app first (http://localhost:5000)."
+    )
+
+
+@app.route("/api/debug/aspect-data")
+def api_debug_aspect_data():
+    """Alias used by debug_aspect.html to load the keyword trace."""
+    return _load_json_file(
+        DEBUG_ASPECT_TRACE_FILE,
+        "No trace file found. Please analyze a video in the main app first (http://localhost:5000)."
+    )
+
+
+@app.route("/api/llm-trace")
+def api_llm_trace():
+    """Load the full LLM prompt/response trace from the last analysis run."""
+    return _load_json_file(
+        LLM_DEBUG_TRACE_FILE,
+        "No LLM trace file found. Run an analysis with USE_LLM_EXTRACTOR=True first."
+    )
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -273,6 +273,17 @@
             <div class="state-sub">Try a different filter or search term.</div>
         </div>
 
+        <!-- LLM Trace Panel -->
+        <div id="llm-trace-panel" style="margin-top:2rem; display:none;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+                <div style="font-size:0.8rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">
+                    🤖 LLM Trace — Gemini Prompt &amp; Response (per batch)
+                </div>
+                <button onclick="loadLlmTrace()" style="padding:0.35rem 0.9rem; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:0.78rem; cursor:pointer;">↺ Load LLM Trace</button>
+            </div>
+            <div id="llm-trace-content"></div>
+        </div>
+
     </div>
 </div>
 
@@ -338,6 +349,13 @@
         badge.textContent = isLLM ? 'LLM Mode' : 'Keyword Mode';
         badge.className = 'mode-badge ' + (isLLM ? 'mode-llm' : 'mode-keyword');
         badge.style.display = 'inline-block';
+
+        // Auto-load LLM trace if in LLM mode
+        if (isLLM) {
+            document.getElementById('llm-trace-panel').style.display = 'block';
+            loadLlmTrace();
+        }
+
 
         // Stats
         const total = data.total_segments || 0;
@@ -436,6 +454,65 @@
     }
 
     loadData();
+    async function loadLlmTrace() {
+        const container = document.getElementById('llm-trace-content');
+        const panel = document.getElementById('llm-trace-panel');
+        panel.style.display = 'block';
+        container.innerHTML = '<div style="color:var(--muted); font-size:0.85rem; padding:1rem;">Loading LLM trace...</div>';
+        try {
+            const res = await fetch('/api/llm-trace');
+            const data = await res.json();
+            if (data.error) {
+                container.innerHTML = `<div style="background:#1a0e0e; border:1px solid #7f1d1d; border-radius:10px; padding:1rem; color:#ef4444; font-family:var(--mono); font-size:0.82rem;">${escHtml(data.error)}</div>`;
+                return;
+            }
+            renderLlmTrace(data, container);
+        } catch (e) {
+            container.innerHTML = `<div style="color:#ef4444;">[ERROR] ${e.message}</div>`;
+        }
+    }
+
+    function renderLlmTrace(data, container) {
+        const statusColor = { success: '#22c55e', error: '#ef4444', empty_response: '#f59e0b', pending: '#94a3b8' };
+        let html = `<div style="font-family:var(--mono); font-size:0.75rem; color:var(--muted); margin-bottom:1rem;">
+            Model: <strong style="color:#a5b4fc;">${escHtml(data.model)}</strong> &nbsp;|
+            Segments: <strong>${data.total_segments}</strong> &nbsp;|
+            Batches: <strong>${data.total_batches}</strong>
+            ${data.final_error ? `&nbsp;| <span style="color:#ef4444;">Final Error: ${escHtml(data.final_error)}</span>` : ''}
+        </div>`;
+
+        (data.batches || []).forEach(batch => {
+            const sc = statusColor[batch.status] || '#94a3b8';
+            const parsedStr = batch.parsed_output
+                ? JSON.stringify(batch.parsed_output, null, 2)
+                : '(none / empty)';
+            html += `
+            <details style="background:var(--card); border:1px solid var(--border); border-radius:12px; margin-bottom:1rem; overflow:hidden;" ${ batch.status === 'error' ? 'open' : '' }>
+                <summary style="padding:0.85rem 1.25rem; cursor:pointer; display:flex; align-items:center; gap:0.75rem; list-style:none; outline:none;">
+                    <span style="font-weight:700; color:${sc}; font-family:var(--mono); font-size:0.8rem;">[${batch.status.toUpperCase()}]</span>
+                    <span style="font-size:0.85rem;">Batch ${batch.batch_num} of ${data.total_batches}</span>
+                    <span style="font-family:var(--mono); font-size:0.75rem; color:var(--muted); margin-left:auto;">${batch.segment_count} segments</span>
+                </summary>
+                <div style="padding:0 1.25rem 1.25rem;">
+                    ${ batch.error ? `<div style="background:#1a0e0e; border:1px solid #7f1d1d; border-radius:8px; padding:0.75rem 1rem; margin-bottom:1rem; color:#ef4444; font-family:var(--mono); font-size:0.78rem;">⚠️ ${escHtml(batch.error)}</div>` : '' }
+                    <div style="font-size:0.72rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.4rem;">Prompt sent to Gemini</div>
+                    <pre style="background:#060d1a; border:1px solid var(--border); border-radius:8px; padding:0.85rem 1rem; font-size:0.75rem; color:#a7f3d0; white-space:pre-wrap; overflow-x:auto; max-height:300px; overflow-y:auto; margin-bottom:1rem;">${escHtml(batch.prompt || '')}</pre>
+                    <div style="font-size:0.72rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.4rem;">Raw response from Gemini</div>
+                    <pre style="background:#060d1a; border:1px solid var(--border); border-radius:8px; padding:0.85rem 1rem; font-size:0.75rem; color:#fbbf24; white-space:pre-wrap; overflow-x:auto; max-height:200px; overflow-y:auto; margin-bottom:1rem;">${escHtml(batch.raw_response || '(empty / null)')}</pre>
+                    <div style="font-size:0.72rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.4rem;">Parsed output (used by pipeline)</div>
+                    <pre style="background:#060d1a; border:1px solid var(--border); border-radius:8px; padding:0.85rem 1rem; font-size:0.75rem; color:#a5b4fc; white-space:pre-wrap; overflow-x:auto; max-height:200px; overflow-y:auto;">${escHtml(parsedStr)}</pre>
+                </div>
+            </details>`;
+        });
+
+        container.innerHTML = html;
+    }
+
+    function escHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
 </script>
 </body>
 </html>

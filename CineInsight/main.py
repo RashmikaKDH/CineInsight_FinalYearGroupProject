@@ -71,20 +71,25 @@ def process_youtube_review_generator(url):
         try:
             aspect_segments = extract_aspects_from_segments_llm(transcript_segments)
         except RuntimeError as e:
-            # Emit compatible aspect_error event (safe message — no key/stack trace)
+            # Surface the exact error reason to the UI — no silent fallback
+            error_reason = str(e)
             yield json.dumps({
                 "status": "aspect_error",
-                "message": "Gemini aspect extraction failed; offline extraction was used."
+                "message": f"⚠️ Gemini LLM aspect extraction failed: {error_reason}"
             })
-            # Emit aspect_fallback for informational progress logging
             yield json.dumps({
-                "status": "aspect_fallback",
-                "message": "LLM aspect extraction is unavailable. Using offline keyword extraction."
+                "status": "error",
+                "message": (
+                    "Aspect extraction failed. Pipeline stopped.\n"
+                    f"Reason: {error_reason}\n\n"
+                    "To switch to offline mode: open main.py and set USE_LLM_EXTRACTOR = False"
+                )
             })
-            aspect_segments = extract_aspects_from_segments(transcript_segments)
+            return  # Stop pipeline — do not continue to tensor steps
     else:
         aspect_segments = extract_aspects_from_segments(transcript_segments)
     _save_aspect_debug_trace(url, aspect_segments)
+
 
     yield json.dumps({"status": "progress", "message": "⏳ 6. Analyzing audio features to generate audio tensors..."})
     audio_tensor = get_audio_tensor(video_path)

@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 # Configuration (overridable via environment variables)
 # ---------------------------------------------------------------------------
 GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
-MODEL_NAME: str = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+MODEL_NAME: str = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
 
 VALID_ASPECTS = frozenset({
     "acting", "plot", "cgi", "direction", "music", "dialogue", "general",
@@ -48,6 +48,7 @@ MAX_RETRIES: int = 4
 BASE_BACKOFF_SECONDS: float = 3.0
 REQUEST_GAP_SECONDS: float = 2.5
 MAX_SEGMENT_CHARS: int = 1200
+LLM_DEBUG_TRACE_FILE: str = "llm_debug_trace.json"
 
 # ---------------------------------------------------------------------------
 # Retryable error patterns (case-insensitive match on error string)
@@ -83,6 +84,16 @@ _RESPONSE_SCHEMA = {
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def _save_llm_trace(trace: dict) -> None:
+    """Persist the full LLM debug trace to llm_debug_trace.json."""
+    import json as _json
+    try:
+        with open(LLM_DEBUG_TRACE_FILE, "w", encoding="utf-8") as f:
+            _json.dump(trace, f, ensure_ascii=False, indent=2)
+    except Exception as exc:
+        logger.warning("Could not write LLM debug trace: %s", exc)
+
 
 def _clean_text(text) -> str:
     """Normalize whitespace and safely cap to MAX_SEGMENT_CHARS."""
@@ -218,14 +229,15 @@ def _call_with_retry(
                 config=genai_types.GenerateContentConfig(
                     response_mime_type="application/json",
                     response_schema=_RESPONSE_SCHEMA,
-                    max_output_tokens=2048,
+                    automatic_function_calling=genai_types.AutomaticFunctionCallingConfig(disable=True),
                 ),
             )
             logger.info(
                 "Batch %d/%d completed (attempt %d).",
                 batch_num, total_batches, attempt + 1,
             )
-            return response.text if response and response.text else None
+            raw_text = response.text if response and response.text else None
+            return raw_text, None  # (response_text, error_str)
 
         except Exception as e:
             err_str = str(e)
@@ -258,7 +270,7 @@ def _call_with_retry(
                     f"Gemini API error on batch {batch_num}/{total_batches} (non-retryable)."
                 ) from e
 
-    return None  # Should not reach here
+    return None, None  # Should not reach here
 
 
 # ---------------------------------------------------------------------------
@@ -277,8 +289,10 @@ def extract_aspects_from_segments_llm(transcript_segments: list) -> list:
 
     Raises:
         RuntimeError: only if the very first batch fails with no results at all.
-                      main.py catches this and falls back to keyword extraction.
+                      main.py catches this and stops the pipeline.
     """
+    import time as _time
+
     if not _GENAI_AVAILABLE:
         raise RuntimeError(
             "google-genai package is not installed. Run: pip install google-genai"
@@ -301,6 +315,15 @@ def extract_aspects_from_segments_llm(transcript_segments: list) -> list:
     total_batches = len(batches)
     logger.info("LLM aspect extraction: %d segments, %d batch(es).", len(transcript_segments), total_batches)
 
+    # Full trace for the debug viewer
+    master_trace = {
+        "model": MODEL_NAME,
+        "total_segments": len(transcript_segments),
+        "total_batches": total_batches,
+        "batches": [],
+        "final_error": None,
+    }
+
     any_success = False
     first_batch_error: Optional[Exception] = None
 
@@ -309,33 +332,58 @@ def extract_aspects_from_segments_llm(transcript_segments: list) -> list:
         valid_indices = {item["original_index"] for item in batch}
         prompt = _build_prompt(batch)
 
+        batch_trace = {
+            "batch_num": batch_num,
+            "segment_count": len(batch),
+            "prompt": prompt,
+            "raw_response": None,
+            "parsed_output": None,
+            "error": None,
+            "status": "pending",
+        }
+
         try:
-            response_text = _call_with_retry(client, prompt, batch_num, total_batches)
+            response_text, _ = _call_with_retry(client, prompt, batch_num, total_batches)
+            batch_trace["raw_response"] = response_text
             if response_text:
                 classifications = _parse_response(response_text, valid_indices)
+                batch_trace["parsed_output"] = [
+                    {"index": k, "aspects": v} for k, v in classifications.items()
+                ]
                 for orig_idx, aspects in classifications.items():
                     output_segments[orig_idx]["aspects"] = aspects
                 any_success = True
+                batch_trace["status"] = "success"
             else:
                 logger.warning("Batch %d/%d returned empty response.", batch_num, total_batches)
+                batch_trace["status"] = "empty_response"
 
         except RuntimeError as e:
+            err_str = str(e)
+            if GEMINI_API_KEY and GEMINI_API_KEY in err_str:
+                err_str = err_str.replace(GEMINI_API_KEY, "[REDACTED]")
+            batch_trace["error"] = err_str
+            batch_trace["status"] = "error"
             if batch_idx == 0 and not any_success:
                 first_batch_error = e
+                master_trace["batches"].append(batch_trace)
+                master_trace["final_error"] = err_str
+                _save_llm_trace(master_trace)
                 break
             else:
-                err_str = str(e)
-                if GEMINI_API_KEY and GEMINI_API_KEY in err_str:
-                    err_str = err_str.replace(GEMINI_API_KEY, "[REDACTED]")
                 logger.warning(
                     "Batch %d/%d failed after earlier batches succeeded; "
                     "leaving those segments as ['general']. Error: %s",
                     batch_num, total_batches, err_str[:120],
                 )
 
+        master_trace["batches"].append(batch_trace)
+
         # Gap between requests (skip after final batch)
         if batch_num < total_batches:
             time.sleep(REQUEST_GAP_SECONDS)
+
+    _save_llm_trace(master_trace)
 
     if not any_success and first_batch_error is not None:
         raise first_batch_error
