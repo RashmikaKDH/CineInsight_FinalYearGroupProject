@@ -1,0 +1,140 @@
+segment_id,start,end,text,aspects,primary_aspect
+seg_0000,3.31,13.99,"Iron Man 3 is directed by Shane Black and stars Robert Downey Jr. Don Cheatle, Gwyneth",acting|direction,acting
+seg_0001,13.99,17.71,"Paltrow, Guy Pierce, Ben Kingsley and Rebecca Hall.",acting,acting
+seg_0002,17.71,20.87,"I would say that this is the sequel to Iron Man 2, but I really don't think it is.",general,general
+seg_0003,20.87,22.59,It's really the sequel to the Avengers.,general,general
+seg_0004,22.59,25.83,"And in this film, you have Tony Stark grappling with this villain, The Mandarin.",plot,plot
+seg_0005,25.83,26.83,He's a terrorist.,plot,plot
+seg_0006,26.83,29.83,"He's causing a lot of different terrorist attacks on the Earth, and he's witnessing all",plot,plot
+seg_0007,29.83,30.83,of this.,general,general
+seg_0008,30.83,33.39,"The same time he's having difficulties with his relationship with Gwyneth Paltrow, they're",plot,plot
+seg_0009,33.39,36.79,"having arguments, they're not getting along well, and he is questioning just how much",plot,plot
+seg_0010,36.79,40.55,"of him wants to be Iron Man anymore, and so he sets out on a one-man mission to try",plot,plot
+seg_0011,40.55,41.55,to find The Mandarin.,plot,plot
+seg_0012,41.55,45.87,Iron Man 3 is a movie that of course I was looking forward to because if you can't tell,general,general
+seg_0013,45.87,49.71,"the things behind me, I am a nerd.",general,general
+seg_0014,49.71,52.43,"I like me some movies, and I like me some superhero movies.",general,general
+seg_0015,52.43,57.39,"I really love the first Iron Man film, wasn't a big fan of Iron Man 2 adored the Avengers,",general,general
+seg_0016,57.39,60.55,"I think that's one of the best superhero films ever made, and for that reason I was very",general,general
+seg_0017,60.55,62.27,much looking forward to Iron Man 3.,general,general
+seg_0018,62.27,63.27,How is the movie?,general,general
+seg_0019,63.27,64.27,Very good.,general,general
+seg_0020,64.27,65.67,Iron Man 3 is a lot of fun.,general,general
+seg_0021,65.67,69.07,"Of course, Downey Jr. is back in this role, and you can't really imagine anyone else",acting,acting
+seg_0022,69.07,73.27,"playing this guy, and he proves that so well in this film because you get a lot of sequences",acting,acting
+seg_0023,73.27,75.55,"in this movie, where it's just Tony Stark.",plot,plot
+seg_0024,75.55,79.67,There isn't as much of Iron Man in the suit fighting in this movie.,plot,plot
+seg_0025,79.67,84.47,"You get a lot of Tony Stark doing a lot of this on his own, having to scrounge for pieces",plot,plot
+seg_0026,84.47,85.47,and parts.,plot,plot
+seg_0027,85.47,89.35,"Fought a little bit Dark Knight rises, you know, he kind of goes into an area where he doesn't",plot,plot
+seg_0028,89.35,93.59,"really have all this technology at his disposal anymore, and he's forced to improvise to try",plot,plot
+seg_0029,93.59,96.15,to get himself out of a whole bunch of really messed up situations.,plot,plot
+seg_0030,96.15,99.31,"At first I was like, you know, I'd like to see a little more Iron Man, but you know what?",general,general
+seg_0031,99.31,103.95,"I actually started to like it after a while, where it was more just Tony Stark using his",plot,plot
+seg_0032,103.95,108.91,"basic human smarts, because he is a genius billionaire playboy philanthropist.",plot,plot
+seg_0033,108.91,112.75,"And you get a lot of that in this movie, it's way more of a human film than any of the",plot,plot
+seg_0034,112.75,114.23,other Iron Man films were.,plot,plot
+seg_0035,114.23,118.43,"You get to learn a lot about Tony Stark in this movie, so when he does put on this suit,",plot,plot
+seg_0036,118.43,119.43,it's all the more enthralling.,plot,plot
+seg_0037,119.43,123.03,"Don't worry if you're weary of any spoilers, I won't give any of them away, I won't",general,general
+seg_0038,123.03,124.55,elude to anything in the film.,general,general
+seg_0039,124.55,128.39,All I'll say is that there are different elements of the plot in this movie that could,plot,plot
+seg_0040,128.39,130.27,hinge on whether or not you like it or not.,plot,plot
+seg_0041,130.27,133.79,"There are certain things that happen in the film where some comic book fans, especially",plot,plot
+seg_0042,133.79,136.95,"fans of the Iron Man source material, will be very upset.",plot,plot
+seg_0043,136.95,141.27,"And I gotta tell you by far, this is the most different comic book film I've ever seen.",general,general
+seg_0044,141.27,145.59,"This film is in no way like the previous Iron Man films, it's in no way like the Avengers,",general,general
+seg_0045,145.59,149.27,"it's completely different, it's its own film, it stands apart from those very well.",general,general
+seg_0046,149.27,155.71,"And some people will be disappointed by that, because this isn't like a big grand epic",plot,plot
+seg_0047,155.71,159.47,action-filled extravaganza until the third act.,plot,plot
+seg_0048,159.47,164.93,"There's a lot of Tony Stark being Tony Stark and having to, as I said, scrounge for little",plot,plot
+seg_0049,164.93,170.11,scraps of technology and try to get out of situations just based off of his intellect.,plot,plot
+seg_0050,170.11,171.87,And I kinda like that about this movie.,general,general
+seg_0051,171.87,176.23,"There was a part of me that wanted more action, that wanted more big set pieces, you get them",general,general
+seg_0052,176.23,177.23,in this film.,general,general
+seg_0053,177.23,178.23,There's a lot of that in this movie.,general,general
+seg_0054,178.23,180.39,"And this movie is very clever, and extremely funny, too.",dialogue,dialogue
+seg_0055,180.39,184.15,I think it's actually probably the funniest Iron Man movie out of the three that we've,dialogue,dialogue
+seg_0056,184.15,185.15,had.,dialogue,dialogue
+seg_0057,185.15,187.19,"But you can really feel Shane Black, the director in there.",direction,direction
+seg_0058,187.19,191.91,"He wrote Kiss Kiss Bang Bang also with Robert Downey Jr., and he was also Hawkins in Predator,",direction,direction
+seg_0059,191.91,193.71,"if you didn't know that, which is interesting to me.",general,general
+seg_0060,193.71,196.75,"But anyway, you can really feel in behind this movie because there are certain elements",direction,direction
+seg_0061,196.75,198.75,of the screenplay that just feel so different.,plot,plot
+seg_0062,198.75,200.99,And there are certain elements that didn't work for me.,plot,plot
+seg_0063,200.99,205.47,"For one, certain things happen in the movie that were so easily explained.",plot,plot
+seg_0064,205.47,210.83,And these things were like extremely big plot points in the first two films.,plot,plot
+seg_0065,210.83,211.83,"Like, how are we gonna do this?",general,general
+seg_0066,211.83,212.83,How are we gonna do that?,general,general
+seg_0067,212.83,213.83,And this film sort of brushed them apart.,plot,plot
+seg_0068,213.83,214.99,I can't really get into it.,general,general
+seg_0069,214.99,217.55,But there were certain elements of the story that didn't always work.,plot,plot
+seg_0070,217.55,220.55,"About the first 20 minutes of this film, I was like, are we gonna get going here?",direction,direction
+seg_0071,220.55,223.23,"And it did start a little bit slow, and I was disappointed by that.",direction,direction
+seg_0072,223.23,226.31,"Certain characters in the movie are very, very underdeveloped.",plot,plot
+seg_0073,226.31,230.03,"Background people who seem like they're important to the story, but the characters aren't",plot,plot
+seg_0074,230.03,231.03,really that well developed.,plot,plot
+seg_0075,231.03,233.35,"There were certain times during the movie when I was watching, and I was like, really,",general,general
+seg_0076,233.35,234.35,this is what they're doing.,general,general
+seg_0077,234.35,235.95,This is the direction they're taking.,direction,direction
+seg_0078,235.95,237.35,"And it seems odd, you know?",general,general
+seg_0079,237.35,241.95,"But then when you look back on the movie, you can go like, you know, okay, I guess that",general,general
+seg_0080,241.95,242.95,kind of makes sense.,general,general
+seg_0081,242.95,245.83,"And it's because there are certain things, once again, about spoiling, that this movie",plot,plot
+seg_0082,245.83,248.19,"does, that you don't really think it's going to do.",general,general
+seg_0083,248.19,252.59,"But then when you look back on the film and think about how they set up certain things,",plot,plot
+seg_0084,252.59,256.71,it makes sense that eventually that happened because they were saying it up that way.,plot,plot
+seg_0085,256.71,259.31,"That's, you know, it's a little hard to explain, and I apologize.",general,general
+seg_0086,259.31,260.91,I really can't get into it without spoiling it.,general,general
+seg_0087,260.91,261.91,"I just can't, but I tried.",general,general
+seg_0088,261.91,262.91,I really did.,general,general
+seg_0089,262.91,263.91,"I can't spoil it for you, so I won't.",general,general
+seg_0090,263.91,267.23,But I guarantee you certain hardcore comic book fans of Iron Man are going to be disappointed,general,general
+seg_0091,267.23,268.23,by certain things.,general,general
+seg_0092,268.23,270.55,"As a film, structurally, it holds together pretty well.",direction,direction
+seg_0093,270.55,272.83,There are a lot of really great set pieces in this movie.,direction,direction
+seg_0094,272.83,273.83,It's very funny.,general,general
+seg_0095,273.83,275.23,There's really great special effects.,cgi,cgi
+seg_0096,275.23,276.39,The score is good.,music,music
+seg_0097,276.39,280.39,There's a lot of great relationships between Robert Downey Jr. and other characters.,acting,acting
+seg_0098,280.39,283.83,"Don Sheetle, I thought, was much better in this film than he was in Iron Man 2.",acting,acting
+seg_0099,283.83,284.99,His character was cooler.,acting,acting
+seg_0100,284.99,287.31,I liked his presence a lot more than in Iron Man 2.,acting,acting
+seg_0101,287.31,289.11,I liked that they drew back from the whole.,general,general
+seg_0102,289.11,291.95,"I'm an awesome playboy, and I'm better than everyone kind of thing.",general,general
+seg_0103,291.95,296.79,"He has that still as a character, but it was less abrasive, like it was in Iron Man 2.",acting,acting
+seg_0104,296.79,299.55,"As all villains do in movies, they all have their little cohorts.",general,general
+seg_0105,299.55,302.31,"You know, like there's the main film, and they have their little cronies.",general,general
+seg_0106,302.31,304.75,I didn't really like the cronies in this movie.,plot,plot
+seg_0107,304.75,308.27,"There were these guys that helped out the Mandarin and everything, and I just felt like they",plot,plot
+seg_0108,308.27,309.27,were sort of just there.,plot,plot
+seg_0109,309.27,312.63,"They just seemed like drones, really, even though they were living people, and I didn't",acting,acting
+seg_0110,312.63,313.95,really like that in this movie.,general,general
+seg_0111,313.95,315.55,Ben Kingsley is very good in the film.,acting,acting
+seg_0112,315.55,317.27,Guy Pierce is very good in the film.,acting,acting
+seg_0113,317.27,321.07,"Rebecca Hall's character is very underdeveloped, and despite the fact that she's a good actress,",acting|plot,acting
+seg_0114,321.07,323.75,I didn't really feel like her character had much to do in the movie.,plot,plot
+seg_0115,323.75,327.83,"You go to see Iron Man for Iron Man, Robert Downing Jr., and he was great in this movie.",acting,acting
+seg_0116,327.83,332.07,What some people may look at as a shortage of action sequences during the second act,plot,plot
+seg_0117,332.07,337.15,"of this movie, I looked at as a way to build the character, and there was still substantial",plot,plot
+seg_0118,337.15,338.15,action scenes.,general,general
+seg_0119,338.15,341.15,"It was Tony Stark doing it, and I really like that.",general,general
+seg_0120,341.15,343.99,"It took the film in a different direction, despite the fact that it would have been cool",direction|plot,direction
+seg_0121,343.99,345.87,I guess to see a little more Iron Man.,general,general
+seg_0122,345.87,348.07,"That's just the boy in me wanting to see more Iron Man, though.",general,general
+seg_0123,348.07,349.95,"But overall, I really enjoyed Iron Man 3.",general,general
+seg_0124,349.95,352.11,I think that it is much better than Iron Man 2.,general,general
+seg_0125,352.11,354.95,"I still like Iron Man 1 more, and I like the Avengers more.",general,general
+seg_0126,354.95,356.67,You just can't beat the Avengers.,general,general
+seg_0127,356.67,358.51,This movie is not like the Avengers at all.,general,general
+seg_0128,358.51,363.55,"So please, when you go into Iron Man 3, do not expect it to be as epic, or just humongous,",general,general
+seg_0129,363.55,364.55,as the Avengers was.,general,general
+seg_0130,364.55,368.03,"This is a very different type of film, but I think it does what it tries to do very well.",general,general
+seg_0131,368.03,370.43,I'm going to give Iron Man 3 a B+.,general,general
+seg_0132,370.43,373.75,"There are some problems in the story elements, certain characters are underdeveloped.",plot,plot
+seg_0133,373.75,376.83,"As I said, hardcore fans of the comics are probably going to find some things to be upset",plot,plot
+seg_0134,376.83,378.83,"about in this film, understandably so.",general,general
+seg_0135,378.83,381.99,"Nevertheless, I would recommend seeing Iron Man 3 if you want to have a good time at the",general,general
+seg_0136,381.99,382.99,movies.,general,general
+seg_0137,382.99,383.99,"Thanks for watching, guys.",general,general
+seg_0138,383.99,386.75,"As always, and if you like this, you can click right here and get stuck in my eyes.",general,general

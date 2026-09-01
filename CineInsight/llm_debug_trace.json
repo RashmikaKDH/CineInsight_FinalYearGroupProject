@@ -1,18 +1,25 @@
 {
   "model": "gemini-3.5-flash",
-  "total_segments": 98,
-  "total_batches": 1,
+  "total_segments": 139,
+  "total_batches": 2,
   "batches": [
     {
       "batch_num": 1,
-      "segment_count": 98,
-      "prompt": "You are a movie-review analyst. Classify each numbered transcript segment into one or more of these aspects: acting, cgi, dialogue, direction, music, plot.\nRules:\n- Return ONLY segments with clearly relevant movie-review content.\n- Omit generic greetings, sponsor messages, filler, unrelated statements, and uncertain cases.\n- Use only the exact labels listed above.\n- Return a JSON array. Each entry: {\"index\": <int>, \"aspects\": [<label>, ...]}.\n- If no segment qualifies, return an empty array [].\n\nSegments:\n0: \"The summer movie season is here and it is kicked off with Iron Man 3. I love the summer movie season. It's like I'm home.\"\n1: \"Iron Man 3. So Iron Man 3 is the third Iron Man movie.\"\n2: \"This is the first Marvel movie that's in a post Avengers world. We'll call it the first Marvel movie of the Avengers phase 2 leading up to the Avengers 2.\"\n3: \"And now we meet Tony Stark and the dude's going through some problems.\"\n4: \"The guy went up through a wormhole saved New York in the Avengers so naturally he's a little messed up.\"\n5: \"It's got that post traumatic stress shit going on. He can't sleep at night so he just buries himself in his work.\"\n6: \"And now we got the Mandarin and Tony Stark has to save the day again.\"\n7: \"It sounds simple but it's actually a pretty complex movie.\"\n8: \"Now Iron Man 3 is not directed by John Favreau and you can tell.\"\n9: \"It has a totally different tone to it. It's a bit darker but it does have humor also.\"\n10: \"It's the darkest of the Iron Man movies yet the funniest of the Iron Man movies.\"\n11: \"Makes sense? It should because that's what it is.\"\n12: \"There are some total contrast where you're like it went from dramatic and then a joke.\"\n13: \"Did it fit perfectly? No, but it did work.\"\n14: \"It never lost me. I was never like ugh blew it. It was never bullshit.\"\n15: \"When the humor happened it usually made me laugh.\"\n16: \"Sometimes in the movie I was like are you overdoing the humor a little bit?\"\n17: \"Did it compromise the drama maybe?\"\n18: \"But Tony Stark is a narcissist. That's how narcissists deal with dramas. They don't deal with it.\"\n19: \"They deflect with humor. It was never cheesy. The humor wasn't cheesy.\"\n20: \"Now Iron Man 3 is the most comic bookie of the Iron Man movies.\"\n21: \"I thought Iron Man 1 was actually pretty grounded. I was like okay it's a guy and he's captured.\"\n22: \"And he builds an Iron Man suit and he becomes a hero and he changes his ways.\"\n23: \"Now we got Iron Man 3 and more comic bookie shit is happening in this movie.\"\n24: \"Not that it's a bad thing because it recognizes that it is a post avengers world.\"\n25: \"Yeah, Tony Stark fought with a god with a hammer to save New York and the world.\"\n26: \"Naturally this one can be a little more comic bookie and still not cross that line.\"\n27: \"One of the things I liked about Iron Man 3 is it takes it back to what I loved about Iron Man 1.\"\n28: \"In Iron Man 1 Tony Stark was a genius and we got to see that he was a genius.\"\n29: \"His suit is not his greatest weapon. His brain is and I love seeing that.\"\n30: \"Iron Man 2, I felt lost it. Yeah, the guy came up with a new element.\"\n31: \"Little things in life. But we didn't get to see that maghiver type genius in him.\"\n32: \"He knows where it's like here's a box of scraps making Iron Man suit.\"\n33: \"In Iron Man 3 we actually get to see that.\"\n34: \"We get to see more about how his intellect is his greatest weapon.\"\n35: \"And when I was watching this movie I was like that might be one of the gripes that people have with Iron Man 3.\"\n36: \"Because it's the same gripe that people had with the Dark Knight Rises.\"\n37: \"Dark Knight Rises people were like there's less Batman more Bruce Wayne.\"\n38: \"Iron Man 3, I will say it feels like there is more Tony Stark less Iron Man.\"\n39: \"There is a big part of me that does wish that Iron Man himself was in the movie more.\"\n40: \"That being said they did what they did with Tony Stark very well.\"\n41: \"And they do make up for it in the last act of the movie.\"\n42: \"There's a lot of metal. When Iron Man comes to play he comes to play and he wrecks some shit and it is badass.\"\n43: \"Crazy cinematography, Iron Man is all flying around how Iron Man should because he's being all Iron Man.\"\n44: \"Iron Man is a word. I made it right here.\"\n45: \"But the movie does illustrate that the core of Iron Man is Tony Stark.\"\n46: \"It shows that Tony Stark really needs to hold on to Iron Man because it gives him purpose.\"\n47: \"But in the end it's all about Tony Stark.\"\n48: \"There's even a little kid in the movie and the little kid didn't piss me off.\"\n49: \"He was annoying but he was annoying in that lovable annoying kind of way.\"\n50: \"He's supposed to be annoying because he's supposed to irritate Tony Stark.\"\n51: \"And it works and you see that so it's kind of funny that Tony Stark throws sarcasm back to this kid.\"\n52: \"And you're like whoa you said that to that kid?\"\n53: \"I mean granted I wanted to say that to kids.\"\n54: \"But you actually did.\"\n55: \"That was actually not that was cool. Good job.\"\n56: \"Now there is a direction they take in this movie at a point about halfway through the movie.\"\n57: \"Where I was like oh that's interesting.\"\n58: \"Some people are going to be pissed.\"\n59: \"Not going to tell you what it is not going to spoil it for you.\"\n60: \"I'm just saying some fans out there are going to be like.\"\n61: \"Done.\"\n62: \"And other people will roll with the movie.\"\n63: \"And that will be the thing.\"\n64: \"Iron Man 3 is a very dividing movie.\"\n65: \"People will walk out of this movie rolling with certain things they do in the movie or walk out going.\"\n66: \"Nope.\"\n67: \"Nope. Not me.\"\n68: \"I myself was one of the people that walked out of Iron Man 3 going.\"\n69: \"Eh all right I can roll with that.\"\n70: \"If you're one of the fans out there who's like no.\"\n71: \"Fuck that shit.\"\n72: \"They didn't need to do that.\"\n73: \"I hate that they did that.\"\n74: \"I hate it.\"\n75: \"I'm not going to tell you you need to get over it because I understand.\"\n76: \"If I was attached to this lore I would hate it too.\"\n77: \"And so much happens in this movie that the movie feels like a half an hour longer than it actually is.\"\n78: \"It's a very investment mood oriented movie.\"\n79: \"I can watch Iron Man 1 all the time.\"\n80: \"My friends could be like you want to watch Iron Man 1? I'll be like yeah sure.\"\n81: \"I got nothing else to do.\"\n82: \"And even if I am doing something put it on, why not?\"\n83: \"Iron Man 3 is one of those movies where it's like.\"\n84: \"I have to want to invest my time in it.\"\n85: \"It's very thick with current it.\"\n86: \"You need to lock in and be like okay.\"\n87: \"We're going to lock in for two hours 15 minutes.\"\n88: \"No casually watching Iron Man 3.\"\n89: \"In the end as a whole I will say Iron Man 3 is worth buying on Blu-ray.\"\n90: \"It was a great sequel.\"\n91: \"It's the most comic book you have the movies but that doesn't matter because God's and Loki and all that.\"\n92: \"That did happen.\"\n93: \"All right so Iron Man 3 have you seen it?\"\n94: \"What's your favorite Iron Man of the three?\"\n95: \"Whatever it is comment below let me know.\"\n96: \"And as always if you like what you've seen here and you want to see more click right here to see more.\"\n97: \"Right here to see more.\"",
-      "raw_response": "[\n  {\n    \"index\": 3,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 4,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 5,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 6,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 7,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 8,\n    \"aspects\": [\"direction\"]\n  },\n  {\n    \"index\": 9,\n    \"aspects\": [\"direction\", \"plot\"]\n  },\n  {\n    \"index\": 10,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 12,\n    \"aspects\": [\"dialogue\", \"plot\"]\n  },\n  {\n    \"index\": 13,\n    \"aspects\": [\"direction\"]\n  },\n  {\n    \"index\": 15,\n    \"aspects\": [\"dialogue\"]\n  },\n  {\n    \"index\": 16,\n    \"aspects\": [\"dialogue\"]\n  },\n  {\n    \"index\": 17,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 18,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 19,\n    \"aspects\": [\"dialogue\"]\n  },\n  {\n    \"index\": 20,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 21,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 22,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 23,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 25,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 26,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 27,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 28,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 29,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 30,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 31,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 33,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 34,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 35,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 36,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 37,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 38,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 39,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 40,\n    \"aspects\": [\"acting\", \"plot\"]\n  },\n  {\n    \"index\": 41,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 42,\n    \"aspects\": [\"cgi\", \"plot\"]\n  },\n  {\n    \"index\": 43,\n    \"aspects\": [\"direction\", \"cgi\"]\n  },\n  {\n    \"index\": 45,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 46,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 47,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 48,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 49,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 50,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 51,\n    \"aspects\": [\"dialogue\", \"acting\"]\n  },\n  {\n    \"index\": 52,\n    \"aspects\": [\"dialogue\"]\n  },\n  {\n    \"index\": 56,\n    \"aspects\": [\"direction\", \"plot\"]\n  },\n  {\n    \"index\": 57,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 58,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 64,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 65,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 76,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 77,\n    \"aspects\": [\"direction\", \"plot\"]\n  },\n  {\n    \"index\": 78,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 90,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 91,\n    \"aspects\": [\"plot\"]\n  }\n]",
+      "segment_count": 109,
+      "prompt": "You are a movie-review analyst. Classify each numbered transcript segment into one or more of these aspects: acting, cgi, dialogue, direction, music, plot.\nRules:\n- Return ONLY segments with clearly relevant movie-review content.\n- Omit generic greetings, sponsor messages, filler, unrelated statements, and uncertain cases.\n- Use only the exact labels listed above.\n- Return a JSON array. Each entry: {\"index\": <int>, \"aspects\": [<label>, ...]}.\n- If no segment qualifies, return an empty array [].\n\nSegments:\n0: \"Iron Man 3 is directed by Shane Black and stars Robert Downey Jr. Don Cheatle, Gwyneth\"\n1: \"Paltrow, Guy Pierce, Ben Kingsley and Rebecca Hall.\"\n2: \"I would say that this is the sequel to Iron Man 2, but I really don't think it is.\"\n3: \"It's really the sequel to the Avengers.\"\n4: \"And in this film, you have Tony Stark grappling with this villain, The Mandarin.\"\n5: \"He's a terrorist.\"\n6: \"He's causing a lot of different terrorist attacks on the Earth, and he's witnessing all\"\n7: \"of this.\"\n8: \"The same time he's having difficulties with his relationship with Gwyneth Paltrow, they're\"\n9: \"having arguments, they're not getting along well, and he is questioning just how much\"\n10: \"of him wants to be Iron Man anymore, and so he sets out on a one-man mission to try\"\n11: \"to find The Mandarin.\"\n12: \"Iron Man 3 is a movie that of course I was looking forward to because if you can't tell\"\n13: \"the things behind me, I am a nerd.\"\n14: \"I like me some movies, and I like me some superhero movies.\"\n15: \"I really love the first Iron Man film, wasn't a big fan of Iron Man 2 adored the Avengers,\"\n16: \"I think that's one of the best superhero films ever made, and for that reason I was very\"\n17: \"much looking forward to Iron Man 3.\"\n18: \"How is the movie?\"\n19: \"Very good.\"\n20: \"Iron Man 3 is a lot of fun.\"\n21: \"Of course, Downey Jr. is back in this role, and you can't really imagine anyone else\"\n22: \"playing this guy, and he proves that so well in this film because you get a lot of sequences\"\n23: \"in this movie, where it's just Tony Stark.\"\n24: \"There isn't as much of Iron Man in the suit fighting in this movie.\"\n25: \"You get a lot of Tony Stark doing a lot of this on his own, having to scrounge for pieces\"\n26: \"and parts.\"\n27: \"Fought a little bit Dark Knight rises, you know, he kind of goes into an area where he doesn't\"\n28: \"really have all this technology at his disposal anymore, and he's forced to improvise to try\"\n29: \"to get himself out of a whole bunch of really messed up situations.\"\n30: \"At first I was like, you know, I'd like to see a little more Iron Man, but you know what?\"\n31: \"I actually started to like it after a while, where it was more just Tony Stark using his\"\n32: \"basic human smarts, because he is a genius billionaire playboy philanthropist.\"\n33: \"And you get a lot of that in this movie, it's way more of a human film than any of the\"\n34: \"other Iron Man films were.\"\n35: \"You get to learn a lot about Tony Stark in this movie, so when he does put on this suit,\"\n36: \"it's all the more enthralling.\"\n37: \"Don't worry if you're weary of any spoilers, I won't give any of them away, I won't\"\n38: \"elude to anything in the film.\"\n39: \"All I'll say is that there are different elements of the plot in this movie that could\"\n40: \"hinge on whether or not you like it or not.\"\n41: \"There are certain things that happen in the film where some comic book fans, especially\"\n42: \"fans of the Iron Man source material, will be very upset.\"\n43: \"And I gotta tell you by far, this is the most different comic book film I've ever seen.\"\n44: \"This film is in no way like the previous Iron Man films, it's in no way like the Avengers,\"\n45: \"it's completely different, it's its own film, it stands apart from those very well.\"\n46: \"And some people will be disappointed by that, because this isn't like a big grand epic\"\n47: \"action-filled extravaganza until the third act.\"\n48: \"There's a lot of Tony Stark being Tony Stark and having to, as I said, scrounge for little\"\n49: \"scraps of technology and try to get out of situations just based off of his intellect.\"\n50: \"And I kinda like that about this movie.\"\n51: \"There was a part of me that wanted more action, that wanted more big set pieces, you get them\"\n52: \"in this film.\"\n53: \"There's a lot of that in this movie.\"\n54: \"And this movie is very clever, and extremely funny, too.\"\n55: \"I think it's actually probably the funniest Iron Man movie out of the three that we've\"\n56: \"had.\"\n57: \"But you can really feel Shane Black, the director in there.\"\n58: \"He wrote Kiss Kiss Bang Bang also with Robert Downey Jr., and he was also Hawkins in Predator,\"\n59: \"if you didn't know that, which is interesting to me.\"\n60: \"But anyway, you can really feel in behind this movie because there are certain elements\"\n61: \"of the screenplay that just feel so different.\"\n62: \"And there are certain elements that didn't work for me.\"\n63: \"For one, certain things happen in the movie that were so easily explained.\"\n64: \"And these things were like extremely big plot points in the first two films.\"\n65: \"Like, how are we gonna do this?\"\n66: \"How are we gonna do that?\"\n67: \"And this film sort of brushed them apart.\"\n68: \"I can't really get into it.\"\n69: \"But there were certain elements of the story that didn't always work.\"\n70: \"About the first 20 minutes of this film, I was like, are we gonna get going here?\"\n71: \"And it did start a little bit slow, and I was disappointed by that.\"\n72: \"Certain characters in the movie are very, very underdeveloped.\"\n73: \"Background people who seem like they're important to the story, but the characters aren't\"\n74: \"really that well developed.\"\n75: \"There were certain times during the movie when I was watching, and I was like, really,\"\n76: \"this is what they're doing.\"\n77: \"This is the direction they're taking.\"\n78: \"And it seems odd, you know?\"\n79: \"But then when you look back on the movie, you can go like, you know, okay, I guess that\"\n80: \"kind of makes sense.\"\n81: \"And it's because there are certain things, once again, about spoiling, that this movie\"\n82: \"does, that you don't really think it's going to do.\"\n83: \"But then when you look back on the film and think about how they set up certain things,\"\n84: \"it makes sense that eventually that happened because they were saying it up that way.\"\n85: \"That's, you know, it's a little hard to explain, and I apologize.\"\n86: \"I really can't get into it without spoiling it.\"\n87: \"I just can't, but I tried.\"\n88: \"I really did.\"\n89: \"I can't spoil it for you, so I won't.\"\n90: \"But I guarantee you certain hardcore comic book fans of Iron Man are going to be disappointed\"\n91: \"by certain things.\"\n92: \"As a film, structurally, it holds together pretty well.\"\n93: \"There are a lot of really great set pieces in this movie.\"\n94: \"It's very funny.\"\n95: \"There's really great special effects.\"\n96: \"The score is good.\"\n97: \"There's a lot of great relationships between Robert Downey Jr. and other characters.\"\n98: \"Don Sheetle, I thought, was much better in this film than he was in Iron Man 2.\"\n99: \"His character was cooler.\"\n100: \"I liked his presence a lot more than in Iron Man 2.\"\n101: \"I liked that they drew back from the whole.\"\n102: \"I'm an awesome playboy, and I'm better than everyone kind of thing.\"\n103: \"He has that still as a character, but it was less abrasive, like it was in Iron Man 2.\"\n104: \"As all villains do in movies, they all have their little cohorts.\"\n105: \"You know, like there's the main film, and they have their little cronies.\"\n106: \"I didn't really like the cronies in this movie.\"\n107: \"There were these guys that helped out the Mandarin and everything, and I just felt like they\"\n108: \"were sort of just there.\"",
+      "raw_response": "[\n  {\n    \"index\": 0,\n    \"aspects\": [\n      \"acting\",\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 1,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 4,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 5,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 6,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 8,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 9,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 10,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 11,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 21,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 22,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 23,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 24,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 25,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 26,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 27,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 28,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 29,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 31,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 32,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 33,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 34,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 35,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 36,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 39,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 40,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 41,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 42,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 46,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 47,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 48,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 49,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 54,\n    \"aspects\": [\n      \"dialogue\"\n    ]\n  },\n  {\n    \"index\": 55,\n    \"aspects\": [\n      \"dialogue\"\n    ]\n  },\n  {\n    \"index\": 56,\n    \"aspects\": [\n      \"dialogue\"\n    ]\n  },\n  {\n    \"index\": 57,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 58,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 60,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 61,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 62,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 63,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 64,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 67,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 69,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 70,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 71,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 72,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 73,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 74,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 77,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 81,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 83,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 84,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 92,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 93,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 95,\n    \"aspects\": [\n      \"cgi\"\n    ]\n  },\n  {\n    \"index\": 96,\n    \"aspects\": [\n      \"music\"\n    ]\n  },\n  {\n    \"index\": 97,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 98,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 99,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 100,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 103,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 106,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 107,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 108,\n    \"aspects\": [\n      \"plot\"\n    ]\n  }\n]",
       "parsed_output": [
         {
-          "index": 3,
+          "index": 0,
           "aspects": [
-            "plot"
+            "acting",
+            "direction"
+          ]
+        },
+        {
+          "index": 1,
+          "aspects": [
+            "acting"
           ]
         },
         {
@@ -34,21 +41,14 @@
           ]
         },
         {
-          "index": 7,
+          "index": 8,
           "aspects": [
             "plot"
           ]
         },
         {
-          "index": 8,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
           "index": 9,
           "aspects": [
-            "direction",
             "plot"
           ]
         },
@@ -59,50 +59,7 @@
           ]
         },
         {
-          "index": 12,
-          "aspects": [
-            "dialogue",
-            "plot"
-          ]
-        },
-        {
-          "index": 13,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
-          "index": 15,
-          "aspects": [
-            "dialogue"
-          ]
-        },
-        {
-          "index": 16,
-          "aspects": [
-            "dialogue"
-          ]
-        },
-        {
-          "index": 17,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 18,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 19,
-          "aspects": [
-            "dialogue"
-          ]
-        },
-        {
-          "index": 20,
+          "index": 11,
           "aspects": [
             "plot"
           ]
@@ -110,17 +67,23 @@
         {
           "index": 21,
           "aspects": [
-            "plot"
+            "acting"
           ]
         },
         {
           "index": 22,
           "aspects": [
-            "plot"
+            "acting"
           ]
         },
         {
           "index": 23,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 24,
           "aspects": [
             "plot"
           ]
@@ -156,13 +119,13 @@
           ]
         },
         {
-          "index": 30,
+          "index": 31,
           "aspects": [
             "plot"
           ]
         },
         {
-          "index": 31,
+          "index": 32,
           "aspects": [
             "plot"
           ]
@@ -192,18 +155,6 @@
           ]
         },
         {
-          "index": 37,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 38,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
           "index": 39,
           "aspects": [
             "plot"
@@ -212,7 +163,6 @@
         {
           "index": 40,
           "aspects": [
-            "acting",
             "plot"
           ]
         },
@@ -224,20 +174,6 @@
         },
         {
           "index": 42,
-          "aspects": [
-            "cgi",
-            "plot"
-          ]
-        },
-        {
-          "index": 43,
-          "aspects": [
-            "direction",
-            "cgi"
-          ]
-        },
-        {
-          "index": 45,
           "aspects": [
             "plot"
           ]
@@ -257,30 +193,23 @@
         {
           "index": 48,
           "aspects": [
-            "acting"
+            "plot"
           ]
         },
         {
           "index": 49,
           "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 50,
-          "aspects": [
             "plot"
           ]
         },
         {
-          "index": 51,
+          "index": 54,
           "aspects": [
-            "dialogue",
-            "acting"
+            "dialogue"
           ]
         },
         {
-          "index": 52,
+          "index": 55,
           "aspects": [
             "dialogue"
           ]
@@ -288,18 +217,41 @@
         {
           "index": 56,
           "aspects": [
-            "direction",
-            "plot"
+            "dialogue"
           ]
         },
         {
           "index": 57,
           "aspects": [
-            "plot"
+            "direction"
           ]
         },
         {
           "index": 58,
+          "aspects": [
+            "direction"
+          ]
+        },
+        {
+          "index": 60,
+          "aspects": [
+            "direction"
+          ]
+        },
+        {
+          "index": 61,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 62,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 63,
           "aspects": [
             "plot"
           ]
@@ -311,13 +263,43 @@
           ]
         },
         {
-          "index": 65,
+          "index": 67,
           "aspects": [
             "plot"
           ]
         },
         {
-          "index": 76,
+          "index": 69,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 70,
+          "aspects": [
+            "direction"
+          ]
+        },
+        {
+          "index": 71,
+          "aspects": [
+            "direction"
+          ]
+        },
+        {
+          "index": 72,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 73,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 74,
           "aspects": [
             "plot"
           ]
@@ -325,24 +307,173 @@
         {
           "index": 77,
           "aspects": [
+            "direction"
+          ]
+        },
+        {
+          "index": 81,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 83,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 84,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 92,
+          "aspects": [
+            "direction"
+          ]
+        },
+        {
+          "index": 93,
+          "aspects": [
+            "direction"
+          ]
+        },
+        {
+          "index": 95,
+          "aspects": [
+            "cgi"
+          ]
+        },
+        {
+          "index": 96,
+          "aspects": [
+            "music"
+          ]
+        },
+        {
+          "index": 97,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 98,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 99,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 100,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 103,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 106,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 107,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 108,
+          "aspects": [
+            "plot"
+          ]
+        }
+      ],
+      "error": null,
+      "status": "success"
+    },
+    {
+      "batch_num": 2,
+      "segment_count": 30,
+      "prompt": "You are a movie-review analyst. Classify each numbered transcript segment into one or more of these aspects: acting, cgi, dialogue, direction, music, plot.\nRules:\n- Return ONLY segments with clearly relevant movie-review content.\n- Omit generic greetings, sponsor messages, filler, unrelated statements, and uncertain cases.\n- Use only the exact labels listed above.\n- Return a JSON array. Each entry: {\"index\": <int>, \"aspects\": [<label>, ...]}.\n- If no segment qualifies, return an empty array [].\n\nSegments:\n109: \"They just seemed like drones, really, even though they were living people, and I didn't\"\n110: \"really like that in this movie.\"\n111: \"Ben Kingsley is very good in the film.\"\n112: \"Guy Pierce is very good in the film.\"\n113: \"Rebecca Hall's character is very underdeveloped, and despite the fact that she's a good actress,\"\n114: \"I didn't really feel like her character had much to do in the movie.\"\n115: \"You go to see Iron Man for Iron Man, Robert Downing Jr., and he was great in this movie.\"\n116: \"What some people may look at as a shortage of action sequences during the second act\"\n117: \"of this movie, I looked at as a way to build the character, and there was still substantial\"\n118: \"action scenes.\"\n119: \"It was Tony Stark doing it, and I really like that.\"\n120: \"It took the film in a different direction, despite the fact that it would have been cool\"\n121: \"I guess to see a little more Iron Man.\"\n122: \"That's just the boy in me wanting to see more Iron Man, though.\"\n123: \"But overall, I really enjoyed Iron Man 3.\"\n124: \"I think that it is much better than Iron Man 2.\"\n125: \"I still like Iron Man 1 more, and I like the Avengers more.\"\n126: \"You just can't beat the Avengers.\"\n127: \"This movie is not like the Avengers at all.\"\n128: \"So please, when you go into Iron Man 3, do not expect it to be as epic, or just humongous,\"\n129: \"as the Avengers was.\"\n130: \"This is a very different type of film, but I think it does what it tries to do very well.\"\n131: \"I'm going to give Iron Man 3 a B+.\"\n132: \"There are some problems in the story elements, certain characters are underdeveloped.\"\n133: \"As I said, hardcore fans of the comics are probably going to find some things to be upset\"\n134: \"about in this film, understandably so.\"\n135: \"Nevertheless, I would recommend seeing Iron Man 3 if you want to have a good time at the\"\n136: \"movies.\"\n137: \"Thanks for watching, guys.\"\n138: \"As always, and if you like this, you can click right here and get stuck in my eyes.\"",
+      "raw_response": "[\n  {\n    \"index\": 109,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 111,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 112,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 113,\n    \"aspects\": [\"acting\", \"plot\"]\n  },\n  {\n    \"index\": 114,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 115,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 116,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 117,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 120,\n    \"aspects\": [\"direction\", \"plot\"]\n  },\n  {\n    \"index\": 132,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 133,\n    \"aspects\": [\"plot\"]\n  }\n]",
+      "parsed_output": [
+        {
+          "index": 109,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 111,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 112,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 113,
+          "aspects": [
+            "acting",
+            "plot"
+          ]
+        },
+        {
+          "index": 114,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 115,
+          "aspects": [
+            "acting"
+          ]
+        },
+        {
+          "index": 116,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 117,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 120,
+          "aspects": [
             "direction",
             "plot"
           ]
         },
         {
-          "index": 78,
+          "index": 132,
           "aspects": [
             "plot"
           ]
         },
         {
-          "index": 90,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 91,
+          "index": 133,
           "aspects": [
             "plot"
           ]
