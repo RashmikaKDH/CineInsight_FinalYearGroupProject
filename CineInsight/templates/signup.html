@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="../static/signup.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='assets/favicon.svg') }}">
 </head>
 <body>
 
@@ -17,7 +19,7 @@
     <header class="main-header">
         <div class="header-container">
             <a href="{{ url_for('index') }}" class="logo-container">
-                <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
                     <rect width="40" height="40" rx="8" fill="#E35614"/>
                     <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
                     <path d="M11 9L14 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -25,11 +27,11 @@
                     <path d="M25 9L28 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
                     <path d="M8 9H32" stroke="white" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                <span class="logo-text">CineInsight</span>
+                <span class="logo-text">Cine<span style="color: #E35614;">Insight</span></span>
             </a>
             <div class="header-actions">
-                <a href="{{ url_for('signin') }}" class="login-link">Login</a>
-                <a href="{{ url_for('signup') }}" class="btn-signup">Sign Up</a>
+                <a href="{{ url_for('signin') }}" class="login-link">Sign In</a>
+                <a href="{{ url_for('signup') }}" class="btn-signup">Get Started</a>
             </div>
         </div>
     </header>
@@ -199,11 +201,7 @@
             <div class="footer-left">
                 <p>&copy; 2026 CineInsight.</p>
             </div>
-            <div class="footer-right">
-                <a href="#privacy" class="footer-link">Privacy</a>
-                <a href="#security" class="footer-link">Security</a>
-                <a href="#contact" class="footer-link">Contact</a>
-            </div>
+
         </div>
     </footer>
 

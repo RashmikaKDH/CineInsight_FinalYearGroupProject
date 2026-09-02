@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Analysis Stylesheet -->
     <link rel="stylesheet" href="../static/analysis.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='assets/favicon.svg') }}">
 </head>
 <body>
 
@@ -34,7 +36,6 @@
                 <ul class="nav-links">
                     <li><a href="{{ url_for('dashboard') }}" class="nav-link">Analysis</a></li>
                     <li><a href="{{ url_for('analysis') }}" class="nav-link active">Reports</a></li>
-                    <li><a href="#settings" class="nav-link">Settings</a></li>
                 </ul>
             </nav>
 
@@ -76,65 +77,6 @@
             <!-- Analysis Results (Hidden until processing is done) -->
             <div id="analysis-results" style="display: none;">
                 
-            <!-- Upper Score Grid -->
-            <section class="upper-grid">
-                
-                <!-- Card 1: Overall Sentiment Score -->
-                <div class="score-card overall-sentiment-card">
-                    <h2 class="card-title-label">Overall Sentiment Score</h2>
-                    
-                    <!-- Gauge Container -->
-                    <div class="gauge-container">
-                        <!-- SVG Semi-circular Gauge -->
-                        <svg class="gauge-svg" width="220" height="130" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Background Track Arc -->
-                            <path d="M 30,110 A 70,70 0 0,1 170,110" stroke="#F1F5F9" stroke-width="14" fill="none" stroke-linecap="round"/>
-                            <!-- Colored Foreground Arc (85% value represents 33 offset out of 220) -->
-                            <path d="M 30,110 A 70,70 0 0,1 170,110" stroke="#10B981" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="33"/>
-                            
-                            <!-- Gauge Inner Text -->
-                            <text x="100" y="82" text-anchor="middle" font-size="28" font-family="'Outfit'" font-weight="700" fill="#10B981">85%</text>
-                            <text x="100" y="104" text-anchor="middle" font-size="12" font-family="'Inter'" font-weight="500" fill="#64748B">Positive</text>
-                        </svg>
-                    </div>
-
-                    <!-- Card Footer Metadata -->
-                    <div class="sentiment-footer-row">
-                        <span class="reviews-count">Based on 1,245 reviews</span>
-                        <span class="trend-indicator">
-                            <!-- Arrow Up Icon -->
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
-                            <span>+5% vs last week</span>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Card 2: Sarcasm Detected Warning -->
-                <div class="score-card sarcasm-detected-card">
-                    <div class="warning-header-row">
-                        <!-- Warning Triangle SVG -->
-                        <svg class="warning-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-                            <line x1="12" y1="9" x2="12" y2="13"/>
-                            <line x1="12" y1="17" x2="12.01" y2="17"/>
-                        </svg>
-                        <h2 class="warning-title">Sarcasm Detected</h2>
-                    </div>
-                    
-                    <p class="warning-description">High likelihood of sarcasm detected in <strong class="red-bold">23%</strong> of the reviews, potentially affecting the overall score accuracy.</p>
-                    
-                    <!-- Report Button -->
-                    <button type="button" class="btn-reasoning-report" id="btn-reasoning-report">
-                        <span class="btn-text">Create Reasoning Report</span>
-                        <span class="badge-why">❓ Why?</span>
-                    </button>
-                    
-                    <span class="warning-help-text">Generate a detailed breakdown of detected sarcasm and linguistic nuances.</span>
-                </div>
-            </section>
 
             <!-- Middle Section: Aspect-Specific Scores -->
             <section class="aspect-section">
@@ -332,9 +274,6 @@
                 <span class="logo-text-footer">CineInsight &copy; 2026</span>
             </div>
             <div class="footer-right">
-                <a href="#terms" class="footer-link">Terms</a>
-                <a href="#privacy" class="footer-link">Privacy</a>
-                <a href="#api" class="footer-link">API</a>
             </div>
         </div>
     </footer>
