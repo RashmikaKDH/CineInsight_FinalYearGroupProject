@@ -1,403 +1,62 @@
 {
   "model": "gemini-3.5-flash",
-  "total_segments": 139,
+  "total_segments": 218,
   "total_batches": 2,
   "batches": [
     {
       "batch_num": 1,
-      "segment_count": 109,
-      "prompt": "You are a movie-review analyst. Classify each numbered transcript segment into one or more of these aspects: acting, cgi, dialogue, direction, music, plot.\nRules:\n- Return ONLY segments with clearly relevant movie-review content.\n- Omit generic greetings, sponsor messages, filler, unrelated statements, and uncertain cases.\n- Use only the exact labels listed above.\n- Return a JSON array. Each entry: {\"index\": <int>, \"aspects\": [<label>, ...]}.\n- If no segment qualifies, return an empty array [].\n\nSegments:\n0: \"Iron Man 3 is directed by Shane Black and stars Robert Downey Jr. Don Cheatle, Gwyneth\"\n1: \"Paltrow, Guy Pierce, Ben Kingsley and Rebecca Hall.\"\n2: \"I would say that this is the sequel to Iron Man 2, but I really don't think it is.\"\n3: \"It's really the sequel to the Avengers.\"\n4: \"And in this film, you have Tony Stark grappling with this villain, The Mandarin.\"\n5: \"He's a terrorist.\"\n6: \"He's causing a lot of different terrorist attacks on the Earth, and he's witnessing all\"\n7: \"of this.\"\n8: \"The same time he's having difficulties with his relationship with Gwyneth Paltrow, they're\"\n9: \"having arguments, they're not getting along well, and he is questioning just how much\"\n10: \"of him wants to be Iron Man anymore, and so he sets out on a one-man mission to try\"\n11: \"to find The Mandarin.\"\n12: \"Iron Man 3 is a movie that of course I was looking forward to because if you can't tell\"\n13: \"the things behind me, I am a nerd.\"\n14: \"I like me some movies, and I like me some superhero movies.\"\n15: \"I really love the first Iron Man film, wasn't a big fan of Iron Man 2 adored the Avengers,\"\n16: \"I think that's one of the best superhero films ever made, and for that reason I was very\"\n17: \"much looking forward to Iron Man 3.\"\n18: \"How is the movie?\"\n19: \"Very good.\"\n20: \"Iron Man 3 is a lot of fun.\"\n21: \"Of course, Downey Jr. is back in this role, and you can't really imagine anyone else\"\n22: \"playing this guy, and he proves that so well in this film because you get a lot of sequences\"\n23: \"in this movie, where it's just Tony Stark.\"\n24: \"There isn't as much of Iron Man in the suit fighting in this movie.\"\n25: \"You get a lot of Tony Stark doing a lot of this on his own, having to scrounge for pieces\"\n26: \"and parts.\"\n27: \"Fought a little bit Dark Knight rises, you know, he kind of goes into an area where he doesn't\"\n28: \"really have all this technology at his disposal anymore, and he's forced to improvise to try\"\n29: \"to get himself out of a whole bunch of really messed up situations.\"\n30: \"At first I was like, you know, I'd like to see a little more Iron Man, but you know what?\"\n31: \"I actually started to like it after a while, where it was more just Tony Stark using his\"\n32: \"basic human smarts, because he is a genius billionaire playboy philanthropist.\"\n33: \"And you get a lot of that in this movie, it's way more of a human film than any of the\"\n34: \"other Iron Man films were.\"\n35: \"You get to learn a lot about Tony Stark in this movie, so when he does put on this suit,\"\n36: \"it's all the more enthralling.\"\n37: \"Don't worry if you're weary of any spoilers, I won't give any of them away, I won't\"\n38: \"elude to anything in the film.\"\n39: \"All I'll say is that there are different elements of the plot in this movie that could\"\n40: \"hinge on whether or not you like it or not.\"\n41: \"There are certain things that happen in the film where some comic book fans, especially\"\n42: \"fans of the Iron Man source material, will be very upset.\"\n43: \"And I gotta tell you by far, this is the most different comic book film I've ever seen.\"\n44: \"This film is in no way like the previous Iron Man films, it's in no way like the Avengers,\"\n45: \"it's completely different, it's its own film, it stands apart from those very well.\"\n46: \"And some people will be disappointed by that, because this isn't like a big grand epic\"\n47: \"action-filled extravaganza until the third act.\"\n48: \"There's a lot of Tony Stark being Tony Stark and having to, as I said, scrounge for little\"\n49: \"scraps of technology and try to get out of situations just based off of his intellect.\"\n50: \"And I kinda like that about this movie.\"\n51: \"There was a part of me that wanted more action, that wanted more big set pieces, you get them\"\n52: \"in this film.\"\n53: \"There's a lot of that in this movie.\"\n54: \"And this movie is very clever, and extremely funny, too.\"\n55: \"I think it's actually probably the funniest Iron Man movie out of the three that we've\"\n56: \"had.\"\n57: \"But you can really feel Shane Black, the director in there.\"\n58: \"He wrote Kiss Kiss Bang Bang also with Robert Downey Jr., and he was also Hawkins in Predator,\"\n59: \"if you didn't know that, which is interesting to me.\"\n60: \"But anyway, you can really feel in behind this movie because there are certain elements\"\n61: \"of the screenplay that just feel so different.\"\n62: \"And there are certain elements that didn't work for me.\"\n63: \"For one, certain things happen in the movie that were so easily explained.\"\n64: \"And these things were like extremely big plot points in the first two films.\"\n65: \"Like, how are we gonna do this?\"\n66: \"How are we gonna do that?\"\n67: \"And this film sort of brushed them apart.\"\n68: \"I can't really get into it.\"\n69: \"But there were certain elements of the story that didn't always work.\"\n70: \"About the first 20 minutes of this film, I was like, are we gonna get going here?\"\n71: \"And it did start a little bit slow, and I was disappointed by that.\"\n72: \"Certain characters in the movie are very, very underdeveloped.\"\n73: \"Background people who seem like they're important to the story, but the characters aren't\"\n74: \"really that well developed.\"\n75: \"There were certain times during the movie when I was watching, and I was like, really,\"\n76: \"this is what they're doing.\"\n77: \"This is the direction they're taking.\"\n78: \"And it seems odd, you know?\"\n79: \"But then when you look back on the movie, you can go like, you know, okay, I guess that\"\n80: \"kind of makes sense.\"\n81: \"And it's because there are certain things, once again, about spoiling, that this movie\"\n82: \"does, that you don't really think it's going to do.\"\n83: \"But then when you look back on the film and think about how they set up certain things,\"\n84: \"it makes sense that eventually that happened because they were saying it up that way.\"\n85: \"That's, you know, it's a little hard to explain, and I apologize.\"\n86: \"I really can't get into it without spoiling it.\"\n87: \"I just can't, but I tried.\"\n88: \"I really did.\"\n89: \"I can't spoil it for you, so I won't.\"\n90: \"But I guarantee you certain hardcore comic book fans of Iron Man are going to be disappointed\"\n91: \"by certain things.\"\n92: \"As a film, structurally, it holds together pretty well.\"\n93: \"There are a lot of really great set pieces in this movie.\"\n94: \"It's very funny.\"\n95: \"There's really great special effects.\"\n96: \"The score is good.\"\n97: \"There's a lot of great relationships between Robert Downey Jr. and other characters.\"\n98: \"Don Sheetle, I thought, was much better in this film than he was in Iron Man 2.\"\n99: \"His character was cooler.\"\n100: \"I liked his presence a lot more than in Iron Man 2.\"\n101: \"I liked that they drew back from the whole.\"\n102: \"I'm an awesome playboy, and I'm better than everyone kind of thing.\"\n103: \"He has that still as a character, but it was less abrasive, like it was in Iron Man 2.\"\n104: \"As all villains do in movies, they all have their little cohorts.\"\n105: \"You know, like there's the main film, and they have their little cronies.\"\n106: \"I didn't really like the cronies in this movie.\"\n107: \"There were these guys that helped out the Mandarin and everything, and I just felt like they\"\n108: \"were sort of just there.\"",
-      "raw_response": "[\n  {\n    \"index\": 0,\n    \"aspects\": [\n      \"acting\",\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 1,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 4,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 5,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 6,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 8,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 9,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 10,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 11,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 21,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 22,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 23,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 24,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 25,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 26,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 27,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 28,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 29,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 31,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 32,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 33,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 34,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 35,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 36,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 39,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 40,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 41,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 42,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 46,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 47,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 48,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 49,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 54,\n    \"aspects\": [\n      \"dialogue\"\n    ]\n  },\n  {\n    \"index\": 55,\n    \"aspects\": [\n      \"dialogue\"\n    ]\n  },\n  {\n    \"index\": 56,\n    \"aspects\": [\n      \"dialogue\"\n    ]\n  },\n  {\n    \"index\": 57,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 58,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 60,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 61,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 62,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 63,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 64,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 67,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 69,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 70,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 71,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 72,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 73,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 74,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 77,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 81,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 83,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 84,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 92,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 93,\n    \"aspects\": [\n      \"direction\"\n    ]\n  },\n  {\n    \"index\": 95,\n    \"aspects\": [\n      \"cgi\"\n    ]\n  },\n  {\n    \"index\": 96,\n    \"aspects\": [\n      \"music\"\n    ]\n  },\n  {\n    \"index\": 97,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 98,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 99,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 100,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 103,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 106,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 107,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 108,\n    \"aspects\": [\n      \"plot\"\n    ]\n  }\n]",
+      "segment_count": 177,
+      "prompt": "You are a movie-review analyst. Classify each numbered transcript segment into one or more of these aspects: acting, cgi, dialogue, direction, music, plot.\nRules:\n- Return ONLY segments with clearly relevant movie-review content.\n- Omit generic greetings, sponsor messages, filler, unrelated statements, and uncertain cases.\n- Use only the exact labels listed above.\n- Return a JSON array. Each entry: {\"index\": <int>, \"aspects\": [<label>, ...]}.\n- If no segment qualifies, return an empty array [].\n\nSegments:\n0: \"Today, we are going to take a look at the toxic review of the film.\"\n1: \"This film is called One Line.\"\n2: \"If we define this film,\"\n3: \"Technical Billions of Milestone in Indian films\"\n4: \"In that, South Indian films\"\n5: \"Will have to take a look at the film.\"\n6: \"One more successful Pan Indian movie\"\n7: \"If you look at the film of Yashod,\"\n8: \"There is no problem.\"\n9: \"How to make a film?\"\n10: \"How to make a film?\"\n11: \"Will the film is in the same film?\"\n12: \"In this film,\"\n13: \"We will collect the film's librarians\"\n14: \"They will not be able to make a film.\"\n15: \"They will preserve it.\"\n16: \"One film is toxic.\"\n17: \"Tell me, how can we make a film?\"\n18: \"I don't know how to describe it.\"\n19: \"If you look at the review part of it,\"\n20: \"you can see the camera and the camera.\"\n21: \"If you look at the movie,\"\n22: \"if you look at the movie,\"\n23: \"you can see the movie.\"\n24: \"Now,\"\n25: \"if you look at it,\"\n26: \"you can see the product\"\n27: \"and the product.\"\n28: \"If you look at it,\"\n29: \"you can see the sky.\"\n30: \"You can see the sky.\"\n31: \"The sky and the sky,\"\n32: \"the sky, the sky.\"\n33: \"You can see the sky.\"\n34: \"You can see the sky.\"\n35: \"You can see the sky.\"\n36: \"If anyone asks me for a positive moment,\"\n37: \"I would ask you to buy it from Satyemos or\"\n38: \"discuss it with me.\"\n39: \"The bed protector!\"\n40: \"Everyone has a bed texture.\"\n41: \"If there is this bed,\"\n42: \"they can sell stories.\"\n43: \"If you review it,\"\n44: \"you know the food you were looking for.\"\n45: \"I don't know about that.\"\n46: \"I have to find a story to tell.\"\n47: \"I don't think that we can find it if you come to the theatre.\"\n48: \"Ok, I will tell you about that story.\"\n49: \"The father died.\"\n50: \"They came to the second floor.\"\n51: \"They were very poor.\"\n52: \"The father was on the way to his life.\"\n53: \"The news also stopped the time.\"\n54: \"He was looking for something.\"\n55: \"He was a actor and a movie actor.\"\n56: \"The father died.\"\n57: \"The father was on the way to his life.\"\n58: \"That's why.\"\n59: \"The father died because of that.\"\n60: \"There are two types of people.\"\n61: \"They are fighting.\"\n62: \"What are they doing in these places?\"\n63: \"This is one of the main concepts.\"\n64: \"See, if you come to know about this story,\"\n65: \"you can see the tweet in social media.\"\n66: \"It is not a story.\"\n67: \"To be very honest,\"\n68: \"there is a story in this story.\"\n69: \"First of all,\"\n70: \"we have to do the work out.\"\n71: \"In the commercial aspect,\"\n72: \"we have seen many different stories.\"\n73: \"There is a scene where\"\n74: \"there is a scene where\"\n75: \"there is a scene where\"\n76: \"there is a scene where\"\n77: \"there is a scene where\"\n78: \"there is a scene where\"\n79: \"there is a scene where\"\n80: \"there is a scene where\"\n81: \"there is a scene where\"\n82: \"there is a scene where\"\n83: \"there is a scene where\"\n84: \"there is a scene where\"\n85: \"there is a scene where\"\n86: \"there is a scene where\"\n87: \"there is a scene where\"\n88: \"there is a scene where\"\n89: \"there is a scene where\"\n90: \"there is a scene where\"\n91: \"there is a scene where\"\n92: \"there is a scene where\"\n93: \"there is a scene where\"\n94: \"there is a scene where\"\n95: \"there is a scene where\"\n96: \"there is a scene where\"\n97: \"there is a scene where\"\n98: \"there is a scene where\"\n99: \"there is a scene where\"\n100: \"there is a scene where\"\n101: \"there is a scene where\"\n102: \"there is a scene where\"\n103: \"there is a scene where\"\n104: \"there is a scene where\"\n105: \"there is a scene where\"\n106: \"there is a scene where\"\n107: \"there is a scene where\"\n108: \"there is a scene where\"\n109: \"This is a story selection, that's a bad story selection, bad director choice, that's what I'm saying.\"\n110: \"some people say, it is another issue.\"\n111: \"We can say it like a movie.\"\n112: \"Even you have watched, you have watched it before.\"\n113: \"So, if you watch that 3 songs, you will get a solution.\"\n114: \"This is like this.\"\n115: \"Don't be so happy to watch this.\"\n116: \"For the first time, we were given a video or thing.\"\n117: \"It is a video that has been reviewed in a movie\"\n118: \"for the first time in the movie.\"\n119: \"So, we would like to know if it is in the film....\"\n120: \"There was no electricity, so they did a deep grinding.\"\n121: \"It would only digest normally.\"\n122: \"ent safest way of thinking,\"\n123: \"that my dad in our family will live in that place before he practices.\"\n124: \"On that day, I peed,\"\n125: \"I peed around a lot at the temple.\"\n126: \"I drank one and the whole campus now.\"\n127: \"I felt to drink was not that bad,\"\n128: \"I also wanted to enjoy the gentlemanly stuff around me.\"\n129: \"When I excelled, my father was right.\"\n130: \"That was the reason I wanted to dissolve sex.\"\n131: \"They came to ask you what is the benefit of this kind of people.\"\n132: \"That is why I am doing this.\"\n133: \"I have an idea, if you can do it, then you should do it.\"\n134: \"Yes, if it is so, what is the best?\"\n135: \"What is the benefit for you like that?\"\n136: \"Just as you said, do you have that feeling of balance?\"\n137: \"Yes, just do it take another step and you will see all the dialogues.\"\n138: \"So, how to be creative.\"\n139: \"We have a lot of knowledge about the girls and girls,\"\n140: \"all of us are creative.\"\n141: \"You have seen this, you will see.\"\n142: \"That's all about the reaction and then it's a matter of understanding and understanding.\"\n143: \"I have a character that speaks for you to be a witness that's what we need to understand.\"\n144: \"For me, as the actor says, I don't have to cognize anyone from the film or him but he also speaks for me.\"\n145: \"So, I don't feel like the story has been taken rather til the end for that.\"\n146: \"I I've got the story.\"\n147: \"I'm not the one who wants to know.\"\n148: \"I'm not the one who can explain the story.\"\n149: \"And then I'm going to understand the story.\"\n150: \"And I think that if you have to tell him about the story,\"\n151: \"This is a string of strings, but screen plays are no better,\"\n152: \"there are no directions, no dialogues at all.\"\n153: \"When a band in a sequence is high,\"\n154: \"there is a sense as the music sets are increased,\"\n155: \"that is called 5,000 bars are being prepared.\"\n156: \"But if a band gets a score,\"\n157: \"that would be the only way.\"\n158: \"So this band is capable of creating a desire\"\n159: \"to gather all the energy at the moment.\"\n160: \"There were some bad guys impossible to control while standing in the middle of the street 15-20 minutes.\"\n161: \"But the mid-final plays were only for the end of the game.\"\n162: \"There were some bad guys in the middle of the street 15-20 minutes.\"\n163: \"And they got good results for it.\"\n164: \"3.\"\n165: \"Yes, he has been doing it for a long time.\"\n166: \"He had used the same act in the KSF to make the situation worse.\"\n167: \"He had had a槍.\"\n168: \"So, on the first appearance, he comes out of the chair and he comes out of the chair andleye.\"\n169: \"His expressions are also in his hair.\"\n170: \"He keeps pulling his legs together with his feet, feet or legs, or legs.\"\n171: \"They are funny.\"\n172: \"This is as if they are together like Devil's Generation.\"\n173: \"They are trying to escape from it.\"\n174: \"They are not holding their power for many times.\"\n175: \"They are doing his own characters.\"\n176: \"They are not trying to carry the same sort of power.\"",
+      "raw_response": "[\n  {\n    \"index\": 109,\n    \"aspects\": [\"direction\", \"plot\"]\n  },\n  {\n    \"index\": 137,\n    \"aspects\": [\"dialogue\"]\n  },\n  {\n    \"index\": 144,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 145,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 152,\n    \"aspects\": [\"dialogue\", \"direction\"]\n  },\n  {\n    \"index\": 154,\n    \"aspects\": [\"music\"]\n  },\n  {\n    \"index\": 166,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 169,\n    \"aspects\": [\"acting\"]\n  }\n]",
       "parsed_output": [
         {
-          "index": 0,
+          "index": 109,
           "aspects": [
-            "acting",
-            "direction"
-          ]
-        },
-        {
-          "index": 1,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 4,
-          "aspects": [
+            "direction",
             "plot"
           ]
         },
         {
-          "index": 5,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 6,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 8,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 9,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 10,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 11,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 21,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 22,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 23,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 24,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 25,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 26,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 27,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 28,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 29,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 31,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 32,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 33,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 34,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 35,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 36,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 39,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 40,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 41,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 42,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 46,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 47,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 48,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 49,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 54,
+          "index": 137,
           "aspects": [
             "dialogue"
           ]
         },
         {
-          "index": 55,
+          "index": 144,
           "aspects": [
-            "dialogue"
+            "acting"
           ]
         },
         {
-          "index": 56,
+          "index": 145,
           "aspects": [
-            "dialogue"
+            "plot"
           ]
         },
         {
-          "index": 57,
+          "index": 152,
           "aspects": [
+            "dialogue",
             "direction"
           ]
         },
         {
-          "index": 58,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
-          "index": 60,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
-          "index": 61,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 62,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 63,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 64,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 67,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 69,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 70,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
-          "index": 71,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
-          "index": 72,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 73,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 74,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 77,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
-          "index": 81,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 83,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 84,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 92,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
-          "index": 93,
-          "aspects": [
-            "direction"
-          ]
-        },
-        {
-          "index": 95,
-          "aspects": [
-            "cgi"
-          ]
-        },
-        {
-          "index": 96,
+          "index": 154,
           "aspects": [
             "music"
           ]
         },
         {
-          "index": 97,
+          "index": 166,
           "aspects": [
             "acting"
           ]
         },
         {
-          "index": 98,
+          "index": 169,
           "aspects": [
             "acting"
-          ]
-        },
-        {
-          "index": 99,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 100,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 103,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 106,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 107,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 108,
-          "aspects": [
-            "plot"
           ]
         }
       ],
@@ -406,74 +65,30 @@
     },
     {
       "batch_num": 2,
-      "segment_count": 30,
-      "prompt": "You are a movie-review analyst. Classify each numbered transcript segment into one or more of these aspects: acting, cgi, dialogue, direction, music, plot.\nRules:\n- Return ONLY segments with clearly relevant movie-review content.\n- Omit generic greetings, sponsor messages, filler, unrelated statements, and uncertain cases.\n- Use only the exact labels listed above.\n- Return a JSON array. Each entry: {\"index\": <int>, \"aspects\": [<label>, ...]}.\n- If no segment qualifies, return an empty array [].\n\nSegments:\n109: \"They just seemed like drones, really, even though they were living people, and I didn't\"\n110: \"really like that in this movie.\"\n111: \"Ben Kingsley is very good in the film.\"\n112: \"Guy Pierce is very good in the film.\"\n113: \"Rebecca Hall's character is very underdeveloped, and despite the fact that she's a good actress,\"\n114: \"I didn't really feel like her character had much to do in the movie.\"\n115: \"You go to see Iron Man for Iron Man, Robert Downing Jr., and he was great in this movie.\"\n116: \"What some people may look at as a shortage of action sequences during the second act\"\n117: \"of this movie, I looked at as a way to build the character, and there was still substantial\"\n118: \"action scenes.\"\n119: \"It was Tony Stark doing it, and I really like that.\"\n120: \"It took the film in a different direction, despite the fact that it would have been cool\"\n121: \"I guess to see a little more Iron Man.\"\n122: \"That's just the boy in me wanting to see more Iron Man, though.\"\n123: \"But overall, I really enjoyed Iron Man 3.\"\n124: \"I think that it is much better than Iron Man 2.\"\n125: \"I still like Iron Man 1 more, and I like the Avengers more.\"\n126: \"You just can't beat the Avengers.\"\n127: \"This movie is not like the Avengers at all.\"\n128: \"So please, when you go into Iron Man 3, do not expect it to be as epic, or just humongous,\"\n129: \"as the Avengers was.\"\n130: \"This is a very different type of film, but I think it does what it tries to do very well.\"\n131: \"I'm going to give Iron Man 3 a B+.\"\n132: \"There are some problems in the story elements, certain characters are underdeveloped.\"\n133: \"As I said, hardcore fans of the comics are probably going to find some things to be upset\"\n134: \"about in this film, understandably so.\"\n135: \"Nevertheless, I would recommend seeing Iron Man 3 if you want to have a good time at the\"\n136: \"movies.\"\n137: \"Thanks for watching, guys.\"\n138: \"As always, and if you like this, you can click right here and get stuck in my eyes.\"",
-      "raw_response": "[\n  {\n    \"index\": 109,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 111,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 112,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 113,\n    \"aspects\": [\"acting\", \"plot\"]\n  },\n  {\n    \"index\": 114,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 115,\n    \"aspects\": [\"acting\"]\n  },\n  {\n    \"index\": 116,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 117,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 120,\n    \"aspects\": [\"direction\", \"plot\"]\n  },\n  {\n    \"index\": 132,\n    \"aspects\": [\"plot\"]\n  },\n  {\n    \"index\": 133,\n    \"aspects\": [\"plot\"]\n  }\n]",
+      "segment_count": 41,
+      "prompt": "You are a movie-review analyst. Classify each numbered transcript segment into one or more of these aspects: acting, cgi, dialogue, direction, music, plot.\nRules:\n- Return ONLY segments with clearly relevant movie-review content.\n- Omit generic greetings, sponsor messages, filler, unrelated statements, and uncertain cases.\n- Use only the exact labels listed above.\n- Return a JSON array. Each entry: {\"index\": <int>, \"aspects\": [<label>, ...]}.\n- If no segment qualifies, return an empty array [].\n\nSegments:\n177: \"Gradually, the idea of how a person is transmitted to Him by giving a video of His own,\"\n178: \"And even this, it is thought that there are a lot of people living in Hyungalam.\"\n179: \"and therefore, if a person lives in Hyungalam,\"\n180: \"A person living in Hyungalam is considered to be a person living in Hyungalam,\"\n181: \"But the idea of the person living in Hyungalam is that\"\n182: \"Everything that happens is that all the places in Hyungalam can be seen,\"\n183: \"From here, they are right here.\"\n184: \"They are not able to come out of the city,\"\n185: \"And, then, they can agree with that.\"\n186: \"I think, they are in Hyungalam.\"\n187: \"But in that, there is a situation where they can not come out of the city\"\n188: \"They have entered Hyungalam.\"\n189: \"We have been sent to Hyungalam as a show.\"\n190: \"If we look at the situation, the lower they will see the wrong way.\"\n191: \"There is a good role and will be a good role in the woman.\"\n192: \"But if the woman has a certain character in her team,\"\n193: \"then the person will see the wrong way.\"\n194: \"The female sexual intercourse is in the middle of the scene too.\"\n195: \"We see they do not accept the police components.\"\n196: \"We see they are checking the police facilities and all the wildlife.\"\n197: \"People and idiots are trying to smoke in a window.\"\n198: \"We see there are so many different types of people here.\"\n199: \"People are very inspired by the cigarette.\"\n200: \"Not even an exaggerate question.\"\n201: \"People are very inspired by the cigarette.\"\n202: \"Green Mat.\"\n203: \"There's a lot of people in India who have a good time seeing this.\"\n204: \"The world's world is so vast.\"\n205: \"How come it's so far?\"\n206: \"There's no point in time that they've been thinking about this world and they've been thinking about it.\"\n207: \"They've been thinking about it for a bit.\"\n208: \"One of the most important points is that they've been thinking about it for a while.\"\n209: \"One of the main things that they've been thinking about is that they've been thinking about it for a while.\"\n210: \"If you have a cup of coffee, you can buy it.\"\n211: \"That's all.\"\n212: \"If you have a good idea, you can buy it.\"\n213: \"You can buy it if you want.\"\n214: \"If you have a cup, you can buy it.\"\n215: \"But you are very difficult to get it.\"\n216: \"That's all.\"\n217: \"Have a good time.\"",
+      "raw_response": "[\n  {\n    \"index\": 184,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 187,\n    \"aspects\": [\n      \"plot\"\n    ]\n  },\n  {\n    \"index\": 191,\n    \"aspects\": [\n      \"acting\"\n    ]\n  },\n  {\n    \"index\": 192,\n    \"aspects\": [\n      \"plot\"\n    ]\n  }\n]",
       "parsed_output": [
         {
-          "index": 109,
+          "index": 184,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 187,
+          "aspects": [
+            "plot"
+          ]
+        },
+        {
+          "index": 191,
           "aspects": [
             "acting"
           ]
         },
         {
-          "index": 111,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 112,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 113,
-          "aspects": [
-            "acting",
-            "plot"
-          ]
-        },
-        {
-          "index": 114,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 115,
-          "aspects": [
-            "acting"
-          ]
-        },
-        {
-          "index": 116,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 117,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 120,
-          "aspects": [
-            "direction",
-            "plot"
-          ]
-        },
-        {
-          "index": 132,
-          "aspects": [
-            "plot"
-          ]
-        },
-        {
-          "index": 133,
+          "index": 192,
           "aspects": [
             "plot"
           ]
