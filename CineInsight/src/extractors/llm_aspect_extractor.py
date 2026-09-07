@@ -48,7 +48,7 @@ MAX_RETRIES: int = 4
 BASE_BACKOFF_SECONDS: float = 3.0
 REQUEST_GAP_SECONDS: float = 2.5
 MAX_SEGMENT_CHARS: int = 1200
-LLM_DEBUG_TRACE_FILE: str = "llm_debug_trace.json"
+LLM_DEBUG_TRACE_FILE: str = "data/debug/llm_debug_trace.json"
 
 # ---------------------------------------------------------------------------
 # Retryable error patterns (case-insensitive match on error string)
@@ -86,9 +86,10 @@ _RESPONSE_SCHEMA = {
 # ---------------------------------------------------------------------------
 
 def _save_llm_trace(trace: dict) -> None:
-    """Persist the full LLM debug trace to llm_debug_trace.json."""
+    """Persist the full LLM debug trace to data/debug/llm_debug_trace.json."""
     import json as _json
     try:
+        os.makedirs(os.path.dirname(LLM_DEBUG_TRACE_FILE), exist_ok=True)
         with open(LLM_DEBUG_TRACE_FILE, "w", encoding="utf-8") as f:
             _json.dump(trace, f, ensure_ascii=False, indent=2)
     except Exception as exc:

@@ -4,7 +4,7 @@ from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
 
-TRACE_FILE = 'debug_trace.json'
+TRACE_FILE = 'data/debug/debug_trace.json'
 
 @app.route('/')
 def index():

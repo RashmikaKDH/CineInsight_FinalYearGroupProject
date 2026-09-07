@@ -9,8 +9,8 @@ from pipeline import download_video
 from src.transcriber import extract_audio, generate_transcript
 from src.extractors.keyword_extractor import ASPECTS_DICT
 
-DEBUG_ASPECT_TRACE_FILE = "debug_aspect_trace.json"
-LLM_DEBUG_TRACE_FILE = "llm_debug_trace.json"
+DEBUG_ASPECT_TRACE_FILE = "data/debug/debug_aspect_trace.json"
+LLM_DEBUG_TRACE_FILE = "data/debug/llm_debug_trace.json"
 
 app = Flask(__name__)
 

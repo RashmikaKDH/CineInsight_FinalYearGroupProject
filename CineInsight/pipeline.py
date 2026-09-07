@@ -146,7 +146,10 @@ def _fallback_tokenize(text, max_length=512):
 
 
 # 1. YouTube Video eka download karana function eka (CHUNKED & FRAGMENTED STREAM SAFE)
-def download_video(url, output_path="temp_video.mp4"):
+def download_video(url, output_path="data/temp_video.mp4"):
+    # Ensure the output directory exists
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
     # Parana kabi files thiyenawa nam auto delete karanawa
     for f in [output_path, output_path + ".part", output_path + ".ytdl"]:
         if os.path.exists(f):

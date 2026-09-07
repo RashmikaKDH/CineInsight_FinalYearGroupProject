@@ -1,7 +1,7 @@
 import json
 import os
 
-TRACE_FILE = 'debug_trace.json'
+TRACE_FILE = 'data/debug/debug_trace.json'
 
 class TraceLogger:
     def __init__(self):
@@ -29,6 +29,7 @@ class TraceLogger:
             "trace": self.trace_data
         }
         try:
+            os.makedirs(os.path.dirname(TRACE_FILE), exist_ok=True)
             with open(TRACE_FILE, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
         except Exception as e:
