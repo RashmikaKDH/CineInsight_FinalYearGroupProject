@@ -1,8 +1,6 @@
 import os
 import tempfile
 from functools import wraps
-import secrets
-from datetime import datetime, timedelta
 
 import mysql.connector
 from flask import Flask, redirect, render_template, request, session, url_for, jsonify, Response, stream_with_context, flash
@@ -178,280 +176,106 @@ def analysis():
 def forgot():
     if request.method == 'POST':
         import re
-
         email = request.form.get('email', '').strip().lower()
 
-        # 1. Email validation
+        # 1. Email format validation
         if not email:
-            return render_template(
-                'forgot.html',
-                error='Please enter your email address.'
-            )
+            return render_template('forgot.html', error='Please enter your email address.')
 
-        email_pattern = re.compile(
-            r'^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$'
-        )
-
+        email_pattern = re.compile(r'^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$')
         if not email_pattern.match(email):
-            return render_template(
-                'forgot.html',
-                error='Please enter a valid email address.'
-            )
+            return render_template('forgot.html', error='Please enter a valid email address.')
 
+        # 2. Database user existence check
         connection = None
         cursor = None
-
         try:
-            # 2. Connect to database
             connection = get_db_connection()
             cursor = connection.cursor(dictionary=True)
-
-            # 3. Check whether the email exists
-            cursor.execute(
-                'SELECT User_Id, Name FROM `USER` WHERE Email = %s LIMIT 1',
-                (email,)
-            )
-
+            cursor.execute('SELECT User_Id, Name FROM `USER` WHERE Email = %s LIMIT 1', (email,))
             user = cursor.fetchone()
-
-            if not user:
-                return render_template(
-                    'forgot.html',
-                    error='No account found with that email address.'
-                )
-
-            # 4. Generate a secure random reset token
-            token = secrets.token_urlsafe(32)
-
-            # 5. Set token expiry time
-            expires_at = datetime.now() + timedelta(minutes=30)
-
-            # 6. Delete old reset tokens for this user
-            cursor.execute(
-                'DELETE FROM password_reset_tokens WHERE user_id = %s',
-                (user['User_Id'],)
-            )
-
-            # 7. Save the new token
-            cursor.execute(
-                '''
-                INSERT INTO password_reset_tokens
-                (user_id, token, expires_at, used)
-                VALUES (%s, %s, %s, %s)
-                ''',
-                (
-                    user['User_Id'],
-                    token,
-                    expires_at,
-                    False
-                )
-            )
-
-            connection.commit()
-
-            # 8. Create the password reset link
-            reset_link = url_for(
-                'reset_password',
-                token=token,
-                _external=True
-            )
-
-            # TEMPORARY:
-            # We will replace this with real email sending
-            # in the next step.
-            print("\n========================================")
-            print("PASSWORD RESET LINK")
-            print(reset_link)
-            print("========================================\n")
-
-            return render_template(
-                'forgot.html',
-                success=True
-            )
-
-        except mysql.connector.Error as e:
-            if connection is not None:
-                connection.rollback()
-
-            print("Database error:", e)
-
-            return render_template(
-                'forgot.html',
-                error='Database error. Please try again.'
-            )
-
+        except mysql.connector.Error:
+            return render_template('forgot.html', error='Database error. Please try again.')
         finally:
             if cursor is not None:
                 cursor.close()
-
             if connection is not None:
                 connection.close()
+
+        if not user:
+            return render_template('forgot.html', error='No account found with that email address.')
+
+        # 3. User exists — show success state
+        return render_template('forgot.html', success=True, email=email)
 
     return render_template('forgot.html')
 
 
 @app.route('/reset-password', methods=['GET', 'POST'])
 def reset_password():
-
-    # Get token from URL when page is opened
-    token = request.args.get('token', '').strip()
-
-    # For POST, get token from hidden form field
     if request.method == 'POST':
-        token = request.form.get('token', '').strip()
-
-    # Token is required
-    if not token:
-        return render_template(
-            'reset-password.html',
-            error='Invalid or missing password reset link.'
-        )
-
-    connection = None
-    cursor = None
-
-    try:
-        # 1. Connect to database
-        connection = get_db_connection()
-        cursor = connection.cursor(dictionary=True)
-
-        # 2. Find valid reset token
-        cursor.execute(
-            '''
-            SELECT prt.user_id, prt.token, prt.expires_at, prt.used,
-                   u.Email, u.Name
-            FROM password_reset_tokens prt
-            INNER JOIN `USER` u ON prt.user_id = u.User_Id
-            WHERE prt.token = %s
-            LIMIT 1
-            ''',
-            (token,)
-        )
-
-        reset_record = cursor.fetchone()
-
-        # 3. Token does not exist
-        if not reset_record:
-            return render_template(
-                'reset-password.html',
-                error='Invalid password reset link.'
-            )
-
-        # 4. Token already used
-        if reset_record['used']:
-            return render_template(
-                'reset-password.html',
-                error='This password reset link has already been used.'
-            )
-
-        # 5. Check token expiry
-        if reset_record['expires_at'] < datetime.now():
-            return render_template(
-                'reset-password.html',
-                error='This password reset link has expired. Please request a new one.'
-            )
-
-        # -------------------------------------------------------
-        # GET → Show reset password form
-        # -------------------------------------------------------
-        if request.method == 'GET':
-            return render_template(
-                'reset-password.html',
-                token=token,
-                email=reset_record['Email']
-            )
-
-        # -------------------------------------------------------
-        # POST → Reset password
-        # -------------------------------------------------------
-
+        email = request.form.get('email', '').strip().lower()
         password = request.form.get('password', '')
         confirm_password = request.form.get('confirm_password', '')
 
-        # 6. Check password fields
+        # 1. Basic field validation
+        if not email:
+            return render_template('reset-password.html', error='Email is missing. Please go back and try again.', email=email)
+
         if not password or not confirm_password:
-            return render_template(
-                'reset-password.html',
-                token=token,
-                email=reset_record['Email'],
-                error='Please fill in all required fields.'
-            )
+            return render_template('reset-password.html', error='Please fill in all required fields.', email=email)
 
-        # 7. Password length
+        # 2. Password strength validation
         if len(password) < 8:
-            return render_template(
-                'reset-password.html',
-                token=token,
-                email=reset_record['Email'],
-                error='Password must be at least 8 characters long.'
-            )
+            return render_template('reset-password.html', error='Password must be at least 8 characters long.', email=email)
 
-        # 8. Password confirmation
+        # 3. Password match validation
         if password != confirm_password:
-            return render_template(
-                'reset-password.html',
-                token=token,
-                email=reset_record['Email'],
-                error='Passwords do not match.'
-            )
+            return render_template('reset-password.html', error='Passwords do not match.', email=email)
 
-        # 9. Hash the new password
-        hashed_password = generate_password_hash(password)
+        # 4. Verify the user actually exists in the database
+        connection = None
+        cursor = None
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('SELECT User_Id FROM `USER` WHERE Email = %s LIMIT 1', (email,))
+            user = cursor.fetchone()
+        except mysql.connector.Error:
+            return render_template('reset-password.html', error='Database error. Please try again.', email=email)
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
 
-        # 10. Update password
-        cursor.execute(
-            '''
-            UPDATE `USER`
-            SET Password = %s
-            WHERE User_Id = %s
-            ''',
-            (
-                hashed_password,
-                reset_record['user_id']
-            )
-        )
+        if not user:
+            return render_template('reset-password.html', error='No account found with that email. Please restart the reset process.', email=email)
 
-        # 11. Mark token as used
-        cursor.execute(
-            '''
-            UPDATE password_reset_tokens
-            SET used = TRUE
-            WHERE token = %s
-            ''',
-            (token,)
-        )
+        # 5. All checks passed — update the password
+        connection = None
+        cursor = None
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            hashed_password = generate_password_hash(password)
+            cursor.execute('UPDATE `USER` SET Password = %s WHERE Email = %s', (hashed_password, email))
+            connection.commit()
+        except mysql.connector.Error:
+            if connection is not None:
+                connection.rollback()
+            return render_template('reset-password.html', error='Database error. Please try again.', email=email)
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
 
-        # 12. Save changes
-        connection.commit()
+        return render_template('reset-password.html', success=True)
 
-        # 13. Success
-        flash(
-            'Password reset successfully! Please sign in with your new password.',
-            'success'
-        )
-
-        return redirect(url_for('signin'))
-
-    except mysql.connector.Error as e:
-
-        if connection is not None:
-            connection.rollback()
-
-        print("Password reset database error:", e)
-
-        return render_template(
-            'reset-password.html',
-            token=token,
-            error='Database error. Please try again.'
-        )
-
-    finally:
-
-        if cursor is not None:
-            cursor.close()
-
-        if connection is not None:
-            connection.close()
+    # GET — pass email from query param so the hidden field is pre-filled
+    email = request.args.get('email', '')
+    return render_template('reset-password.html', email=email)
 
 
 @app.route('/google-login')
