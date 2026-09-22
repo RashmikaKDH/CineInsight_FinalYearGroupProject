@@ -8,7 +8,7 @@
     --color-primary-hover: #C2410C;
     --color-primary-light: rgba(227, 86, 20, 0.06);
     --color-primary-glow: rgba(227, 86, 20, 0.15);
-
+    
     /* Neutral Colors */
     --color-dark: #0A1128;
     --color-text-main: #0F172A;
@@ -16,7 +16,7 @@
     --color-text-light: #64748B;
     --color-border: #E2E8F0;
     --color-input-bg: #F8FAFC;
-
+    
     /* Layout Constants */
     --border-radius: 8px;
     --border-radius-pill: 50px;
@@ -28,8 +28,7 @@
     padding: 0;
 }
 
-html,
-body {
+html, body {
     height: 100%;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: var(--color-text-main);
@@ -45,7 +44,7 @@ body {
 .main-header {
     background-color: #FFFFFF;
     border-bottom: 1px solid var(--color-border);
-    height: 80px;
+    height: 72px;
     display: flex;
     align-items: center;
     position: sticky;
@@ -237,7 +236,6 @@ body {
 .input-group:focus-within .input-label {
     color: var(--color-primary);
 }
-
 .input-group:focus-within .label-icon {
     color: var(--color-primary);
 }
@@ -253,7 +251,6 @@ body {
     gap: 10px;
     cursor: pointer;
     position: relative;
-    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -277,11 +274,11 @@ body {
     transition: all 0.2s ease;
 }
 
-.checkbox-container:hover input~.custom-checkbox {
+.checkbox-container:hover input ~ .custom-checkbox {
     border-color: #94A3B8;
 }
 
-.checkbox-container input:checked~.custom-checkbox {
+.checkbox-container input:checked ~ .custom-checkbox {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
 }
@@ -299,7 +296,7 @@ body {
     transform: rotate(45deg);
 }
 
-.checkbox-container input:checked~.custom-checkbox::after {
+.checkbox-container input:checked ~ .custom-checkbox::after {
     display: block;
 }
 
@@ -562,7 +559,6 @@ body {
         opacity: 0;
         transform: translateY(24px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -576,15 +572,15 @@ body {
     .signup-card {
         max-width: 920px;
     }
-
+    
     .form-panel {
         padding: 40px;
     }
-
+    
     .graphic-panel {
         padding: 40px;
     }
-
+    
     .panel-title {
         font-size: 1.85rem;
     }
@@ -594,34 +590,34 @@ body {
     .page-container {
         padding: 24px 16px;
     }
-
+    
     .signup-card {
         flex-direction: column;
         max-width: 500px;
     }
-
+    
     .form-panel {
         border-right: none;
         border-bottom: 1px solid var(--color-border);
         padding: 36px 24px;
     }
-
+    
     .panel-title {
         font-size: 1.75rem;
     }
-
+    
     .graphic-panel {
         padding: 40px 24px;
     }
-
+    
     .visual-stack {
         height: 240px;
     }
-
+    
     .floating-badge {
         padding: 10px 14px;
     }
-
+    
     .badge-text {
         width: 145px;
         top: 20px;
@@ -645,7 +641,7 @@ body {
         bottom: 45px;
         right: 15px;
     }
-
+    
     .showcase-quote {
         font-size: 1.3rem;
     }
