@@ -2,22 +2,52 @@ import os
 import tempfile
 from functools import wraps
 
+# Load environment variables from .env before accessing os.getenv / os.environ
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 import mysql.connector
 from flask import Flask, redirect, render_template, request, session, url_for, jsonify, Response, stream_with_context, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 import yt_dlp
 import json
+import hashlib
+import re
+import secrets
+from datetime import datetime, timedelta, timezone
 from main import process_youtube_review_generator
 
 # ---------------------------------------------------------------------------
 # Search pipeline service imports
 # ---------------------------------------------------------------------------
+import logging
+
+auth_logger = logging.getLogger("cineinsight.auth")
+if not auth_logger.handlers:
+    auth_handler = logging.StreamHandler()
+    auth_formatter = logging.Formatter("[%(asctime)s] %(levelname)s in %(name)s: %(message)s")
+    auth_handler.setFormatter(auth_formatter)
+    auth_logger.addHandler(auth_handler)
+    auth_logger.setLevel(logging.INFO)
+
 from services.youtube_search import search_movie_reviews
 from services.subtitle_service import download_subtitles, cleanup_subtitle_files
 from services.subtitle_parser import parse_vtt_to_text
 from services.language_detector import get_detector
-from services.trace_logger import logger
-from services.db_service import get_or_create_video, create_analysis, create_reasoning_report
+from services.trace_logger import logger as trace_logger
+from services.db_service import (
+    get_or_create_video,
+    create_analysis,
+    create_reasoning_report,
+    init_password_reset_table,
+    invalidate_user_reset_tokens,
+    create_password_reset_token,
+)
+from services.email_service import send_reset_email, send_password_reset_email
+from services.rate_limiter import rate_limiter
 
 
 app = Flask(__name__)
@@ -63,11 +93,29 @@ def index():
 
 def get_db_connection():
     return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='cineinsight_db',
+        host=os.environ.get('DB_HOST', 'localhost'),
+        user=os.environ.get('DB_USER', 'root'),
+        password=os.environ.get('DB_PASSWORD', ''),
+        database=os.environ.get('DB_NAME', 'cineinsight_db'),
+        port=int(os.environ.get('DB_PORT', 3306)),
     )
+
+
+# Automatically ensure password_reset_tokens table exists on startup
+try:
+    init_password_reset_table()
+except Exception:
+    pass
+
+
+def get_client_ip():
+    """Extract real client IP address, respecting reverse proxies if configured."""
+    if request.headers.get('X-Forwarded-For'):
+        return request.headers['X-Forwarded-For'].split(',')[0].strip()
+    return request.remote_addr or '127.0.0.1'
+
+
+RESET_NEUTRAL_MESSAGE = 'If an account exists for this email, a password reset link has been sent.'
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -173,110 +221,298 @@ def analysis():
     return render_template('analysis.html')
 
 
+# ---------------------------------------------------------------------------
+# Forgot Password & Password Reset Flow
+# ---------------------------------------------------------------------------
+
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
+    """
+    Renders forgot-password page (GET) or processes form submission (POST).
+    Always returns a neutral response to prevent account enumeration.
+    """
     if request.method == 'POST':
-        import re
+        client_ip = get_client_ip()
         email = request.form.get('email', '').strip().lower()
 
-        # 1. Email format validation
-        if not email:
-            return render_template('forgot.html', error='Please enter your email address.')
+        # Rate limit checks
+        ip_allowed, _ = rate_limiter.check_and_record(client_ip, 'forgot_ip', max_requests=5, window_seconds=900)
+        if not ip_allowed:
+            return render_template('forgot.html', error='Too many password reset requests. Please try again later.')
+
+        email_allowed, _ = rate_limiter.check_and_record(email, 'forgot_email', max_requests=3, window_seconds=900)
+        if not email_allowed:
+            return render_template('forgot.html', error='Too many reset requests for this email. Please try again later.')
 
         email_pattern = re.compile(r'^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$')
-        if not email_pattern.match(email):
+        if not email or not email_pattern.match(email):
             return render_template('forgot.html', error='Please enter a valid email address.')
 
-        # 2. Database user existence check
         connection = None
         cursor = None
         try:
             connection = get_db_connection()
             cursor = connection.cursor(dictionary=True)
-            cursor.execute('SELECT User_Id, Name FROM `USER` WHERE Email = %s LIMIT 1', (email,))
+            cursor.execute('SELECT User_Id, Name, Email FROM `user` WHERE Email = %s LIMIT 1', (email,))
             user = cursor.fetchone()
-        except mysql.connector.Error:
-            return render_template('forgot.html', error='Database error. Please try again.')
+
+            if user:
+                # 1. Invalidate any existing unused tokens for this account
+                invalidate_user_reset_tokens(cursor, user['User_Id'])
+
+                # 2. Generate cryptographically secure token & SHA-256 hash
+                raw_token = secrets.token_urlsafe(32)
+                token_hash = hashlib.sha256(raw_token.encode('utf-8')).hexdigest()
+                expires_at = (datetime.now(timezone.utc) + timedelta(minutes=15)).strftime('%Y-%m-%d %H:%M:%S')
+
+                # 3. Store hash in password_reset_tokens
+                create_password_reset_token(cursor, user['User_Id'], token_hash, expires_at)
+                connection.commit()
+
+                # 4. Dispatch email with reset URL
+                reset_base_url = os.environ.get('RESET_PASSWORD_URL', 'http://127.0.0.1:5000/reset-password').rstrip('/')
+                reset_url = f"{reset_base_url}?token={raw_token}"
+                send_reset_email(user['Email'], reset_url)
+
+        except Exception as e:
+            if connection is not None:
+                connection.rollback()
+            auth_logger.error("Error processing password reset request: %s", str(e))
         finally:
             if cursor is not None:
                 cursor.close()
             if connection is not None:
                 connection.close()
 
-        if not user:
-            return render_template('forgot.html', error='No account found with that email address.')
-
-        # 3. User exists — show success state
-        return render_template('forgot.html', success=True, email=email)
+        # Always return the neutral success message
+        return render_template('forgot.html', success=True, message=RESET_NEUTRAL_MESSAGE)
 
     return render_template('forgot.html')
 
 
+@app.route('/api/auth/forgot-password', methods=['POST'])
+def api_forgot_password():
+    """
+    REST API endpoint for forgot-password.
+    Accepts: {"email": "user@example.com"}
+    Always returns: {"message": "If an account exists for this email, a password reset link has been sent."}
+    """
+    client_ip = get_client_ip()
+    data = request.get_json(silent=True) or request.form.to_dict() or {}
+    email = data.get('email', '').strip().lower()
+
+    # 1. Rate limiting
+    ip_allowed, retry_after = rate_limiter.check_and_record(client_ip, 'forgot_ip', max_requests=5, window_seconds=900)
+    if not ip_allowed:
+        return jsonify({'error': 'Too many password reset requests. Please try again later.', 'retry_after': retry_after}), 429
+
+    email_allowed, retry_after = rate_limiter.check_and_record(email, 'forgot_email', max_requests=3, window_seconds=900)
+    if not email_allowed:
+        return jsonify({'error': 'Too many password reset requests for this email. Please try again later.', 'retry_after': retry_after}), 429
+
+    # 2. Email format validation
+    email_pattern = re.compile(r'^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$')
+    if not email or not email_pattern.match(email):
+        return jsonify({'error': 'Please provide a valid email address.'}), 400
+
+    connection = None
+    cursor = None
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute('SELECT User_Id, Name, Email FROM `user` WHERE Email = %s LIMIT 1', (email,))
+        user = cursor.fetchone()
+
+        if user:
+            invalidate_user_reset_tokens(cursor, user['User_Id'])
+            raw_token = secrets.token_urlsafe(32)
+            token_hash = hashlib.sha256(raw_token.encode('utf-8')).hexdigest()
+            expires_at = (datetime.now(timezone.utc) + timedelta(minutes=15)).strftime('%Y-%m-%d %H:%M:%S')
+
+            create_password_reset_token(cursor, user['User_Id'], token_hash, expires_at)
+            connection.commit()
+
+            reset_base_url = os.environ.get('RESET_PASSWORD_URL', 'http://127.0.0.1:5000/reset-password').rstrip('/')
+            reset_url = f"{reset_base_url}?token={raw_token}"
+            send_reset_email(user['Email'], reset_url)
+
+    except Exception as e:
+        if connection is not None:
+            connection.rollback()
+        auth_logger.error("Error during api_forgot_password: %s", str(e))
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if connection is not None:
+            connection.close()
+
+    return jsonify({'message': RESET_NEUTRAL_MESSAGE}), 200
+
+
 @app.route('/reset-password', methods=['GET', 'POST'])
 def reset_password():
+    """
+    Renders password reset page (GET) or updates password (POST).
+    Includes Referrer-Policy: no-referrer header.
+    """
     if request.method == 'POST':
-        email = request.form.get('email', '').strip().lower()
+        client_ip = get_client_ip()
+        ip_allowed, _ = rate_limiter.check_and_record(client_ip, 'reset_ip', max_requests=5, window_seconds=900)
+        if not ip_allowed:
+            resp = render_template('reset-password.html', error='Too many password reset attempts. Please try again later.')
+            return Response(resp, status=429, headers={'Referrer-Policy': 'no-referrer'})
+
+        token = request.form.get('token', '').strip()
         password = request.form.get('password', '')
         confirm_password = request.form.get('confirm_password', '')
 
-        # 1. Basic field validation
-        if not email:
-            return render_template('reset-password.html', error='Email is missing. Please go back and try again.', email=email)
+        if not token:
+            resp = render_template('reset-password.html', error='Missing reset token. Please request a new link.')
+            return Response(resp, status=400, headers={'Referrer-Policy': 'no-referrer'})
 
-        if not password or not confirm_password:
-            return render_template('reset-password.html', error='Please fill in all required fields.', email=email)
+        if not password or len(password) < 8:
+            resp = render_template('reset-password.html', error='Password must be at least 8 characters long.', token=token)
+            return Response(resp, status=400, headers={'Referrer-Policy': 'no-referrer'})
 
-        # 2. Password strength validation
-        if len(password) < 8:
-            return render_template('reset-password.html', error='Password must be at least 8 characters long.', email=email)
-
-        # 3. Password match validation
         if password != confirm_password:
-            return render_template('reset-password.html', error='Passwords do not match.', email=email)
+            resp = render_template('reset-password.html', error='Passwords do not match.', token=token)
+            return Response(resp, status=400, headers={'Referrer-Policy': 'no-referrer'})
 
-        # 4. Verify the user actually exists in the database
-        connection = None
-        cursor = None
-        try:
-            connection = get_db_connection()
-            cursor = connection.cursor(dictionary=True)
-            cursor.execute('SELECT User_Id FROM `USER` WHERE Email = %s LIMIT 1', (email,))
-            user = cursor.fetchone()
-        except mysql.connector.Error:
-            return render_template('reset-password.html', error='Database error. Please try again.', email=email)
-        finally:
-            if cursor is not None:
-                cursor.close()
-            if connection is not None:
-                connection.close()
+        success, err_msg = _execute_password_reset(token, password)
+        if not success:
+            resp = render_template('reset-password.html', error=err_msg, token=token)
+            return Response(resp, status=400, headers={'Referrer-Policy': 'no-referrer'})
 
-        if not user:
-            return render_template('reset-password.html', error='No account found with that email. Please restart the reset process.', email=email)
+        resp = render_template('reset-password.html', success=True)
+        return Response(resp, status=200, headers={'Referrer-Policy': 'no-referrer'})
 
-        # 5. All checks passed — update the password
-        connection = None
-        cursor = None
-        try:
-            connection = get_db_connection()
-            cursor = connection.cursor()
-            hashed_password = generate_password_hash(password)
-            cursor.execute('UPDATE `USER` SET Password = %s WHERE Email = %s', (hashed_password, email))
-            connection.commit()
-        except mysql.connector.Error:
-            if connection is not None:
-                connection.rollback()
-            return render_template('reset-password.html', error='Database error. Please try again.', email=email)
-        finally:
-            if cursor is not None:
-                cursor.close()
-            if connection is not None:
-                connection.close()
+    # GET request
+    token = request.args.get('token', '').strip()
+    if not token:
+        resp = render_template('reset-password.html', error='No reset token provided. Please use the link sent to your email.')
+    else:
+        resp = render_template('reset-password.html', token=token)
 
-        return render_template('reset-password.html', success=True)
+    return Response(
+        resp,
+        headers={
+            'Referrer-Policy': 'no-referrer',
+            'Cache-Control': 'no-store, no-cache, must-revalidate',
+        }
+    )
 
-    # GET — pass email from query param so the hidden field is pre-filled
-    email = request.args.get('email', '')
-    return render_template('reset-password.html', email=email)
+
+@app.route('/api/auth/reset-password', methods=['POST'])
+def api_reset_password():
+    """
+    REST API endpoint for resetting password with a token.
+    Accepts:
+    {
+      "token": "reset-token-from-email",
+      "new_password": "NewSecurePassword123"
+    }
+    """
+    client_ip = get_client_ip()
+    ip_allowed, retry_after = rate_limiter.check_and_record(client_ip, 'reset_ip', max_requests=5, window_seconds=900)
+    if not ip_allowed:
+        return jsonify({'error': 'Too many password reset attempts. Please try again later.', 'retry_after': retry_after}), 429
+
+    data = request.get_json(silent=True) or request.form.to_dict() or {}
+    token = data.get('token', '').strip()
+    new_password = data.get('new_password') or data.get('password') or ''
+    confirm_password = data.get('confirm_password')
+
+    if not token:
+        return jsonify({'error': 'Reset token is required.'}), 400
+
+    if not new_password or len(new_password) < 8:
+        return jsonify({'error': 'Password must be at least 8 characters long.'}), 400
+
+    if confirm_password is not None and new_password != confirm_password:
+        return jsonify({'error': 'Passwords do not match.'}), 400
+
+    success, err_msg = _execute_password_reset(token, new_password)
+    if not success:
+        return jsonify({'error': err_msg}), 400
+
+    return jsonify({'message': 'Password has been reset successfully. Please sign in with your new password.'}), 200
+
+
+def _execute_password_reset(raw_token: str, new_password: str) -> tuple[bool, str]:
+    """
+    Internal helper to validate token and update password inside an atomic transaction.
+    Uses SELECT ... FOR UPDATE on password_reset_tokens to prevent concurrent reuse.
+    """
+    token_hash = hashlib.sha256(raw_token.encode('utf-8')).hexdigest()
+
+    connection = None
+    cursor = None
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # 1. Lock the token record for atomic update
+        cursor.execute(
+            """
+            SELECT id, user_id, expires_at, used_at
+            FROM password_reset_tokens
+            WHERE token_hash = %s
+            FOR UPDATE
+            """,
+            (token_hash,)
+        )
+        token_record = cursor.fetchone()
+
+        if not token_record:
+            connection.rollback()
+            return False, 'Invalid or expired password reset link.'
+
+        if token_record['used_at'] is not None:
+            connection.rollback()
+            return False, 'This password reset link has already been used.'
+
+        expires_at = token_record['expires_at']
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+        now = datetime.now(timezone.utc)
+
+        if expires_at < now:
+            connection.rollback()
+            return False, 'This password reset link has expired. Please request a new one.'
+
+        # 2. Hash new password with existing secure hashing method (scrypt)
+        hashed_password = generate_password_hash(new_password)
+
+        # 3. Update user password
+        cursor.execute(
+            'UPDATE `user` SET Password = %s WHERE User_Id = %s',
+            (hashed_password, token_record['user_id'])
+        )
+
+        # 4. Mark token as used
+        cursor.execute(
+            'UPDATE password_reset_tokens SET used_at = UTC_TIMESTAMP() WHERE id = %s',
+            (token_record['id'],)
+        )
+
+        connection.commit()
+
+        # Invalidate active session for the resetting user
+        session.clear()
+
+        return True, ''
+
+    except Exception as e:
+        if connection is not None:
+            connection.rollback()
+        auth_logger.error("Error executing password reset: %s", str(e))
+        return False, 'Database error while resetting password. Please try again.'
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if connection is not None:
+            connection.close()
+
 
 
 @app.route('/google-login')
