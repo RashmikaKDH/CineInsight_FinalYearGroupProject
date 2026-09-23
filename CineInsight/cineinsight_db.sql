@@ -160,6 +160,26 @@ ALTER TABLE `analysis`
 --
 ALTER TABLE `reasoning_report`
   ADD CONSTRAINT `reasoning_report_ibfk_1` FOREIGN KEY (`Analysis_Id`) REFERENCES `analysis` (`Analysis_Id`) ON DELETE CASCADE;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `token_hash` varchar(64) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `used_at` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `idx_token_hash` (`token_hash`),
+  KEY `idx_user_id` (`user_id`),
+  CONSTRAINT `fk_prt_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`User_Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
