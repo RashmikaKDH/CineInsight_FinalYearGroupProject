@@ -222,3 +222,10 @@ lid.176.bin
 
 # Debug logs
 debug_trace.json
+CineInsight/data/debug/llm_debug_trace.json
+CineInsight/data/llm_output_20260923_011520.csv
+CineInsight/data/llm_output_20260923_085458.csv
+CineInsight/data/llm_output_20260923_102435.csv
+CineInsight/data/processed/audio.wav
+CineInsight/data/processed/audio.wav
+CineInsight/data/processed/audio.wav
