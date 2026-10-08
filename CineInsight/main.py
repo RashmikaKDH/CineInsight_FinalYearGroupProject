@@ -23,7 +23,7 @@ def _save_llm_output_csv(url, aspect_segments):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     csv_path = os.path.join(LLM_CSV_OUTPUT_DIR, f"llm_output_{timestamp}.csv")
 
-    fieldnames = ["segment_id", "start", "end", "text", "aspects", "primary_aspect"]
+    fieldnames = ["segment_id", "start", "end", "text", "aspects", "primary_aspect", "sentiment_label", "aspect_sentiments", "sentiment_status", "sentiment_model"]
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -36,9 +36,13 @@ def _save_llm_output_csv(url, aspect_segments):
                 "text": seg.get("text", ""),
                 "aspects": "|".join(aspects),
                 "primary_aspect": aspects[0] if aspects else "general",
+                "sentiment_label": seg.get("sentiment_label", ""),
+                "aspect_sentiments": json.dumps(seg.get("aspect_sentiments", {}), ensure_ascii=False),
+                "sentiment_status": seg.get("sentiment_status", ""),
+                "sentiment_model": seg.get("sentiment_model", ""),
             })
 
-    print(f"💾 LLM output saved to: {csv_path}  ({len(aspect_segments)} segments)")
+    print(f"LLM output saved to: {csv_path}  ({len(aspect_segments)} segments)")
     return csv_path
 
 
@@ -96,7 +100,7 @@ def process_youtube_review_generator(url):
     yield json.dumps({"status": "progress", "message": "⏳ 4. Transcribing speech to text (Whisper)..."})
     transcript_segments = generate_transcript(audio_path)
     
-    yield json.dumps({"status": "progress", "message": "⏳ 5. Detecting movie aspects..."})
+    yield json.dumps({"status": "progress", "message": "⏳ 5. Detecting movie aspects and sentiment..."})
     if USE_LLM_EXTRACTOR:
         try:
             aspect_segments = extract_aspects_from_segments_llm(transcript_segments)
@@ -112,7 +116,7 @@ def process_youtube_review_generator(url):
                 "message": (
                     "Aspect extraction failed. Pipeline stopped.\n"
                     f"Reason: {error_reason}\n\n"
-                    "To switch to offline mode: open main.py and set USE_LLM_EXTRACTOR = False"
+                    "Completed Gemini batches are cached. Check API limits and retry later."
                 )
             })
             return  # Stop pipeline — do not continue to tensor steps

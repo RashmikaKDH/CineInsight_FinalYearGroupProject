@@ -2,6 +2,10 @@ import os
 import tempfile
 from functools import wraps
 
+# Load environment variables from .env file (must be before any other imports that read env vars)
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
 import mysql.connector
 from flask import Flask, redirect, render_template, request, session, url_for, jsonify, Response, stream_with_context, flash
 from werkzeug.security import check_password_hash, generate_password_hash
