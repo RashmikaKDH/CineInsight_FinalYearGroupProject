@@ -114,7 +114,7 @@ def _extract(segments):
     batch_size = int(os.getenv('GEMINI_SEGMENTS_PER_REQUEST','20'))
     gap = float(os.getenv('GEMINI_REQUEST_GAP_SECONDS','15'))
     max_requests = int(os.getenv('GEMINI_MAX_REQUESTS_PER_RUN','20'))
-    if not 1 <= batch_size <= 20 or gap < 0 or max_requests < 1:
+    if not 1 <= batch_size <= 100 or gap < 0 or max_requests < 1:
         raise RuntimeError('Invalid Gemini batch/gap/request-budget setting.')
     output = [dict(s,aspects=['general'],sentiment_label='not_applicable',
                    aspect_sentiments={},sentiment_status='skipped_empty',sentiment_model='') for s in segments]
