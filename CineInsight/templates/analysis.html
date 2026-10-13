@@ -1,2 +1,153 @@
-{% extends 'report_base.html' %}{% block title %}Prepare analysis{% endblock %}{% block content %}<h1>Movie Review Analysis</h1><section class="card"><p id="progress" role="status">Select a video from the dashboard, or import a completed Colab report.</p><a id="import-link" href="{{ url_for('reports.library') }}">Import Colab Report / Saved Reports →</a></section>
-<script>const u=new URLSearchParams(location.search).get('url'),p=document.getElementById('progress');if(u){p.textContent='Preparing your video. Please keep this page open…';const source=new EventSource('/api/analyze?url='+encodeURIComponent(u));source.onmessage=e=>{try{const d=JSON.parse(e.data);if(d.status==='progress')p.textContent='Preparing your video for analysis…';if(d.status==='completed'){source.close();if(d.db_analysis_id){document.getElementById('import-link').href='/reports?analysis_id='+encodeURIComponent(d.db_analysis_id);}p.textContent='Preparation complete. Run your prepared files in Colab, then import the final report here.';}if(d.status==='error'){source.close();p.textContent='Preparation could not be completed. Please try again.';}}catch{source.close();p.textContent='Unable to read progress. Please try again.';}};source.onerror=()=>{source.close();p.textContent='Connection interrupted. Please return to the dashboard and try again.';};}</script>{% endblock %}
+﻿{% extends 'report_base.html' %}
+{% block title %}Prepare analysis{% endblock %}
+{% block content %}
+<h1>Movie Review Analysis</h1>
+
+<section class="card" id="empty-state" hidden>
+  <p>No video selected. Go back to the <a href="{{ url_for('dashboard') }}">dashboard</a> and click <strong>Analyze Sentiment</strong> on a video.</p>
+</section>
+
+<section class="card" id="processing-panel" hidden>
+  <h2>Preparing your video</h2>
+  <p class="muted">Keep this page open. This usually takes 2&#8211;5 minutes.</p>
+  <ol id="stage-list" aria-live="polite" aria-atomic="false">
+    <li id="stage-download" class="stage stage-pending">Downloading video</li>
+    <li id="stage-audio"    class="stage stage-pending">Extracting WAV audio</li>
+    <li id="stage-whisper"  class="stage stage-pending">Transcribing speech with Whisper</li>
+    <li id="stage-gemini"   class="stage stage-pending">Extracting aspects and sentiment with Gemini</li>
+    <li id="stage-csv"      class="stage stage-pending">Saving the initial CSV</li>
+    <li id="stage-history"  class="stage stage-pending">Saving analysis history</li>
+  </ol>
+  <p id="status-message" role="status" class="status-msg"></p>
+</section>
+
+<section class="card" id="import-section" hidden>
+  <h2>Next step: run the Colab notebook</h2>
+  <p>Your prepared files (video, WAV, initial CSV) are ready. Open the Colab notebook, run all cells, then return here to import the <strong>final explainability CSV</strong> that Colab produces.</p>
+  <p class="muted">The initial CSV saved here contains only raw transcription and aspect labels &#8212; it is <em>not</em> the final Colab report. Do <strong>not</strong> upload the initial CSV on the import page.</p>
+  <a id="import-link" class="btn-import" href="{{ url_for('reports.library') }}">Import Final Colab Report &#8594;</a>
+</section>
+
+<style>
+.stage{padding:9px 0;border-bottom:1px solid #eee;list-style:none;display:flex;align-items:center;gap:12px;font-size:15px}
+.stage::before{content:'\25CB';font-size:18px;flex-shrink:0;color:#8291a4;display:inline-block}
+.stage-active::before{content:'\25CC';color:#e35614;animation:ci-spin 1.4s linear infinite}
+.stage-done::before{content:'\2713';color:#127144}
+.stage-error::before{content:'\2717';color:#9c2424}
+.stage-warning::before{content:'\26A0';color:#b45309}
+.stage-pending{color:#8291a4}
+.stage-active{color:#192437;font-weight:600}
+.stage-done{color:#127144}
+.stage-error{color:#9c2424;font-weight:600}
+.stage-warning{color:#b45309}
+.status-msg{margin-top:18px;min-height:1.4em;font-size:14px}
+.status-msg.s-error{background:#fff0ee;color:#9c2424;padding:14px;border-radius:8px}
+.status-msg.s-warning{background:#fffbeb;color:#92400e;padding:14px;border-radius:8px}
+.status-msg.s-success{color:#127144;font-weight:600}
+.btn-import{display:inline-block;margin-top:14px;background:#b23d0d;color:white;border-radius:8px;padding:12px 22px;text-decoration:none;font-weight:600}
+.btn-import:hover{background:#8f2f09;color:white}
+#stage-list{padding-left:0;margin:16px 0 0}
+@keyframes ci-spin{to{transform:rotate(360deg)}}
+</style>
+
+<script>
+(function(){
+  'use strict';
+  var STAGES=[
+    {id:'stage-download',keys:['download']},
+    {id:'stage-audio',   keys:['audio','wav','extract']},
+    {id:'stage-whisper', keys:['transcript','whisper']},
+    {id:'stage-gemini',  keys:['aspect','sentiment','gemini','llm','detecting']},
+    {id:'stage-csv',     keys:['csv','saving']},
+    {id:'stage-history', keys:['history','database','db']}
+  ];
+  var videoUrl=new URLSearchParams(location.search).get('url');
+  var emptyEl  =document.getElementById('empty-state');
+  var panelEl  =document.getElementById('processing-panel');
+  var importEl =document.getElementById('import-section');
+  var msgEl    =document.getElementById('status-message');
+  if(!videoUrl){emptyEl.hidden=false;return;}
+  panelEl.hidden=false;
+  var currentIdx=-1;
+  function stEl(id){return document.getElementById(id);}
+  function mark(id,state){var el=stEl(id);if(el)el.className='stage stage-'+state;}
+  function activate(idx){
+    if(idx<=currentIdx)return;
+    for(var i=currentIdx+1;i<idx;i++){mark(STAGES[i].id,'done');}
+    if(idx<STAGES.length){mark(STAGES[idx].id,'active');currentIdx=idx;}
+  }
+  function markAllDone(){
+    for(var i=(currentIdx>=0?currentIdx:0);i<STAGES.length;i++){mark(STAGES[i].id,'done');}
+    currentIdx=STAGES.length-1;
+  }
+  function idxFromMsg(msg){
+    if(!msg)return -1;
+    var lo=msg.toLowerCase();
+    for(var i=0;i<STAGES.length;i++){
+      for(var j=0;j<STAGES[i].keys.length;j++){
+        if(lo.indexOf(STAGES[i].keys[j])!==-1)return i;
+      }
+    }
+    return -1;
+  }
+  function setMsg(text,cls){
+    msgEl.textContent=text;
+    msgEl.className='status-msg'+(cls?' '+cls:'');
+  }
+  activate(0);
+  setMsg('Connecting to pipeline...');
+  var sse=null,redirecting=false,lostOnce=false;
+  function closeSSE(){if(sse){sse.close();sse=null;}}
+  function startSSE(){
+    sse=new EventSource('/api/analyze?url='+encodeURIComponent(videoUrl));
+    sse.onmessage=function(ev){
+      var d;
+      try{d=JSON.parse(ev.data);}
+      catch(_){console.warn('[CineInsight] Malformed SSE frame (ignored):',ev.data);return;}
+      var st=d.status||'',msg=d.message||'';
+      if(st==='progress'){
+        var idx=idxFromMsg(msg);
+        if(idx>=0)activate(idx);
+        setMsg(msg);
+      }else if(st==='saving_csv'){
+        activate(4);setMsg(msg||'Saving the initial CSV...');
+      }else if(st==='saving_history'){
+        activate(5);setMsg(msg||'Saving analysis history...');
+      }else if(st==='completed'){
+        if(d.db_save_warning){
+          closeSSE();
+          mark('stage-csv','done');mark('stage-history','warning');
+          setMsg('Prepared files are ready, but history could not be saved: '+d.db_save_warning+' You can still run the Colab notebook. Import the final CSV manually.','s-warning');
+          importEl.hidden=false;return;
+        }
+        var aid=d.db_analysis_id;
+        if(!aid){
+          closeSSE();markAllDone();
+          setMsg('Preparation succeeded but no analysis ID was returned. Import the final CSV manually.','s-warning');
+          importEl.hidden=false;return;
+        }
+        closeSSE();markAllDone();
+        setMsg('Complete! Redirecting...','s-success');
+        redirecting=true;
+        setTimeout(function(){window.location.href='/reports?analysis_id='+encodeURIComponent(aid);},800);
+      }else if(st==='aspect_error'){
+        mark('stage-gemini','error');setMsg(msg,'s-error');
+      }else if(st==='error'){
+        closeSSE();
+        if(currentIdx>=0&&currentIdx<STAGES.length)mark(STAGES[currentIdx].id,'error');
+        setMsg('Preparation failed: '+msg,'s-error');
+      }
+    };
+    sse.onerror=function(){
+      if(redirecting)return;
+      closeSSE();
+      if(!lostOnce){
+        lostOnce=true;
+        setMsg('Connection to the server was lost. The pipeline may still be running. Do not refresh -- return to the dashboard and try again if needed.','s-error');
+      }
+    };
+  }
+  startSSE();
+}());
+</script>
+{% endblock %}

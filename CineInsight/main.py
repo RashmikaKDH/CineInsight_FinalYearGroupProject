@@ -119,10 +119,12 @@ def process_youtube_review_generator(url):
             return  # Stop preparation when Gemini cannot complete
     else:
         aspect_segments = extract_aspects_from_segments(transcript_segments)
+    yield json.dumps({"status": "saving_csv", "message": "5. Saving the initial CSV..."})
     csv_path = None
     if USE_LLM_EXTRACTOR:
         csv_path = _save_llm_output_csv(url, aspect_segments)
     _save_aspect_debug_trace(url, aspect_segments)
+    yield json.dumps({"status": "saving_history", "message": "6. Saving analysis history..."})
 
 
     final_data = {
