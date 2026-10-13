@@ -1,0 +1,15 @@
+{% extends 'report_base.html' %}{% block title %}Import report{% endblock %}{% block content %}
+<h1>Your review reports</h1><p class="muted">Import the final report downloaded from Colab to see sentiment, sarcasm and explanations.</p>
+<section class="card"><h2>Import Colab Report</h2>{% if error %}<p role="alert" class="error">{{ error }}</p>{% endif %}
+<form method="post" enctype="multipart/form-data" id="import-form"><input type="hidden" name="token" value="{{ session.report_token }}">
+<label for="analysis_id">Video from your analysis history</label>
+<select id="analysis_id" name="analysis_id" required {% if not analyses %}disabled{% endif %}>
+<option value="">Choose the video you processed</option>
+{% for analysis in analyses %}<option value="{{ analysis.Analysis_Id }}" {% if selected_id == analysis.Analysis_Id|string %}selected{% endif %}>{{ analysis.YouTube_url }} — {{ analysis.Analysis_Date }} (Analysis {{ analysis.Analysis_Id }})</option>{% endfor %}
+</select>
+{% if not analyses and not error %}<p class="muted">No saved analyses yet. Process a video while signed in, then return here to import its final Colab report.</p>{% endif %}
+<label for="report">Final report CSV</label><input id="report" name="report" type="file" accept=".csv,text/csv" required><p class="muted">Choose the matching final explainability report, up to 5 MB. Choose the CSV for the selected video. The URL is taken automatically from your history; the CSV itself does not identify the video.</p>
+<button type="submit" {% if not analyses %}disabled{% endif %}>Import and view results</button><p id="import-status" role="status"></p></form></section>
+<section class="card"><h2>Saved reports</h2>{% for item in history %}<p><a href="{{ url_for('reports.show',report_id=item.id) }}">{{ item.title }}</a></p>{% else %}<p class="muted">No reports yet. Import your first final CSV above.</p>{% endfor %}</section>
+<script>document.getElementById('import-form').addEventListener('submit',()=>{document.getElementById('import-status').textContent='Checking your report…';document.querySelector('button[type=submit]').disabled=true;});</script>
+{% endblock %}

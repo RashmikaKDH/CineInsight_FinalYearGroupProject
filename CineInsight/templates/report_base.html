@@ -1,0 +1,3 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{% block title %}Reports{% endblock %} · CineInsight</title><link rel="stylesheet" href="{{ url_for('static',filename='reports.css') }}"></head><body>
+<header><a class="brand" href="{{ url_for('dashboard') }}">CineInsight</a><nav><a href="{{ url_for('dashboard') }}">Analysis</a><a href="{{ url_for('reports.library') }}">Reports</a><a href="{{ url_for('profile') }}">Profile</a></nav></header>
+<main>{% block content %}{% endblock %}</main></body></html>

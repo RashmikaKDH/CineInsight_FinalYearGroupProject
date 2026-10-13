@@ -25,6 +25,8 @@ from services.db_service import get_or_create_video, create_analysis, create_rea
 
 
 app = Flask(__name__)
+from services.report_import import reports
+app.register_blueprint(reports)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'cineinsight-dev-secret-key')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'

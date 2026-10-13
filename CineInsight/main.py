@@ -2,7 +2,7 @@ import csv
 import json
 import os
 from datetime import datetime
-from pipeline import download_video, get_text_tensor, get_audio_tensor, get_video_tensor
+from pipeline import download_video
 from src.transcriber import extract_audio, generate_transcript
 from src.extractors.keyword_extractor import extract_aspects_from_segments, ASPECTS_DICT
 from src.extractors.llm_aspect_extractor import extract_aspects_from_segments_llm
@@ -88,19 +88,16 @@ def _save_aspect_debug_trace(url, aspect_segments):
     return trace
 
 def process_youtube_review_generator(url):
-    yield json.dumps({"status": "progress", "message": "⏳ 1. Downloading video and extracting metadata..."})
+    yield json.dumps({"status": "progress", "message": "1. Downloading video..."})
     video_path = download_video(url)
     
-    yield json.dumps({"status": "progress", "message": "⏳ 2. Processing subtitles to generate text tensors..."})
-    text_tensor, raw_text = get_text_tensor(url)
-    
-    yield json.dumps({"status": "progress", "message": "⏳ 3. Extracting clean audio for AI..."})
+    yield json.dumps({"status": "progress", "message": "2. Preparing audio..."})
     audio_path = extract_audio(video_path)
     
-    yield json.dumps({"status": "progress", "message": "⏳ 4. Transcribing speech to text (Whisper)..."})
+    yield json.dumps({"status": "progress", "message": "3. Transcribing speech..."})
     transcript_segments = generate_transcript(audio_path)
     
-    yield json.dumps({"status": "progress", "message": "⏳ 5. Detecting movie aspects and sentiment..."})
+    yield json.dumps({"status": "progress", "message": "4. Detecting movie aspects and sentiment..."})
     if USE_LLM_EXTRACTOR:
         try:
             aspect_segments = extract_aspects_from_segments_llm(transcript_segments)
@@ -119,28 +116,23 @@ def process_youtube_review_generator(url):
                     "Completed Gemini batches are cached. Check API limits and retry later."
                 )
             })
-            return  # Stop pipeline — do not continue to tensor steps
+            return  # Stop preparation when Gemini cannot complete
     else:
         aspect_segments = extract_aspects_from_segments(transcript_segments)
+    csv_path = None
     if USE_LLM_EXTRACTOR:
-        _save_llm_output_csv(url, aspect_segments)
+        csv_path = _save_llm_output_csv(url, aspect_segments)
     _save_aspect_debug_trace(url, aspect_segments)
 
 
-    yield json.dumps({"status": "progress", "message": "⏳ 6. Analyzing audio features to generate audio tensors..."})
-    audio_tensor = get_audio_tensor(video_path)
-    
-    yield json.dumps({"status": "progress", "message": "⏳ 7. Processing video frames to generate visual tensors..."})
-    video_tensor = get_video_tensor(video_path)
-    
     final_data = {
         "status": "completed",
         "url": url,
         "title": f"YouTube Review ({url})",  # TODO: replace with real title from pipeline
-        "text_shape": str(list(text_tensor.shape)),
-        "audio_shape": str(list(audio_tensor.shape)),
-        "video_shape": str(list(video_tensor.shape)),
-        "raw_text_snippet": raw_text[:200] + "..." if raw_text else "No text found",
+        "preparation_status": "ready_for_colab",
+        "video_path": video_path,
+        "audio_path": audio_path,
+        "csv_path": csv_path,
         "total_segments_found": len(aspect_segments),
         "sample_segment": aspect_segments[0] if aspect_segments else None,
         # --- Mock values (to be replaced when scoring pipeline is ready) ---
@@ -157,13 +149,11 @@ def process_youtube_review(url):
         if data["status"] == "progress":
             print(data["message"])
         elif data["status"] == "completed":
-            print("\n✅ OKKOMA TENSORS READY! MEWA THAMAI AI MODEL EKATA WANNE:")
-            print("==================================================")
-            print(f"📝 Text Tensor Shape  : {data['text_shape']}")
-            print(f"🔊 Audio Tensor Shape : {data['audio_shape']}")
-            print(f"🎬 Video Tensor Shape : {data['video_shape']}")
-            print("==================================================")
-            print(f"🗣️ Extract una Subtitle Text eka: \"{data['raw_text_snippet']}\"\n")
+            print("Files ready for Colab:")
+            for name in ("video_path", "audio_path", "csv_path"):
+                print(f"{name}: {data[name]}")
+        elif data["status"] == "error":
+            print(data["message"])
 
 if __name__ == "__main__":
     test_url = "https://youtu.be/ZS8EC2LQlng?si=Ov0qngs1i7zvfxcH"
