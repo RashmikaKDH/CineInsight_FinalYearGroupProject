@@ -37,12 +37,15 @@ import manage_analysis
 from manage_analysis import (
     clear_shared_aspect_cache,
     find_analysis_artifacts,
+    find_shap_results_csv,
     has_symlink_or_junction_in_hierarchy,
     is_path_safe,
     list_analyses,
     run_list,
+    run_recover,
     run_reset,
     staged_delete_analysis,
+    validate_shap_results,
     verify_safe_path,
 )
 from src.extractors.cache_lock import CrossProcessLock
@@ -685,6 +688,165 @@ class TestManageAnalysis(unittest.TestCase):
         branch_404 = content[content.index("response.status===404"):content.index("return;")]
         self.assertNotIn("start()", branch_404)
         self.assertNotIn("location.reload()", branch_404)
+
+    # -------------------------------------------------------------------------
+    # 15. Dual Layout Support and SHAP Artifact Discovery
+    # -------------------------------------------------------------------------
+    def test_find_shap_results_csv_compact_and_legacy(self):
+        with tempfile.TemporaryDirectory() as td:
+            task_dir = Path(td)
+            self.assertIsNone(find_shap_results_csv(task_dir))
+
+            # Legacy layout
+            legacy_dir = task_dir / "inference" / "inference_20261014_064753"
+            legacy_dir.mkdir(parents=True)
+            legacy_csv = legacy_dir / "cineinsight_final_results_with_shap.csv"
+            legacy_csv.write_text("segment_id\ns1\n", encoding="utf-8")
+            self.assertEqual(find_shap_results_csv(task_dir), legacy_csv)
+
+            # Compact layout takes precedence when present
+            compact_dir = task_dir / "run"
+            compact_dir.mkdir(parents=True)
+            compact_csv = compact_dir / "cineinsight_final_results_with_shap.csv"
+            compact_csv.write_text("segment_id\ns1\n", encoding="utf-8")
+            self.assertEqual(find_shap_results_csv(task_dir), compact_csv)
+
+    # -------------------------------------------------------------------------
+    # 16. SHAP Artifact Validation
+    # -------------------------------------------------------------------------
+    def test_validate_shap_results_rules(self):
+        import pandas as pd
+        valid_row = {
+            "segment_id": "seg_0001_plot", "start": 0.0, "end": 2.5, "text": "Great acting.",
+            "aspects": "acting", "primary_aspect": "acting", "sentiment_label": "positive",
+            "aspect_sentiments": '{"acting":"positive"}', "sentiment_status": "completed",
+            "sarcasm_prediction": "Sarcastic", "sarcastic_probability": 0.85, "shap_status": "completed",
+            "text_shap_value": 0.1, "audio_shap_value": -0.05, "video_shap_value": 0.02,
+            "shap_background": "dataset", "dominant_modality": "Text", "dominant_direction": "supports_sarcasm",
+        }
+        df_valid = pd.DataFrame([valid_row])
+        # Valid frame does not raise
+        validate_shap_results(df_valid)
+
+        # Missing required column
+        with self.assertRaises(ValueError):
+            validate_shap_results(df_valid.drop(columns=["dominant_modality"]))
+
+        # Duplicate segment IDs
+        with self.assertRaises(ValueError):
+            validate_shap_results(pd.DataFrame([valid_row, valid_row]))
+
+        # Invalid probability
+        df_bad_prob = df_valid.copy()
+        df_bad_prob["sarcastic_probability"] = 1.5
+        with self.assertRaises(ValueError):
+            validate_shap_results(df_bad_prob)
+
+        # Invalid aspect_sentiments JSON
+        df_bad_json = df_valid.copy()
+        df_bad_json["aspect_sentiments"] = "not-json"
+        with self.assertRaises(ValueError):
+            validate_shap_results(df_bad_json)
+
+    # -------------------------------------------------------------------------
+    # 17. Recovery from Saved SHAP Without Rerunning Earlier Pipeline Stages
+    # -------------------------------------------------------------------------
+    def test_run_recover_without_rerunning_earlier_stages(self):
+        import pandas as pd
+        aid = 14
+        owner_hash = hashlib.sha256(str(self.user_id_1).encode()).hexdigest()
+        task_dir = self.instance_dir / "analysis_runs" / owner_hash / str(aid)
+        legacy_dir = task_dir / "inference" / "inference_20261014_064753_677966"
+        legacy_dir.mkdir(parents=True)
+
+        rows = []
+        for i in range(10):
+            rows.append({
+                "segment_id": f"seg_{i:04d}_plot", "start": float(i * 2), "end": float(i * 2 + 2),
+                "text": f"Review line {i}", "aspects": "plot", "primary_aspect": "plot",
+                "sentiment_label": "positive", "aspect_sentiments": '{"plot":"positive"}',
+                "sentiment_status": "completed",
+                "sarcasm_prediction": "Sarcastic" if i < 2 else "Normal",
+                "sarcastic_probability": 0.85 if i < 2 else 0.10,
+                "shap_status": "completed" if i < 2 else "skipped_normal",
+                "text_shap_value": 0.15 if i < 2 else 0.0,
+                "audio_shap_value": -0.05 if i < 2 else 0.0,
+                "video_shap_value": 0.02 if i < 2 else 0.0,
+                "shap_background": "dataset",
+                "dominant_modality": "Text" if i < 2 else "None",
+                "dominant_direction": "supports_sarcasm" if i < 2 else "none",
+            })
+        shap_df = pd.DataFrame(rows)
+        shap_csv = legacy_dir / "cineinsight_final_results_with_shap.csv"
+        shap_df.to_csv(shap_csv, index=False)
+
+        task_json = task_dir / "task.json"
+        task_json.write_text(json.dumps({
+            "analysis_id": aid, "user_id": self.user_id_1, "url": "https://www.youtube.com/watch?v=test",
+            "status": "failed", "stage": "Gemini reasoning"
+        }), encoding="utf-8")
+
+        mock_row = {
+            "Analysis_Id": aid, "User_Id": self.user_id_1, "User_Name": "Alice",
+            "YouTube_url": "https://www.youtube.com/watch?v=test", "Aspect_Vise_Report": "{}"
+        }
+        mock_conn = RealisticMockConnection(preview_rows=[mock_row])
+
+        with patch.object(manage_analysis.db, "_get_connection", return_value=mock_conn), \
+             patch.object(manage_analysis.db, "save_final_analysis") as mock_save:
+            args = SimpleNamespace(analysis_id=aid, gemini_model=None, skip_gemini=True)
+            exit_code = run_recover(args, instance_dir=self.instance_dir)
+            self.assertEqual(exit_code, 0)
+            mock_save.assert_called_once()
+            call_args = mock_save.call_args.args
+            self.assertEqual(call_args[0], self.user_id_1)
+            self.assertEqual(call_args[1], aid)
+            self.assertEqual(call_args[4], "completed")
+
+        # Compact run directory output was created
+        compact_final = task_dir / "run" / "cineinsight_final_explainability_report.csv"
+        self.assertTrue(compact_final.is_file())
+        self.assertTrue(shap_csv.is_file())  # Original file preserved
+
+        # Imported report was written
+        imported_dir = self.instance_dir / "imported_reports" / owner_hash
+        imported_json = list(imported_dir.glob("*.json"))
+        self.assertEqual(len(imported_json), 1)
+
+        # task.json updated to finished
+        updated_task = json.loads(task_json.read_text(encoding="utf-8"))
+        self.assertEqual(updated_task["status"], "completed")
+        self.assertEqual(updated_task["stage"], "finished")
+        self.assertIn("/reports/", updated_task["result_url"])
+
+    # -------------------------------------------------------------------------
+    # 18. Reset Compatibility with Both Compact and Legacy Layouts
+    # -------------------------------------------------------------------------
+    def test_reset_handles_both_compact_and_legacy_layouts_safely(self):
+        # 1. Compact analysis
+        aid_compact = 701
+        task_dir_comp = self.user_runs_1 / str(aid_compact)
+        (task_dir_comp / "run").mkdir(parents=True, exist_ok=True)
+        (task_dir_comp / "run" / "cineinsight_final_explainability_report.csv").write_text("data\n", encoding="utf-8")
+        all_comp_art = find_analysis_artifacts(self.instance_dir, self.user_id_1, aid_compact)
+
+        conn_comp = RealisticMockConnection(for_update_row={"Analysis_Id": aid_compact, "User_Id": self.user_id_1, "Video_Id": 1})
+        res_comp = staged_delete_analysis(self.instance_dir, self.user_id_1, aid_compact, all_comp_art, conn_comp)
+        self.assertTrue(res_comp["success"])
+        self.assertFalse((task_dir_comp / "run").exists())
+
+        # 2. Legacy analysis with deep nested folder
+        aid_legacy = 702
+        task_dir_leg = self.user_runs_1 / str(aid_legacy)
+        leg_sub = task_dir_leg / "inference" / "inference_20261014_064753_677966"
+        leg_sub.mkdir(parents=True, exist_ok=True)
+        (leg_sub / "cineinsight_final_results_with_shap.csv").write_text("data\n", encoding="utf-8")
+        all_leg_art = find_analysis_artifacts(self.instance_dir, self.user_id_1, aid_legacy)
+
+        conn_leg = RealisticMockConnection(for_update_row={"Analysis_Id": aid_legacy, "User_Id": self.user_id_1, "Video_Id": 2})
+        res_leg = staged_delete_analysis(self.instance_dir, self.user_id_1, aid_legacy, all_leg_art, conn_leg)
+        self.assertTrue(res_leg["success"])
+        self.assertFalse(leg_sub.exists())
 
 
 if __name__ == "__main__":

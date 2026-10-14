@@ -38,13 +38,20 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+import pandas as pd
+from dotenv import load_dotenv
+
 from services import db_service as db
 from services.analysis_worker import (
     owner_dir,
     get_analysis_lock,
     is_analysis_active,
     is_worker_alive,
+    find_inference_csv,
+    write_json,
 )
+from services.report_import import parse_report
+from src import local_inference as inference
 from src.extractors.cache_lock import CrossProcessLock
 from manage_cache import (
     verify_cache_dir_safety,
@@ -55,8 +62,12 @@ from manage_cache import (
 
 def get_instance_dir(root: Path | None = None) -> Path:
     """Return resolved instance directory."""
-    r = (root or PROJECT_ROOT).resolve()
-    return (r / "instance").resolve()
+    if root is not None:
+        r = Path(root).resolve()
+        if r.name == "instance" or (r / "analysis_runs").is_dir():
+            return r
+        return (r / "instance").resolve()
+    return (PROJECT_ROOT / "instance").resolve()
 
 
 def has_symlink_or_junction_in_hierarchy(path: Path) -> bool:
@@ -322,12 +333,12 @@ def staged_delete_analysis(
     try:
         # Record the complete plan BEFORE the first move.
         plan = []
-        for f in sorted(set(artifacts.get("all_files", []))):
+        for index, f in enumerate(sorted(set(artifacts.get("all_files", [])))):
             if f.name == ".task.lock":
                 continue
             source = verify_safe_path(f, allowed_roots)
             if source.is_file():
-                dest = staging_dir / source.relative_to(instance_dir)
+                dest = staging_dir / "files" / f"{index:04d}_{source.name}"
                 verify_safe_path(dest, [staging_base])
                 plan.append((source, dest))
                 manifest["items"].append({"original":str(source),"staged":str(dest),"state":"planned"})
@@ -750,6 +761,297 @@ def run_reset(args, confirm_fn: Callable[[], str] | None = None) -> int:
         conn.close()
 
 
+def find_shap_results_csv(task_dir: Path) -> Path | None:
+    """Find existing cineinsight_final_results_with_shap.csv in compact or legacy paths."""
+    task_dir = Path(task_dir)
+    # 1. Compact run directory
+    compact = task_dir / "run" / "cineinsight_final_results_with_shap.csv"
+    if compact.is_file():
+        return compact
+    # 2. Legacy inference subdirectories
+    legacy_runs = sorted(
+        (task_dir / "inference").glob("inference_*"),
+        key=lambda p: p.stat().st_mtime if p.exists() else 0,
+        reverse=True,
+    )
+    for run in legacy_runs:
+        c = run / "cineinsight_final_results_with_shap.csv"
+        if c.is_file():
+            return c
+    # 3. Flat inference directory
+    direct = task_dir / "inference" / "cineinsight_final_results_with_shap.csv"
+    if direct.is_file():
+        return direct
+    return None
+
+
+def validate_shap_results(df: pd.DataFrame) -> None:
+    """Validate that saved predictions and SHAP results are complete, intact, and valid for Gemini reasoning."""
+    if df.empty:
+        raise ValueError("Saved SHAP results CSV is empty.")
+
+    required = {
+        "segment_id", "start", "end", "text", "aspects", "primary_aspect",
+        "sentiment_label", "aspect_sentiments", "sentiment_status",
+        "sarcasm_prediction", "sarcastic_probability", "shap_status",
+        "text_shap_value", "audio_shap_value", "video_shap_value",
+        "shap_background", "dominant_modality", "dominant_direction"
+    }
+    missing = sorted(required - set(df.columns))
+    if missing:
+        raise ValueError(f"Saved SHAP results CSV is missing required columns: {missing}")
+
+    if df["segment_id"].isna().any() or df["segment_id"].astype(str).str.strip().eq("").any():
+        raise ValueError("Saved SHAP results contain missing or empty segment IDs.")
+    if df["segment_id"].duplicated().any():
+        raise ValueError("Saved SHAP results contain duplicate segment IDs.")
+
+    # Validate predictions
+    if not df["sarcasm_prediction"].isin(["Normal", "Sarcastic"]).all():
+        raise ValueError("Saved SHAP results contain invalid or missing sarcasm predictions.")
+
+    # Validate probabilities
+    probs = pd.to_numeric(df["sarcastic_probability"], errors="coerce")
+    if probs.isna().any() or ((probs < 0) | (probs > 1)).any():
+        raise ValueError("Saved SHAP results contain non-numeric or out-of-range sarcastic probabilities.")
+
+    # Check sarcastic rows have completed SHAP
+    sarcastic_mask = df["sarcasm_prediction"] == "Sarcastic"
+    for col in ("text_shap_value", "audio_shap_value", "video_shap_value"):
+        vals = pd.to_numeric(df.loc[sarcastic_mask, col], errors="coerce")
+        if vals.isna().any():
+            raise ValueError(f"Sarcastic segments have missing or non-numeric SHAP values in {col}.")
+
+    # Validate aspect_sentiments JSON
+    for _, row in df.iterrows():
+        try:
+            mapping = json.loads(str(row["aspect_sentiments"]))
+            if not isinstance(mapping, dict):
+                raise ValueError("aspect_sentiments must be a JSON dictionary.")
+        except Exception as exc:
+            raise ValueError(f"Segment {row['segment_id']} has invalid aspect_sentiments JSON: {exc}")
+
+
+def run_recover(args, instance_dir: Path | None = None) -> int:
+    """Safely recover a failed or interrupted analysis from its saved predictions and SHAP output.
+
+    Guarantees:
+    - Cross-process locking prevents concurrent reset or worker collisions.
+    - Validates existing SHAP results without re-downloading media or rerunning models/SHAP.
+    - Checks SHAP_GEMINI_API_KEY and SHAP_GEMINI_MODEL from .env.
+    - Preserves all original files.
+    - Runs only missing Gemini reasoning using repair_reasoning.
+    - Saves final report in compact run/ directory (immune to Windows MAX_PATH).
+    - Updates analysis record and reasoning_report atomically without duplicate rows.
+    - Populates imported_reports library so report is immediately viewable in the UI.
+    """
+    aid = args.analysis_id
+    inst = get_instance_dir(instance_dir)
+
+    conn = db._get_connection()
+    cursor = conn.cursor(dictionary=True)
+    try:
+        cursor.execute(
+            "SELECT a.Analysis_Id, a.User_Id, u.Name as User_Name, v.YouTube_url, a.Aspect_Vise_Report "
+            "FROM analysis a "
+            "LEFT JOIN youtube_video v ON a.Video_Id = v.Video_Id "
+            "LEFT JOIN user u ON a.User_Id = u.User_Id "
+            "WHERE a.Analysis_Id = %s",
+            (aid,)
+        )
+        row = cursor.fetchone()
+    finally:
+        cursor.close()
+        conn.close()
+
+    if not row:
+        print(f"\n[ERROR] Analysis ID {aid} not found in database.\n", file=sys.stderr)
+        return 1
+
+    user_id = row["User_Id"]
+    user_name = row["User_Name"] or "Unknown"
+    url = row["YouTube_url"] or ""
+
+    # Acquire cross-process analysis lock to prevent concurrent reset or worker execution
+    analysis_lock = get_analysis_lock(inst, user_id, aid, timeout=0)
+    if not analysis_lock.acquire(timeout=5.0):
+        print(f"\n[REFUSED] Analysis {aid} is currently locked by another worker process.\n", file=sys.stderr)
+        return 1
+
+    try:
+        # Check if worker is alive & actively processing
+        if is_analysis_active(inst, user_id, aid, check_lock=False):
+            print(f"\n[REFUSED] Analysis {aid} is actively being processed by a running worker.\n", file=sys.stderr)
+            return 1
+
+        owner_hash = hashlib.sha256(str(user_id).encode()).hexdigest()
+        task_dir = inst / "analysis_runs" / owner_hash / str(aid)
+        if not task_dir.is_dir():
+            print(f"\n[ERROR] Task directory not found: {task_dir}\n", file=sys.stderr)
+            return 1
+
+        shap_csv = find_shap_results_csv(task_dir)
+        if not shap_csv or not shap_csv.is_file():
+            print(f"\n[ERROR] No saved predictions & SHAP CSV found for Analysis {aid}.\n", file=sys.stderr)
+            return 1
+
+        print("\n" + "=" * 76)
+        print("                     CINEINSIGHT PIPELINE RECOVERY                    ")
+        print("=" * 76)
+        print(f"Analysis ID:    {aid}")
+        print(f"Owner:          User {user_id} ({user_name})")
+        print(f"Video URL:      {url}")
+        print(f"SHAP Artifact:  {shap_csv}")
+        print("=" * 76 + "\n")
+
+        print("[1/5] Validating saved predictions and SHAP results...")
+        try:
+            df = pd.read_csv(shap_csv)
+            validate_shap_results(df)
+        except Exception as val_err:
+            print(f"\n[ERROR] Artifact validation failed: {val_err}\n", file=sys.stderr)
+            return 1
+
+        normal_count = int((df["sarcasm_prediction"] == "Normal").sum())
+        sarcastic_count = int((df["sarcasm_prediction"] == "Sarcastic").sum())
+        shap_completed = int((df["shap_status"] == "completed").sum())
+        print(f"      Validation successful: {len(df)} segments total.")
+        print(f"      - Normal segments (SHAP skipped): {normal_count}")
+        print(f"      - Sarcastic segments:              {sarcastic_count} ({shap_completed} SHAP completed)")
+        print("      Earlier pipeline stages (media download, Whisper, feature vectors, SHAP) will NOT be rerun.")
+
+        print("\n[2/5] Loading Gemini reasoning configuration...")
+        load_dotenv(PROJECT_ROOT / ".env", override=False)
+        skip_gemini = getattr(args, "skip_gemini", False)
+        if not skip_gemini:
+            try:
+                api_key, model_name = inference.reasoning_config(cli_model=getattr(args, "gemini_model", None), enabled=True)
+                print(f"      Configuration verified. Model: {model_name}")
+            except Exception as cfg_err:
+                print(f"\n[ERROR] Gemini configuration check failed: {cfg_err}\n", file=sys.stderr)
+                return 1
+        else:
+            api_key, model_name = "", "disabled"
+            print("      Gemini reasoning disabled (--skip-gemini specified).")
+
+        run_dir = task_dir / "run"
+        run_dir.mkdir(parents=True, exist_ok=True)
+        output_csv = run_dir / "cineinsight_final_explainability_report.csv"
+        cache_path = run_dir / "gemini_explanations.json"
+
+        # Preserve the SHAP CSV in the compact run folder if it's not already there
+        compact_shap = run_dir / "cineinsight_final_results_with_shap.csv"
+        if shap_csv.resolve() != compact_shap.resolve() and not compact_shap.exists():
+            shutil.copy2(str(shap_csv), str(compact_shap))
+
+        print(f"\n[3/5] Generating Gemini reasoning explanations...")
+        if not skip_gemini:
+            def make_client():
+                from google import genai
+                return genai.Client(
+                    api_key=api_key,
+                    http_options={"retry_options": {"attempts": 1}, "timeout": 60000}
+                )
+
+            try:
+                report = inference.repair_reasoning(
+                    frame=df,
+                    model_name=model_name,
+                    cache_path=cache_path,
+                    output_path=output_csv,
+                    make_client=make_client,
+                    progress_fn=lambda msg: print(f"      {msg}")
+                )
+            except Exception as reason_err:
+                print(f"\n[ERROR] Reasoning execution failed: {reason_err}\n", file=sys.stderr)
+                return 1
+        else:
+            report = df.copy()
+            report["ai_reasoning"] = "Gemini explanations skipped."
+            report["reasoning_status"] = "disabled"
+            report["reasoning_model"] = "none"
+            report["reasoning_error_code"] = ""
+            report["reasoning_error"] = ""
+            inference.save_csv(report, output_csv)
+
+        incomplete = (
+            report.get("reasoning_status", pd.Series(dtype=str)).isin(["error", "waiting_after_error", "waiting_budget", "pending"]).any() or
+            report.get("shap_status", pd.Series(dtype=str)).eq("error").any()
+        )
+        target_state = "partial" if incomplete else "completed"
+        print(f"      Reasoning stage finished with status: {target_state}")
+
+        print("\n[4/5] Saving final report and importing to user report library...")
+        if not output_csv.is_file():
+            print(f"\n[ERROR] Final CSV was not created: {output_csv}\n", file=sys.stderr)
+            return 1
+
+        raw = output_csv.read_bytes()
+        summary = parse_report(raw)
+        report_id = hashlib.sha256(str(aid).encode() + b"\0" + raw).hexdigest()
+        reports_dir = inst / "imported_reports" / owner_hash
+        reports_dir.mkdir(parents=True, exist_ok=True)
+        summary.update(
+            title=url,
+            id=report_id,
+            analysis_id=aid,
+            video_url=url,
+            analysis_date="",
+            pipeline_status=target_state
+        )
+        (reports_dir / f"{report_id}.csv").write_bytes(raw)
+        write_json(reports_dir / f"{report_id}.json", summary)
+        print(f"      Report imported with ID: {report_id}")
+
+        print("\n[5/5] Updating database records and task status...")
+        try:
+            db.save_final_analysis(user_id, aid, summary, report_id, target_state)
+            db_saved = True
+            print("      Database analysis and reasoning_report records updated successfully.")
+        except Exception as db_err:
+            print(f"\n[WARNING] Database update warning: {db_err}", file=sys.stderr)
+            db_saved = False
+            target_state = "partial"
+            summary.update(pipeline_status="partial", database_save_warning=True)
+            write_json(reports_dir / f"{report_id}.json", summary)
+
+        # Update task.json
+        task_json = task_dir / "task.json"
+        if task_json.is_file():
+            try:
+                t_state = json.loads(task_json.read_text(encoding="utf-8"))
+            except Exception:
+                t_state = {"analysis_id": aid, "user_id": user_id, "url": url}
+            t_state.update(
+                status=target_state,
+                stage="finished",
+                message="Results ready." if target_state == "completed" else "Results available; some explanations or database saving did not complete.",
+                db_saved=db_saved,
+                result_url=f"/reports/{report_id}",
+                download_url=f"/reports/{report_id}/download",
+            )
+            write_json(task_json, t_state)
+            print("      Local task.json state set to finished.")
+
+        # Status.json in run_dir
+        status_path = run_dir / "status.json"
+        status_path.write_text(json.dumps({"status": target_state, "final_csv": str(output_csv)}), encoding="utf-8")
+
+        print("\n" + "=" * 76)
+        print("                        RECOVERY COMPLETE                             ")
+        print("=" * 76)
+        print(f"Analysis ID {aid} was successfully recovered!")
+        print(f"Status:       {target_state.upper()}")
+        print(f"Report URL:   /reports/{report_id}")
+        print(f"Download URL: /reports/{report_id}/download")
+        print(f"Final CSV:    {output_csv}")
+        print("\nYou can now view the results directly in the CineInsight web UI.")
+        print("=" * 76 + "\n")
+        return 0
+    finally:
+        analysis_lock.release()
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="CineInsight Analysis Management & Reset Tool",
@@ -771,11 +1073,21 @@ def main():
         help="Also clear the shared aspect/sentiment cache (affects other videos)",
     )
 
+    # Subcommand: recover
+    recover_parser = subparsers.add_parser("recover", help="Recover a failed or interrupted analysis from saved SHAP output")
+    recover_parser.add_argument("--analysis-id", type=int, required=True, help="Analysis ID to recover")
+    recover_parser.add_argument("--gemini-model", default=None, help="Override SHAP_GEMINI_MODEL")
+    recover_parser.add_argument("--skip-gemini", action="store_true", help="Complete recovery without calling Gemini (sets reasoning to disabled)")
+
     args = parser.parse_args()
     if args.command == "list":
         run_list(args)
     elif args.command == "reset":
         code = run_reset(args)
+        if code != 0:
+            sys.exit(code)
+    elif args.command == "recover":
+        code = run_recover(args)
         if code != 0:
             sys.exit(code)
 

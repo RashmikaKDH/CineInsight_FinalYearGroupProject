@@ -46,4 +46,39 @@ class LocalInferenceTests(unittest.TestCase):
    output=next(Path(d).iterdir())
    self.assertTrue((output/'manifest.json').exists())
    self.assertTrue((output/'validated_segments.csv').exists())
+ def test_save_csv_atomic_and_path_length_diagnosis(self):
+  import pandas as pd
+  df = pd.DataFrame([{"a": 1, "b": "hello"}])
+  with tempfile.TemporaryDirectory() as d:
+   target = Path(d) / "subfolder" / "test.csv"
+   li.save_csv(df, target)
+   self.assertTrue(target.is_file())
+   self.assertFalse(target.with_suffix('.tmp').exists())
+   loaded = pd.read_csv(target)
+   self.assertEqual(loaded.iloc[0]["a"], 1)
+
+   unwritable = target.parent / ("x" * 250) / "file.csv"
+   with self.assertRaises(OSError) as ctx:
+    li.save_csv(df, unwritable)
+   msg = str(ctx.exception)
+   self.assertTrue("path length" in msg or "parent directory" in msg)
+ def test_run_dir_parameter_uses_compact_layout(self):
+  with tempfile.TemporaryDirectory() as d:
+   p = Path(d)
+   for name in ['input.csv', 'video.mp4', 'audio.wav', 'model.pth', 'bg.npy', 'bg.json']:
+    (p / name).write_bytes(b'test')
+   run_dir = p / 'run'
+   args = SimpleNamespace(
+    csv=str(p / 'input.csv'), video=str(p / 'video.mp4'), audio=str(p / 'audio.wav'),
+    model=str(p / 'model.pth'), background=str(p / 'bg.npy'), background_meta=str(p / 'bg.json'),
+    output=str(run_dir), run_dir=str(run_dir), device='cpu', gemini_model='test', skip_gemini=True
+   )
+   source = "results=pd.DataFrame([{'segment_id':'s1','sentiment_label':'positive','sarcasm_prediction':'Normal'}])"
+   with patch.object(li, 'STAGES', [('Synthetic integration fixture', source)]):
+    code = li.run(args)
+   self.assertEqual(code, 0)
+   self.assertTrue(run_dir.is_dir())
+   self.assertTrue((run_dir / 'inputs/segments.csv').is_file())
+   self.assertTrue((run_dir / 'cineinsight_final_explainability_report.csv').is_file())
+   self.assertFalse(list(run_dir.glob('inference_*')))
 if __name__=='__main__':unittest.main()

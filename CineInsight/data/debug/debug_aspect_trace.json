@@ -1,13 +1,13 @@
 {
   "url": "https://www.youtube.com/watch?v=8tDwMmTKlW0",
   "total_segments": 95,
-  "detected_count": 70,
-  "general_count": 25,
+  "detected_count": 60,
+  "general_count": 35,
   "aspect_counts": {
-    "acting": 18,
-    "plot": 37,
+    "acting": 10,
+    "plot": 36,
     "cgi": 0,
-    "direction": 1,
+    "direction": 0,
     "music": 0,
     "dialogue": 14
   },
@@ -1118,9 +1118,9 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0018",
@@ -1177,9 +1177,9 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0019",
@@ -1236,9 +1236,9 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0020",
@@ -1354,9 +1354,9 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0022",
@@ -1413,9 +1413,9 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0023",
@@ -1472,9 +1472,9 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0024",
@@ -1531,9 +1531,9 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0025",
@@ -1767,9 +1767,9 @@
         }
       },
       "aspects": [
-        "acting"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0029",
@@ -5366,9 +5366,9 @@
         }
       },
       "aspects": [
-        "direction"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0090",
@@ -5425,9 +5425,9 @@
         }
       },
       "aspects": [
-        "plot"
+        "general"
       ],
-      "is_general": false
+      "is_general": true
     },
     {
       "segment_id": "seg_0091",

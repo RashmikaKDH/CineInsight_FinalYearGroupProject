@@ -134,6 +134,26 @@ def write_json(path,value):
     temp=path.with_suffix('.tmp')
     temp.write_text(json.dumps(value,ensure_ascii=False),encoding='utf-8');temp.replace(path)
 
+def find_inference_csv(work):
+    work = Path(work)
+    compact = work / 'run' / 'cineinsight_final_explainability_report.csv'
+    if compact.is_file():
+        return compact
+    run_subs = sorted((work / 'run').glob('inference_*'), key=lambda p: p.stat().st_mtime if p.exists() else 0, reverse=True)
+    for s in run_subs:
+        c = s / 'cineinsight_final_explainability_report.csv'
+        if c.is_file():
+            return c
+    legacy_runs = sorted((work / 'inference').glob('inference_*'), key=lambda p: p.stat().st_mtime if p.exists() else 0, reverse=True)
+    for s in legacy_runs:
+        c = s / 'cineinsight_final_explainability_report.csv'
+        if c.is_file():
+            return c
+    legacy_direct = work / 'inference' / 'cineinsight_final_explainability_report.csv'
+    if legacy_direct.is_file():
+        return legacy_direct
+    return None
+
 def valid_url(value):
     parsed=urlparse(value)
     if parsed.scheme not in ('http','https') or parsed.hostname not in ('youtube.com','www.youtube.com','m.youtube.com','youtu.be','www.youtu.be'):
@@ -209,15 +229,14 @@ def process_analysis(instance,user_id,aid):
                 elif data['status'] not in ('aspect_error',):progress(data.get('message','Preparing review…'))
             if not prepared or not prepared.get('csv_path'):raise RuntimeError('Preparation did not produce input files.')
             stage='inference'
+            run_dir = work / 'run'
             args=SimpleNamespace(csv=prepared['csv_path'],video=prepared['video_path'],audio=prepared['audio_path'],
                 model=str(ROOT/'models/cineinsight/cineinsight_crossmodal_attention_best.pth'),
                 background=str(ROOT/'models/cineinsight/shap_background.npy'),background_meta=str(ROOT/'models/cineinsight/shap_background.json'),
-                output=str(work/'inference'),device='auto',gemini_model=None,skip_gemini=False,progress_callback=progress)
+                output=str(run_dir),run_dir=str(run_dir),device='auto',gemini_model=None,skip_gemini=False,progress_callback=progress)
             exit_code=inference.run(args)
-            runs=list((work/'inference').glob('inference_*'))
-            if len(runs)!=1:raise RuntimeError('Unexpected inference output folder.')
-            final_csv=runs[0]/'cineinsight_final_explainability_report.csv'
-            if not final_csv.is_file():raise RuntimeError('Final CSV was not saved.')
+            final_csv=find_inference_csv(work)
+            if not final_csv or not final_csv.is_file():raise RuntimeError('Final CSV was not saved.')
             raw=final_csv.read_bytes();summary=parse_report(raw)
             target_state='partial' if exit_code==2 else 'completed'
             if exit_code not in (0,2):raise RuntimeError('Inference did not complete.')
