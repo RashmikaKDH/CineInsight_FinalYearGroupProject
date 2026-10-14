@@ -17,11 +17,12 @@ USE_LLM_EXTRACTOR = True
 DEBUG_ASPECT_TRACE_FILE = "data/debug/debug_aspect_trace.json"
 LLM_CSV_OUTPUT_DIR = "data"
 
-def _save_llm_output_csv(url, aspect_segments):
+def _save_llm_output_csv(url, aspect_segments, output_dir=None):
     """Save LLM-classified segments to a timestamped CSV in the data/ folder."""
-    os.makedirs(LLM_CSV_OUTPUT_DIR, exist_ok=True)
+    output_dir = str(output_dir or LLM_CSV_OUTPUT_DIR)
+    os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    csv_path = os.path.join(LLM_CSV_OUTPUT_DIR, f"llm_output_{timestamp}.csv")
+    csv_path = os.path.join(output_dir, f"llm_output_{timestamp}.csv")
 
     fieldnames = ["segment_id", "start", "end", "text", "aspects", "primary_aspect", "sentiment_label", "aspect_sentiments", "sentiment_status", "sentiment_model"]
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
@@ -87,12 +88,16 @@ def _save_aspect_debug_trace(url, aspect_segments):
         json.dump(trace, f, ensure_ascii=False, indent=2)
     return trace
 
-def process_youtube_review_generator(url):
+def process_youtube_review_generator(url, work_dir=None):
+    if work_dir is not None:
+        from pathlib import Path
+        work_dir = Path(work_dir).resolve()
+        work_dir.mkdir(parents=True, exist_ok=True)
     yield json.dumps({"status": "progress", "message": "1. Downloading video..."})
-    video_path = download_video(url)
+    video_path = download_video(url, output_path=str(work_dir/"video.mp4")) if work_dir is not None else download_video(url)
     
     yield json.dumps({"status": "progress", "message": "2. Preparing audio..."})
-    audio_path = extract_audio(video_path)
+    audio_path = extract_audio(video_path, audio_path=str(work_dir/"audio.wav")) if work_dir is not None else extract_audio(video_path)
     
     yield json.dumps({"status": "progress", "message": "3. Transcribing speech..."})
     transcript_segments = generate_transcript(audio_path)
@@ -122,7 +127,7 @@ def process_youtube_review_generator(url):
     yield json.dumps({"status": "saving_csv", "message": "5. Saving the initial CSV..."})
     csv_path = None
     if USE_LLM_EXTRACTOR:
-        csv_path = _save_llm_output_csv(url, aspect_segments)
+        csv_path = _save_llm_output_csv(url, aspect_segments, output_dir=work_dir) if work_dir is not None else _save_llm_output_csv(url, aspect_segments)
     _save_aspect_debug_trace(url, aspect_segments)
     yield json.dumps({"status": "saving_history", "message": "6. Saving analysis history..."})
 

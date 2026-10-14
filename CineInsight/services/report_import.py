@@ -6,7 +6,7 @@ import math
 import hashlib
 from collections import Counter
 from pathlib import Path
-from flask import Blueprint, current_app, session, request, render_template, redirect, url_for, abort
+from flask import Blueprint, current_app, session, request, render_template, redirect, url_for, abort, send_file
 
 reports = Blueprint('reports', __name__)
 ASPECTS = ('acting','plot','cgi','direction','music','dialogue','general')
@@ -141,3 +141,12 @@ def show(report_id):
     path=store_dir()/(report_id+'.json')
     if not path.exists():abort(404)
     return render_template('report_results.html',report=json.loads(path.read_text(encoding='utf-8')))
+
+
+@reports.route('/reports/<report_id>/download')
+def download(report_id):
+    if 'user_id' not in session:return redirect(url_for('signin'))
+    if len(report_id)!=64 or any(c not in '0123456789abcdef' for c in report_id):abort(404)
+    path=store_dir()/(report_id+'.csv')
+    if not path.is_file():abort(404)
+    return send_file(path,as_attachment=True,download_name='cineinsight_final_explainability_report.csv')

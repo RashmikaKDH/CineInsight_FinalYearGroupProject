@@ -1,153 +1,40 @@
-﻿{% extends 'report_base.html' %}
-{% block title %}Prepare analysis{% endblock %}
-{% block content %}
+{% extends 'report_base.html' %}{% block title %}Analyze review{% endblock %}{% block content %}
 <h1>Movie Review Analysis</h1>
-
-<section class="card" id="empty-state" hidden>
-  <p>No video selected. Go back to the <a href="{{ url_for('dashboard') }}">dashboard</a> and click <strong>Analyze Sentiment</strong> on a video.</p>
-</section>
-
-<section class="card" id="processing-panel" hidden>
-  <h2>Preparing your video</h2>
-  <p class="muted">Keep this page open. This usually takes 2&#8211;5 minutes.</p>
-  <ol id="stage-list" aria-live="polite" aria-atomic="false">
-    <li id="stage-download" class="stage stage-pending">Downloading video</li>
-    <li id="stage-audio"    class="stage stage-pending">Extracting WAV audio</li>
-    <li id="stage-whisper"  class="stage stage-pending">Transcribing speech with Whisper</li>
-    <li id="stage-gemini"   class="stage stage-pending">Extracting aspects and sentiment with Gemini</li>
-    <li id="stage-csv"      class="stage stage-pending">Saving the initial CSV</li>
-    <li id="stage-history"  class="stage stage-pending">Saving analysis history</li>
-  </ol>
-  <p id="status-message" role="status" class="status-msg"></p>
-</section>
-
-<section class="card" id="import-section" hidden>
-  <h2>Next step: run the Colab notebook</h2>
-  <p>Your prepared files (video, WAV, initial CSV) are ready. Open the Colab notebook, run all cells, then return here to import the <strong>final explainability CSV</strong> that Colab produces.</p>
-  <p class="muted">The initial CSV saved here contains only raw transcription and aspect labels &#8212; it is <em>not</em> the final Colab report. Do <strong>not</strong> upload the initial CSV on the import page.</p>
-  <a id="import-link" class="btn-import" href="{{ url_for('reports.library') }}">Import Final Colab Report &#8594;</a>
-</section>
-
-<style>
-.stage{padding:9px 0;border-bottom:1px solid #eee;list-style:none;display:flex;align-items:center;gap:12px;font-size:15px}
-.stage::before{content:'\25CB';font-size:18px;flex-shrink:0;color:#8291a4;display:inline-block}
-.stage-active::before{content:'\25CC';color:#e35614;animation:ci-spin 1.4s linear infinite}
-.stage-done::before{content:'\2713';color:#127144}
-.stage-error::before{content:'\2717';color:#9c2424}
-.stage-warning::before{content:'\26A0';color:#b45309}
-.stage-pending{color:#8291a4}
-.stage-active{color:#192437;font-weight:600}
-.stage-done{color:#127144}
-.stage-error{color:#9c2424;font-weight:600}
-.stage-warning{color:#b45309}
-.status-msg{margin-top:18px;min-height:1.4em;font-size:14px}
-.status-msg.s-error{background:#fff0ee;color:#9c2424;padding:14px;border-radius:8px}
-.status-msg.s-warning{background:#fffbeb;color:#92400e;padding:14px;border-radius:8px}
-.status-msg.s-success{color:#127144;font-weight:600}
-.btn-import{display:inline-block;margin-top:14px;background:#b23d0d;color:white;border-radius:8px;padding:12px 22px;text-decoration:none;font-weight:600}
-.btn-import:hover{background:#8f2f09;color:white}
-#stage-list{padding-left:0;margin:16px 0 0}
-@keyframes ci-spin{to{transform:rotate(360deg)}}
-</style>
-
+<section class="card" id="empty" hidden>No video selected. <a href="{{ url_for('dashboard') }}">Return to the dashboard</a>.</section>
+<section class="card" id="panel" hidden><h2 id="heading">Analyzing your video</h2><p class="muted">Processing runs locally in the background, one video at a time. CPU processing can take several minutes. Closing this page does not cancel the work.</p>
+<ol id="stages"><li>Video download and audio preparation</li><li>Whisper transcription</li><li>Gemini aspects and sentiment</li><li>Audio, video and text feature extraction</li><li>Trained sarcasm prediction</li><li>SHAP evidence and Gemini explanations</li><li>Save final CSV and database results</li></ol>
+<p id="message" role="status" aria-live="polite">Starting…</p>
+<button id="new-run" type="button" hidden>Start a new analysis of this video</button>
+<button id="reconnect" type="button" hidden>Reconnect to progress</button>
+<a id="results" hidden>View Results</a><p><a href="{{ url_for('dashboard') }}">Back to dashboard</a></p></section>
 <script>
-(function(){
-  'use strict';
-  var STAGES=[
-    {id:'stage-download',keys:['download']},
-    {id:'stage-audio',   keys:['audio','wav','extract']},
-    {id:'stage-whisper', keys:['transcript','whisper']},
-    {id:'stage-gemini',  keys:['aspect','sentiment','gemini','llm','detecting']},
-    {id:'stage-csv',     keys:['csv','saving']},
-    {id:'stage-history', keys:['history','database','db']}
-  ];
-  var videoUrl=new URLSearchParams(location.search).get('url');
-  var emptyEl  =document.getElementById('empty-state');
-  var panelEl  =document.getElementById('processing-panel');
-  var importEl =document.getElementById('import-section');
-  var msgEl    =document.getElementById('status-message');
-  if(!videoUrl){emptyEl.hidden=false;return;}
-  panelEl.hidden=false;
-  var currentIdx=-1;
-  function stEl(id){return document.getElementById(id);}
-  function mark(id,state){var el=stEl(id);if(el)el.className='stage stage-'+state;}
-  function activate(idx){
-    if(idx<=currentIdx)return;
-    for(var i=currentIdx+1;i<idx;i++){mark(STAGES[i].id,'done');}
-    if(idx<STAGES.length){mark(STAGES[idx].id,'active');currentIdx=idx;}
-  }
-  function markAllDone(){
-    for(var i=(currentIdx>=0?currentIdx:0);i<STAGES.length;i++){mark(STAGES[i].id,'done');}
-    currentIdx=STAGES.length-1;
-  }
-  function idxFromMsg(msg){
-    if(!msg)return -1;
-    var lo=msg.toLowerCase();
-    for(var i=0;i<STAGES.length;i++){
-      for(var j=0;j<STAGES[i].keys.length;j++){
-        if(lo.indexOf(STAGES[i].keys[j])!==-1)return i;
-      }
-    }
-    return -1;
-  }
-  function setMsg(text,cls){
-    msgEl.textContent=text;
-    msgEl.className='status-msg'+(cls?' '+cls:'');
-  }
-  activate(0);
-  setMsg('Connecting to pipeline...');
-  var sse=null,redirecting=false,lostOnce=false;
-  function closeSSE(){if(sse){sse.close();sse=null;}}
-  function startSSE(){
-    sse=new EventSource('/api/analyze?url='+encodeURIComponent(videoUrl));
-    sse.onmessage=function(ev){
-      var d;
-      try{d=JSON.parse(ev.data);}
-      catch(_){console.warn('[CineInsight] Malformed SSE frame (ignored):',ev.data);return;}
-      var st=d.status||'',msg=d.message||'';
-      if(st==='progress'){
-        var idx=idxFromMsg(msg);
-        if(idx>=0)activate(idx);
-        setMsg(msg);
-      }else if(st==='saving_csv'){
-        activate(4);setMsg(msg||'Saving the initial CSV...');
-      }else if(st==='saving_history'){
-        activate(5);setMsg(msg||'Saving analysis history...');
-      }else if(st==='completed'){
-        if(d.db_save_warning){
-          closeSSE();
-          mark('stage-csv','done');mark('stage-history','warning');
-          setMsg('Prepared files are ready, but history could not be saved: '+d.db_save_warning+' You can still run the Colab notebook. Import the final CSV manually.','s-warning');
-          importEl.hidden=false;return;
-        }
-        var aid=d.db_analysis_id;
-        if(!aid){
-          closeSSE();markAllDone();
-          setMsg('Preparation succeeded but no analysis ID was returned. Import the final CSV manually.','s-warning');
-          importEl.hidden=false;return;
-        }
-        closeSSE();markAllDone();
-        setMsg('Complete! Redirecting...','s-success');
-        redirecting=true;
-        setTimeout(function(){window.location.href='/reports?analysis_id='+encodeURIComponent(aid);},800);
-      }else if(st==='aspect_error'){
-        mark('stage-gemini','error');setMsg(msg,'s-error');
-      }else if(st==='error'){
-        closeSSE();
-        if(currentIdx>=0&&currentIdx<STAGES.length)mark(STAGES[currentIdx].id,'error');
-        setMsg('Preparation failed: '+msg,'s-error');
-      }
-    };
-    sse.onerror=function(){
-      if(redirecting)return;
-      closeSSE();
-      if(!lostOnce){
-        lostOnce=true;
-        setMsg('Connection to the server was lost. The pipeline may still be running. Do not refresh -- return to the dashboard and try again if needed.','s-error');
-      }
-    };
-  }
-  startSSE();
-}());
-</script>
-{% endblock %}
+(()=>{'use strict';const video=new URLSearchParams(location.search).get('url');
+if(!video){document.getElementById('empty').hidden=false;return;}
+document.getElementById('panel').hidden=false;
+const message=document.getElementById('message'),reconnect=document.getElementById('reconnect'),result=document.getElementById('results');
+const key='cineinsight-analysis:'+{{ session.get('user_id')|tojson }}+':'+video;
+let saved;try{saved=JSON.parse(sessionStorage.getItem(key)||'null');}catch{saved=null;}
+let aid=saved&&saved.analysis_id,requestId=saved&&saved.request_id||crypto.randomUUID();
+sessionStorage.setItem(key,JSON.stringify({request_id:requestId,analysis_id:aid}));
+let timer,stopped=false;
+async function poll(){
+ try{const response=await fetch('/api/analyze/status/'+aid,{cache:'no-store'});if(!response.ok)throw Error('Unable to read progress.');const data=await response.json();
+ message.textContent=data.message;document.getElementById('heading').textContent=data.status==='queued'?'Waiting for processing':data.status==='running'?'Analyzing your video':'Analysis '+data.status;
+ if(['completed','partial','failed','interrupted'].includes(data.status)){stopped=true;document.getElementById('new-run').hidden=false;
+ if(data.result_url){result.href=data.result_url;result.hidden=false;result.textContent=data.status==='partial'?'View available results':'View Results';if(data.status==='completed')location.assign(data.result_url);}
+ else{sessionStorage.removeItem(key);}return;}
+ timer=setTimeout(poll,2000);
+ }catch{message.textContent='Progress connection interrupted. Processing may still be running. Reconnect to check; do not start another analysis.';reconnect.hidden=false;}
+}
+document.getElementById('new-run').onclick=()=>{sessionStorage.removeItem(key);location.reload();};
+reconnect.onclick=()=>{reconnect.hidden=true;if(aid)poll();else start();};
+async function start(){
+ if(aid){poll();return;}
+ try{const response=await fetch('/api/analyze/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:video,request_id:requestId,token:{{ session.get('analysis_token')|tojson }}})});
+ const data=await response.json();if(!response.ok){message.textContent=data.error||'Unable to start analysis.';return;}
+ aid=data.analysis_id;sessionStorage.setItem(key,JSON.stringify({request_id:requestId,analysis_id:aid}));poll();
+ }catch{message.textContent='Unable to confirm whether processing started. Reconnect safely using the same request.';reconnect.hidden=false;}
+}
+start();window.addEventListener('pagehide',()=>clearTimeout(timer));
+})();
+</script>{% endblock %}

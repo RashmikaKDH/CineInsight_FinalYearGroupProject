@@ -27,6 +27,8 @@ from services.db_service import get_or_create_video, create_analysis, create_rea
 app = Flask(__name__)
 from services.report_import import reports
 app.register_blueprint(reports)
+from services.analysis_worker import automation
+app.register_blueprint(automation)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'cineinsight-dev-secret-key')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
@@ -176,6 +178,10 @@ def dashboard():
 
 @app.route('/analysis')
 def analysis():
+    if 'user_id' not in session:
+        return redirect(url_for('signin'))
+    import secrets
+    session.setdefault('analysis_token',secrets.token_urlsafe(32))
     return render_template('analysis.html')
 
 
@@ -520,60 +526,8 @@ def api_trending_reviews():
 
 @app.route('/api/analyze')
 def api_analyze():
-    url = request.args.get('url')
-    if not url:
-        return jsonify({'error': 'No URL provided'}), 400
-
-    # Capture user_id before entering the generator (session not accessible in threads)
-    user_id = session.get('user_id')
-
-    def generate():
-        try:
-            for json_str in process_youtube_review_generator(url):
-                data = json.loads(json_str)
-
-                # When the pipeline finishes successfully, save everything to the DB
-                if data.get('status') == 'completed' and user_id is not None:
-                    try:
-                        # 1. Get or create the youtube_video record
-                        video_id = get_or_create_video(
-                            title=data.get('title', url),
-                            url=data.get('url', url),
-                        )
-
-                        # 2. Create the analysis record (with mock scores for now)
-                        analysis_id = create_analysis(
-                            user_id=user_id,
-                            video_id=video_id,
-                            overall_sentiment_score=data.get('overall_sentiment_score', 0.0),
-                            sarcasm_flag=data.get('sarcasm_flag', False),
-                            aspect_wise_report=data.get('aspect_wise_report'),
-                        )
-
-                        # 3. Create the reasoning_report record
-                        create_reasoning_report(
-                            analysis_id=analysis_id,
-                            generated_text=data.get(
-                                'reasoning_report_text',
-                                'Reasoning report under development.'
-                            ),
-                        )
-
-                        # Attach db IDs to the response so the frontend can reference them
-                        data['db_video_id'] = video_id
-                        data['db_analysis_id'] = analysis_id
-
-                    except Exception as db_err:
-                        # Non-fatal: surface the DB error in the response without crashing
-                        data['db_save_warning'] = f'DB save failed: {str(db_err)}'
-
-                # SSE format: "data: {json}\n\n"
-                yield f"data: {json.dumps(data)}\n\n"
-        except Exception as e:
-            error_json = json.dumps({"status": "error", "message": f"Pipeline Error: {str(e)}"})
-            yield f"data: {error_json}\n\n"
-
-    return Response(stream_with_context(generate()), mimetype='text/event-stream')
+    # GET must never start expensive background work or create database records.
+    return jsonify({'error':'Use the authenticated Analyze screen to start processing.'}), 405
 
 
 # ---------------------------------------------------------------------------
