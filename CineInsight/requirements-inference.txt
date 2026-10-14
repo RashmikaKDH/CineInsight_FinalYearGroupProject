@@ -1,0 +1,6 @@
+-r requirements.txt
+pandas
+shap
+scikit-learn
+python-dotenv
+pillow
