@@ -257,6 +257,16 @@ def find_analysis_artifacts(
     return artifacts
 
 
+def write_recovery_manifest(path, manifest):
+    """Atomically persist recovery intent before touching source files."""
+    temp = path.with_suffix('.tmp')
+    with temp.open('w', encoding='utf-8') as stream:
+        json.dump(manifest, stream, indent=2)
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(temp, path)
+
+
 def staged_delete_analysis(
     instance_dir: Path,
     user_id: int,
@@ -310,25 +320,29 @@ def staged_delete_analysis(
     db_committed = False
 
     try:
-        # Phase 1: Quarantine files by moving to staging
-        for f in set(artifacts.get("all_files", [])):
+        # Record the complete plan BEFORE the first move.
+        plan = []
+        for f in sorted(set(artifacts.get("all_files", []))):
             if f.name == ".task.lock":
                 continue
-            safe_source = verify_safe_path(f, allowed_roots)
-            if safe_source.is_file():
-                rel_name = safe_source.relative_to(instance_dir)
-                dest = staging_dir / rel_name
+            source = verify_safe_path(f, allowed_roots)
+            if source.is_file():
+                dest = staging_dir / source.relative_to(instance_dir)
                 verify_safe_path(dest, [staging_base])
-                dest.parent.mkdir(parents=True, exist_ok=True)
-                shutil.move(str(safe_source), str(dest))
-                staged_items.append((safe_source, dest))
-                manifest["items"].append({
-                    "original": str(safe_source),
-                    "staged": str(dest),
-                })
-
+                plan.append((source, dest))
+                manifest["items"].append({"original":str(source),"staged":str(dest),"state":"planned"})
+        write_recovery_manifest(manifest_path, manifest)
+        for index, (source, dest) in enumerate(plan):
+            verify_safe_path(source, allowed_roots)
+            verify_safe_path(dest, [staging_base])
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            # Register first so a failed/partial move is recoverable too.
+            staged_items.append((source, dest))
+            shutil.move(str(source), str(dest))
+            manifest["items"][index]["state"] = "moved"
+            write_recovery_manifest(manifest_path, manifest)
         manifest["phase"] = "staged"
-        manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+        write_recovery_manifest(manifest_path, manifest)
 
         # Clean empty subdirectories in task_dir (bottom-up)
         task_dir = artifacts.get("task_dir")
@@ -369,6 +383,8 @@ def staged_delete_analysis(
             if analysis_deleted != 1:
                 raise RuntimeError(f"Expected to delete exactly 1 analysis record, deleted {analysis_deleted}.")
 
+            manifest["phase"] = "commit_pending"
+            write_recovery_manifest(manifest_path, manifest)
             db_conn.commit()
             db_committed = True
         except Exception as db_exc:
@@ -379,7 +395,7 @@ def staged_delete_analysis(
 
         # Update manifest to db_committed
         manifest["phase"] = "db_committed"
-        manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+        write_recovery_manifest(manifest_path, manifest)
 
         # Phase 3: Post-commit cleanup
         cleanup_failed = False
@@ -406,6 +422,10 @@ def staged_delete_analysis(
             for original, staged in staged_items:
                 try:
                     if staged.exists():
+                        verify_safe_path(staged, [staging_base])
+                        verify_safe_path(original, allowed_roots)
+                        if original.exists():
+                            raise RuntimeError("Restore refused: original path is already occupied.")
                         original.parent.mkdir(parents=True, exist_ok=True)
                         shutil.move(str(staged), str(original))
                 except Exception as rest_exc:
@@ -418,7 +438,7 @@ def staged_delete_analysis(
             if failed_restores:
                 manifest["failed_restores"] = failed_restores
                 try:
-                    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+                    write_recovery_manifest(manifest_path, manifest)
                 except Exception:
                     pass
                 raise RuntimeError(
@@ -522,7 +542,12 @@ def run_reset(args, confirm_fn: Callable[[], str] | None = None) -> int:
     try:
         conn.commit()
     except Exception:
-        pass
+        print("[ERROR] Could not finish the preview transaction. Reset aborted; no files were moved.", file=sys.stderr)
+        try:
+            conn.rollback()
+        finally:
+            conn.close()
+        return 1
 
     if not row:
         conn.close()
@@ -700,7 +725,7 @@ def run_reset(args, confirm_fn: Callable[[], str] | None = None) -> int:
         print("If you had this video open on the web UI, refresh or return to the Analyze page.")
         print("The browser will detect the reset analysis and provide an action to start a fresh analysis.")
         print("=" * 76 + "\n")
-        return 0
+        return 2 if result.get("cleanup_failed") or cache_cleanup_failed else 0
 
     finally:
         if cache_lock:

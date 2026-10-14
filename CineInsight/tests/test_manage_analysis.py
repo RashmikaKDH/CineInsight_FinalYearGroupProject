@@ -157,6 +157,31 @@ class TestManageAnalysis(unittest.TestCase):
     # -------------------------------------------------------------------------
     # 1. List / Preview & Confirmation Cancellation
     # -------------------------------------------------------------------------
+    def test_manifest_exists_before_first_move(self):
+        aid=811
+        folder=self.user_runs_1/str(aid);folder.mkdir()
+        source=folder/'prepared.csv';source.write_text('important')
+        artifacts=find_analysis_artifacts(self.instance_dir,1,aid)
+        conn=RealisticMockConnection(for_update_row={'Analysis_Id':aid,'User_Id':1,'Video_Id':5})
+        original_move=shutil.move
+        def checked_move(src,dst):
+            manifest=next((self.instance_dir/'.staging_trash').glob('*/recovery_manifest.json'))
+            data=json.loads(manifest.read_text())
+            self.assertTrue(any(i['original']==str(source) and i['state']=='planned' for i in data['items']))
+            return original_move(src,dst)
+        with patch('manage_analysis.shutil.move',side_effect=checked_move):
+            result=staged_delete_analysis(self.instance_dir,1,aid,artifacts,db_conn=conn)
+        self.assertTrue(result['success'])
+
+    def test_preview_commit_failure_aborts_before_mutation(self):
+        row={'Analysis_Id':812,'User_Id':1,'Video_Id':5,'Analysis_Date':'date','Aspect_Vise_Report':None,'YouTube_url':'url','Title':'name','Name':'user'}
+        conn=RealisticMockConnection(preview_rows=[row])
+        with patch('manage_analysis.db._get_connection',return_value=conn), \
+             patch.object(conn,'commit',side_effect=RuntimeError('commit failed')), \
+             patch('manage_analysis.staged_delete_analysis') as deletion:
+            result=run_reset(SimpleNamespace(analysis_id=812,clear_aspect_cache=False),confirm_fn=lambda:'RESET')
+        self.assertEqual(result,1);deletion.assert_not_called();self.assertTrue(conn.rolled_back)
+
     def test_list_analyses_formats_output_and_hides_credentials(self):
         mock_rows = [
             {
@@ -578,6 +603,7 @@ class TestManageAnalysis(unittest.TestCase):
             "Name": "Alice",
         }
         mock_conn = RealisticMockConnection(preview_rows=[mock_preview], for_update_row=mock_preview)
+        (self.cache_dir/"cached.json").write_text("{}",encoding="utf-8")
         args = SimpleNamespace(analysis_id=aid, clear_aspect_cache=True)
 
         with patch("manage_analysis.get_instance_dir", return_value=self.instance_dir), \
@@ -586,7 +612,7 @@ class TestManageAnalysis(unittest.TestCase):
              patch("pathlib.Path.unlink", side_effect=OSError("Locked cache file")):
             exit_code = run_reset(args, confirm_fn=lambda: "RESET")
 
-        self.assertEqual(exit_code, 0)
+        self.assertEqual(exit_code, 2)
         self.assertTrue(mock_conn.committed)
 
     # -------------------------------------------------------------------------
