@@ -18,7 +18,15 @@ let aid=saved&&saved.analysis_id,requestId=saved&&saved.request_id||crypto.rando
 sessionStorage.setItem(key,JSON.stringify({request_id:requestId,analysis_id:aid}));
 let timer,stopped=false;
 async function poll(){
- try{const response=await fetch('/api/analyze/status/'+aid,{cache:'no-store'});if(!response.ok)throw Error('Unable to read progress.');const data=await response.json();
+ try{const response=await fetch('/api/analyze/status/'+aid,{cache:'no-store'});
+ if(response.status===404){
+  sessionStorage.removeItem(key);aid=null;stopped=true;
+  message.textContent='The previous analysis was removed or not found. Start a new analysis of this video.';
+  document.getElementById('heading').textContent='Analysis not found';
+  document.getElementById('new-run').hidden=false;reconnect.hidden=true;
+  return;
+ }
+ if(!response.ok)throw Error('Unable to read progress.');const data=await response.json();
  message.textContent=data.message;document.getElementById('heading').textContent=data.status==='queued'?'Waiting for processing':data.status==='running'?'Analyzing your video':'Analysis '+data.status;
  if(['completed','partial','failed','interrupted'].includes(data.status)){stopped=true;document.getElementById('new-run').hidden=false;
  if(data.result_url){result.href=data.result_url;result.hidden=false;result.textContent=data.status==='partial'?'View available results':'View Results';if(data.status==='completed')location.assign(data.result_url);}

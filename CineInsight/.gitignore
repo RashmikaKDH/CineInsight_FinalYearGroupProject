@@ -55,6 +55,8 @@ temp_video.mp4.ytdl
 
 # Gemini reusable classification results
 data/cache/aspect_sentiment/
+data/cache/*.lock
+data/cache/.*.lock
 
 # Local trained assets and inference outputs
 models/cineinsight/

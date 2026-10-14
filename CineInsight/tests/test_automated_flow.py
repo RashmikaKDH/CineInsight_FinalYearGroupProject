@@ -9,7 +9,9 @@ from src import local_inference as inference
 ROOT=Path(__file__).resolve().parents[1]
 class AutomatedFlowTests(unittest.TestCase):
  def setUp(self):
-  self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
+  self.tmp=tempfile.TemporaryDirectory()
+  self.addCleanup(self.tmp.cleanup)
+  self.addCleanup(worker.release_worker_lock)
   self.instance=self.tmp.name
   self.app=Flask(__name__,template_folder=str(ROOT/'templates'),instance_path=self.instance)
   self.app.secret_key='test';self.app.register_blueprint(worker.automation);self.app.register_blueprint(reports)
