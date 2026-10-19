@@ -18,12 +18,21 @@ import mysql.connector
 # ---------------------------------------------------------------------------
 # Internal: re-use the same connection factory as app.py
 # ---------------------------------------------------------------------------
+import os
+
+DB_CONNECTION_TIMEOUT = int(os.environ.get('DB_CONNECTION_TIMEOUT', 5))
+DB_READ_TIMEOUT = int(os.environ.get('DB_READ_TIMEOUT', 10))
+DB_WRITE_TIMEOUT = int(os.environ.get('DB_WRITE_TIMEOUT', 10))
+
 def _get_connection():
     return mysql.connector.connect(
         host='localhost',
         user='root',
         password='',
         database='cineinsight_db',
+        connection_timeout=DB_CONNECTION_TIMEOUT,
+        read_timeout=DB_READ_TIMEOUT,
+        write_timeout=DB_WRITE_TIMEOUT,
     )
 
 

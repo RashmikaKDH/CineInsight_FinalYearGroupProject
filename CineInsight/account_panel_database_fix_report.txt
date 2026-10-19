@@ -1,0 +1,229 @@
+================================================================================
+CineInsight: Account Panel Database-Wait Fix & Saved Reports Hardening Report
+================================================================================
+
+Project: CineInsight
+Workspace: C:\Users\Rashmika\Documents\GitHub\CineInsight_FinalYearGroupProject\CineInsight
+Date: 2026-10-19
+
+
+================================================================================
+1. Root Cause Analysis
+================================================================================
+
+1. Synchronous Database Lookup in Saved-Reports Listing:
+   In services/report_import.py, get_user_saved_reports() was synchronously calling
+   get_analyses_for_user(user_id) to look up title and analysis date metadata from MySQL.
+   This meant that simply visiting /reports or /profile immediately triggered a synchronous
+   database query across all user analyses.
+
+2. Unbounded Database Socket Waits:
+   Neither app.py:get_db_connection() nor services/db_service.py:_get_connection() passed
+   finite timeout arguments to mysql.connector.connect().
+   By default, socket connections and read operations wait indefinitely. If MySQL stalls
+   (e.g., during table opening, metadata lock acquisition, or hung table locks), the Python
+   thread blocks forever on the underlying socket recv() call. A try/except block does not
+   protect against this because the call never returns or raises until the connection is
+   severed.
+
+3. Impact on Profile, Reports, and Login:
+   - When MySQL stalled, /profile and /reports hung indefinitely while waiting for get_analyses_for_user().
+   - /signin hung indefinitely while waiting for SELECT ... FROM `USER`.
+   - Users and automated tests were left waiting without any response or timeout recovery.
+
+
+================================================================================
+2. Changes Made
+================================================================================
+
+1. Decoupled Saved-Report Listing from Database Availability:
+   - Completely removed get_analyses_for_user() from services/report_import.py:get_user_saved_reports().
+   - get_user_saved_reports() now reads exclusively from local report JSON metadata stored
+     under imported_reports/<hashed_user_id>/.
+   - Title, video_url, analysis_date, scores (positive sentiment), sarcasm rate, total segments,
+     and pipeline_status are extracted directly from the stored JSON file.
+   - If analysis_date is absent or empty, the file's modification timestamp (mtime) is used as fallback.
+   - Missing optional fields and malformed files (syntax errors, non-dict JSON) are caught
+     defensively and skipped without crashing.
+   - No external YouTube or Gemini API calls are made.
+   - Report files are read-only; no modifications are made to existing report files.
+   - Preserves user ownership isolation, newest-first ordering (by mtime), and latest-5 limit.
+
+2. Bounded Database Waits in Connection Factories:
+   - Configured finite connection, read, and write timeouts in both:
+       * app.py: get_db_connection()
+       * services/db_service.py: _get_connection()
+   - Configured constants with sensible defaults:
+       * DB_CONNECTION_TIMEOUT = 5 seconds (overridable via env)
+       * DB_READ_TIMEOUT = 10 seconds (overridable via env)
+       * DB_WRITE_TIMEOUT = 10 seconds (overridable via env)
+   - Preserves existing connection settings, credentials, and transaction semantics
+     (start_transaction, commit, rollback).
+   - No duplicate-query retry loops or background worker threads were added that could hide
+     unnoticed running queries.
+
+3. Differentiated Profile Outages from Missing Users:
+   - In app.py:profile():
+       * If a database error or timeout occurs (mysql.connector.Error, TimeoutError, OSError),
+         db_unavailable is flagged as True. The view falls back to session identity, loads
+         saved reports from local JSON metadata, and renders the profile with an accessible
+         status notice: "Live account details are temporarily unavailable. Showing cached session details."
+       * If the database query executes successfully without errors, but returns None, the user
+         account was deleted or no longer exists. The session is cleared and the user is redirected
+         to /signin. A deleted account is never silently presented as an active user.
+
+4. Bounded Login Timeouts and Error Handling:
+   - In app.py:signin():
+       * Caught timeout exceptions (ConnectionTimeoutError, ReadTimeoutError, WriteTimeoutError,
+         TimeoutError, and timeout message matches) specifically.
+       * Returns HTTP 503 Service Unavailable with a clean user-facing error message:
+         "Service temporarily unavailable. Please try again shortly."
+       * Database credentials, table names, and internal exception traces are never exposed in the UI.
+       * Users are NEVER authenticated through a database-error fallback; sessions remain unauthenticated.
+
+
+================================================================================
+3. Files Changed
+================================================================================
+
+1. services/report_import.py:
+   - Removed get_analyses_for_user call in get_user_saved_reports().
+   - Added robust JSON and dictionary validation for saved reports.
+
+2. services/db_service.py:
+   - Added import os and defined DB_CONNECTION_TIMEOUT, DB_READ_TIMEOUT, DB_WRITE_TIMEOUT.
+   - Applied connection_timeout, read_timeout, write_timeout to _get_connection().
+
+3. app.py:
+   - Defined DB_CONNECTION_TIMEOUT, DB_READ_TIMEOUT, DB_WRITE_TIMEOUT.
+   - Applied connection_timeout, read_timeout, write_timeout to get_db_connection().
+   - Updated signin() to catch connection/read timeouts and return HTTP 503.
+   - Updated profile() to differentiate database outages from deleted accounts, fallback to
+     session info during outages, and pass db_unavailable to template.
+
+4. templates/profile.html:
+   - Added temporary status notice banner when db_unavailable is True.
+
+5. tests/test_account_navigation.py:
+   - Imported MagicMock from unittest.mock.
+   - Patched get_db_connection in test_profile_my_reports_empty_state to ensure deterministic
+     testing independent of live database content.
+
+6. tests/test_database_timeout_and_reports.py (New):
+   - Comprehensive test suite verifying DB independence, timeout bounds, and error handling.
+
+
+================================================================================
+4. Timeout Values and Connector Compatibility
+================================================================================
+
+- Connector: mysql-connector-python version 9.7.0
+- Inspected connection parameters:
+    * connection_timeout: Supported by mysql.connector.connect() (socket connection timeout)
+    * read_timeout: Supported by mysql.connector.connect() (socket receive timeout)
+    * write_timeout: Supported by mysql.connector.connect() (socket send timeout)
+- Default Values:
+    * Connection timeout: 5 seconds
+    * Read timeout: 10 seconds
+    * Write timeout: 10 seconds
+- Compatibility Verification:
+    * Passing connection_timeout=5, read_timeout=10, write_timeout=10 was verified directly
+      against mysql-connector-python 9.7.0 without throwing AttributeError or Unsupported argument.
+    * Timeout exceptions inherit from mysql.connector.errors.Error (specifically
+      ConnectionTimeoutError, ReadTimeoutError, WriteTimeoutError).
+
+
+================================================================================
+5. Exact Tests Run and Results
+================================================================================
+
+All tests were executed using the virtual environment:
+  venv\Scripts\python -m pytest tests/test_database_timeout_and_reports.py tests/test_account_navigation.py tests/test_report_import.py tests/test_automated_flow.py tests/test_analyze_flow.py -v
+
+Results Breakdown:
+------------------
+tests/test_database_timeout_and_reports.py:
+  * test_both_connection_factories_apply_intended_timeout_settings: PASSED
+  * test_login_timeout_produces_controlled_response_and_no_authenticated_session: PASSED
+  * test_missing_or_deleted_account_and_database_timeout_follow_different_paths: PASSED
+  * test_profile_displays_owned_saved_reports_when_account_query_times_out: PASSED
+  * test_report_ownership_newest_first_limit_and_malformed_metadata: PASSED
+  * test_reports_listing_performs_no_database_lookup: PASSED
+
+tests/test_account_navigation.py:
+  * test_analysis_page_renders_account_panel: PASSED
+  * test_dashboard_removed_old_import_link: PASSED
+  * test_get_user_saved_reports_isolation_and_limit: PASSED
+  * test_home_page_logged_in: PASSED
+  * test_home_page_logged_out: PASSED
+  * test_manual_import_backup_route_auth_and_rendering: PASSED
+  * test_profile_my_reports_empty_state: PASSED
+  * test_profile_my_reports_with_data: PASSED
+  * test_reports_library_empty_state: PASSED
+  * test_reports_library_normal_view: PASSED
+  * test_results_page_renders_account_panel: PASSED
+  * test_shared_account_panel_admin_role: PASSED
+  * test_shared_account_panel_user_role: PASSED
+  * test_shared_header_across_authenticated_pages: PASSED
+
+tests/test_report_import.py:
+  * test_actual_report: PASSED
+  * test_history_selection_and_rejection: PASSED
+  * test_history_unavailable: PASSED
+  * test_import_render_and_duplicate: PASSED
+  * test_validation_and_auth: PASSED
+
+tests/test_automated_flow.py:
+  * test_database_upsert_uses_one_transaction: PASSED
+  * test_full_background_flow_saves_db_result_and_download: PASSED
+  * test_partial_and_database_failure_preserve_result: PASSED
+  * test_restart_does_not_restart_processing: PASSED
+  * test_start_idempotence_owner_and_auth: PASSED
+
+tests/test_analyze_flow.py:
+  * TestSSEProgressStages (4 subtests): PASSED
+  * TestRedirectConditions (4 subtests): PASSED
+  * TestAnalysisHistoryPreselection (2 subtests): PASSED
+
+TOTAL: 40 passed, 4 subtests passed in 5.24s (0 failures).
+
+
+================================================================================
+6. Browser Checks Actually Performed
+================================================================================
+
+- Status: NOT TESTED (Browser automation unavailable)
+- Details:
+  An isolated Flask test server was started on http://127.0.0.1:5055 with mock session
+  fixtures to verify dropdown opening, keyboard navigation, Escape key closing, outside click,
+  and responsive breakpoints.
+  However, the browser subagent could not initialize Playwright because the driver binaries
+  could not be downloaded in the restricted/offline environment (HTTP 404 from azureedge CDN).
+  In accordance with safety guidelines and prompt requirements, live browser testing was
+  explicitly labeled as NOT TESTED.
+- Simulated / DOM Markup Verification:
+  HTML structure, ARIA menu attributes (aria-haspopup="true", aria-expanded, role="menu",
+  role="menuitem"), escape key and arrow key handlers in static/account_panel.js, and CSS
+  media queries in static/account_panel.css were verified via automated HTTP response
+  assertions.
+
+
+================================================================================
+7. Remaining Limitations and Architectural Context
+================================================================================
+
+1. Client-Side Timeouts vs. Server-Side MySQL Stalls:
+   Adding connection_timeout=5, read_timeout=10, write_timeout=10 configures the MySQL client
+   (Flask / Python) to abort waiting on unresponsive network sockets after a bounded duration.
+   This guarantees that the web application will never hang indefinitely when MySQL queries
+   stall (e.g. during "Opening tables" or lock contention).
+   However, adding client timeouts DOES NOT resolve or fix the underlying server-side MySQL
+   stall itself (which is typically caused by filesystem lock contention, exhausted table cache,
+   or deadlocked queries on the MySQL daemon). It only bounds the application's wait time and
+   allows Flask to return a controlled, user-friendly 503 response.
+
+2. Video Title Fallback:
+   Because get_user_saved_reports() no longer performs a database query or external API call,
+   if a legacy report JSON file is missing an explicit title field, it displays the YouTube URL
+   or fallback ID. This is an intentional design trade-off to ensure fast, deterministic,
+   database-independent page loading.

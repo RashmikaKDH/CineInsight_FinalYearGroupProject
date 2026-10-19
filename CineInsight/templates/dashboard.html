@@ -13,55 +13,19 @@
         rel="stylesheet">
     <!-- Dashboard Stylesheet -->
     <link rel="stylesheet" href="../static/dashboard.css">
+    <link rel="stylesheet" href="../static/account_panel.css">
 </head>
 
 <body>
 
     <!-- Header Navigation -->
-    <header class="dashboard-header">
-        <div class="header-container">
-            <!-- Logo -->
-            <a href="{{ url_for('index') }}" class="logo-container">
-                <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="logo-icon">
-                    <rect width="40" height="40" rx="8" fill="#E35614" />
-                    <path d="M8 14H32" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-                    <path d="M11 9L14 14" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M18 9L21 14" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M25 9L28 14" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M8 9H32" stroke="white" stroke-width="2" stroke-linecap="round" />
-                </svg>
-                <span class="logo-text">CineInsight</span>
-            </a>
-
-            <!-- User Panel -->
-            <div class="user-panel">
-                <span class="welcome-text">Welcome, {{ session.get('user_name', 'User').split()[0] }}</span>
-                <a href="{{ url_for('profile') }}" class="avatar-link" title="View Profile">
-                    <div class="avatar-circle" id="user-avatar"
-                        data-name="{{ session.get('user_name', 'U') }}">
-                        {{ session.get('user_name', 'U')[0].upper() }}
-                    </div>
-                </a>
-                <form action="{{ url_for('logout') }}" method="post" class="logout-form">
-                    <button type="submit" class="logout-btn" title="Sign Out">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-                            <polyline points="16 17 21 12 16 7"/>
-                            <line x1="21" y1="12" x2="9" y2="12"/>
-                        </svg>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </header>
+    {% set active_page = 'dashboard' %}
+    {% include 'components/header.html' %}
 
     <!-- Main Content Grid -->
     <main class="dashboard-main">
         <div class="container">
 
-            <p><a href="{{ url_for('reports.library') }}" style="color:#E35614;font-weight:700">Import Colab Report / Saved Reports →</a></p>
             <!-- Hero Title block -->
             <section class="search-hero">
                 <h1 class="main-title">Movie Review Sentiment Analysis</h1>
@@ -226,6 +190,7 @@
 
     <!-- Main JavaScript File -->
     <script src="../static/main.js?v=4.0"></script>
+    <script src="../static/account_panel.js"></script>
 </body>
 
 </html>

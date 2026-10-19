@@ -1,0 +1,79 @@
+<div class="user-panel">
+    <!-- Trigger Button -->
+    <button type="button" class="user-account-btn" id="user-menu-button" aria-haspopup="true" aria-expanded="false" aria-controls="user-dropdown-menu" aria-label="Account menu for {{ session.get('user_name', 'User') }}">
+        <div class="avatar-circle" data-name="{{ session.get('user_name', 'U') }}" aria-hidden="true">
+            {{ session.get('user_name', 'U')[0].upper() }}
+        </div>
+        <span class="user-account-name">{{ session.get('user_name', 'User').split()[0] }}</span>
+        <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </button>
+
+    <!-- Accessible Dropdown Menu -->
+    <div class="user-dropdown-menu" id="user-dropdown-menu" role="menu" aria-labelledby="user-menu-button" hidden>
+        <!-- User Info Header -->
+        <div class="dropdown-user-header" role="presentation">
+            <div class="dropdown-avatar-circle" data-name="{{ session.get('user_name', 'U') }}" aria-hidden="true">
+                {{ session.get('user_name', 'U')[0].upper() }}
+            </div>
+            <div class="dropdown-user-details">
+                <span class="dropdown-user-name">{{ session.get('user_name', 'User') }}</span>
+                <span class="dropdown-user-email">{{ session.get('user_email', '') }}</span>
+                {% if session.get('user_role') == 'Admin' %}
+                <span class="dropdown-role-badge">Admin</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="dropdown-divider" role="separator"></div>
+
+        <!-- Navigation items -->
+        <ul class="dropdown-menu-list" role="none">
+            <li role="none">
+                <a href="/profile" class="dropdown-item" role="menuitem">
+                    <svg class="dropdown-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li role="none">
+                <a href="/reports" class="dropdown-item" role="menuitem">
+                    <svg class="dropdown-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    <span>My Reports</span>
+                </a>
+            </li>
+            {% if session.get('user_role') == 'Admin' %}
+            <li role="none">
+                <a href="/admin" class="dropdown-item dropdown-item-admin" role="menuitem">
+                    <svg class="dropdown-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>Admin Panel</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+
+        <div class="dropdown-divider" role="separator"></div>
+
+        <!-- Sign Out (POST) -->
+        <form action="/logout" method="post" class="dropdown-logout-form" role="none">
+            <button type="submit" class="dropdown-item dropdown-item-logout" role="menuitem">
+                <svg class="dropdown-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Sign Out</span>
+            </button>
+        </form>
+    </div>
+</div>

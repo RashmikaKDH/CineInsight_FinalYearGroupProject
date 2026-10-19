@@ -1,0 +1,390 @@
+/* ==========================================================================
+   CineInsight Shared Account Panel & Header Stylesheet
+   Accessible, responsive, and visually cohesive across all pages
+   ========================================================================== */
+
+:root {
+    --ap-primary: #E35614;
+    --ap-primary-hover: #C2410C;
+    --ap-primary-light: rgba(227, 86, 20, 0.08);
+    --ap-primary-glow: rgba(227, 86, 20, 0.2);
+    --ap-dark: #0A1128;
+    --ap-text-main: #0F172A;
+    --ap-text-muted: #475569;
+    --ap-text-light: #64748B;
+    --ap-border: #E2E8F0;
+    --ap-bg-card: #FFFFFF;
+    --ap-bg-subtle: #F8FAFC;
+    --ap-shadow: 0 10px 30px rgba(15, 23, 42, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+/* ── Header Navigation Links ── */
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ap-text-muted);
+    text-decoration: none;
+    border-radius: 9999px;
+    transition: all 0.18s ease;
+}
+
+.header-nav-link svg {
+    flex-shrink: 0;
+    color: currentColor;
+    transition: transform 0.18s ease;
+}
+
+.header-nav-link:hover {
+    color: var(--ap-primary);
+    background: var(--ap-primary-light);
+}
+
+.header-nav-link:hover svg {
+    transform: translateY(-1px);
+}
+
+.header-nav-link.active {
+    color: var(--ap-primary);
+    background: rgba(227, 86, 20, 0.12);
+    font-weight: 700;
+}
+
+.header-nav-link:focus-visible {
+    outline: 2px solid var(--ap-primary);
+    outline-offset: 2px;
+}
+
+/* ── User Panel Container ── */
+.user-panel {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ── Account Button (Trigger) ── */
+.user-panel button.user-account-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 14px 4px 5px;
+    background: #FFFFFF;
+    border: 1px solid var(--ap-border);
+    border-radius: 9999px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.user-panel button.user-account-btn:hover {
+    border-color: #CBD5E1;
+    background: var(--ap-bg-subtle);
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.06);
+    transform: translateY(-1px);
+}
+
+.user-panel button.user-account-btn:focus-visible {
+    outline: 2px solid var(--ap-primary);
+    outline-offset: 2px;
+}
+
+.user-panel button.user-account-btn[aria-expanded="true"] {
+    border-color: var(--ap-primary);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px var(--ap-primary-glow);
+}
+
+.user-account-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--ap-text-main);
+    letter-spacing: -0.01em;
+}
+
+.chevron-icon {
+    color: var(--ap-text-light);
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s ease;
+}
+
+.user-panel button.user-account-btn[aria-expanded="true"] .chevron-icon {
+    transform: rotate(180deg);
+    color: var(--ap-primary);
+}
+
+/* ── Avatar Circles ── */
+.avatar-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FDBA74, #E35614);
+    box-shadow: 0 2px 6px rgba(227, 86, 20, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.dropdown-avatar-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FDBA74, #E35614);
+    box-shadow: 0 3px 8px rgba(227, 86, 20, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+/* ── Dropdown Menu Container ── */
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 270px;
+    max-width: calc(100vw - 32px);
+    background: var(--ap-bg-card);
+    border: 1px solid var(--ap-border);
+    border-radius: 16px;
+    box-shadow: var(--ap-shadow);
+    padding: 8px;
+    z-index: 1000;
+    transform-origin: top right;
+    animation: apDropdownEnter 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.user-dropdown-menu[hidden] {
+    display: none !important;
+}
+
+@keyframes apDropdownEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ── Dropdown User Header ── */
+.dropdown-user-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--ap-bg-subtle);
+    border: 1px solid rgba(226, 232, 240, 0.7);
+    border-radius: 12px;
+    margin-bottom: 6px;
+}
+
+.dropdown-user-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.dropdown-user-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ap-dark);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-user-email {
+    font-size: 0.8rem;
+    color: var(--ap-text-light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+}
+
+.dropdown-role-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 4px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: #FEF3C7;
+    color: #92400E;
+    width: fit-content;
+    letter-spacing: 0.02em;
+}
+
+/* ── Divider ── */
+.dropdown-divider {
+    height: 1px;
+    background: var(--ap-border);
+    margin: 6px 4px;
+}
+
+/* ── Menu List & Items ── */
+.dropdown-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 12px;
+    box-sizing: border-box;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ap-text-main);
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.dropdown-item-icon {
+    flex-shrink: 0;
+    color: var(--ap-text-light);
+    transition: color 0.15s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus-visible {
+    background: var(--ap-bg-subtle);
+    color: var(--ap-primary);
+    outline: none;
+}
+
+.dropdown-item:hover .dropdown-item-icon,
+.dropdown-item:focus-visible .dropdown-item-icon {
+    color: var(--ap-primary);
+}
+
+.dropdown-item-admin {
+    color: #92400E;
+}
+
+.dropdown-item-admin .dropdown-item-icon {
+    color: #D97706;
+}
+
+.dropdown-item-admin:hover,
+.dropdown-item-admin:focus-visible {
+    background: #FEF3C7;
+    color: #78350F;
+}
+
+.dropdown-item-admin:hover .dropdown-item-icon,
+.dropdown-item-admin:focus-visible .dropdown-item-icon {
+    color: #B45309;
+}
+
+/* ── Sign Out Button (POST Form) ── */
+.dropdown-logout-form {
+    margin: 0;
+    padding: 0;
+}
+
+.user-dropdown-menu button.dropdown-item-logout {
+    color: #DC2626;
+    background: transparent;
+    font-weight: 500;
+}
+
+.user-dropdown-menu button.dropdown-item-logout .dropdown-item-icon {
+    color: #EF4444;
+}
+
+.user-dropdown-menu button.dropdown-item-logout:hover,
+.user-dropdown-menu button.dropdown-item-logout:focus-visible {
+    background: #FEF2F2;
+    color: #B91C1C;
+}
+
+.user-dropdown-menu button.dropdown-item-logout:hover .dropdown-item-icon,
+.user-dropdown-menu button.dropdown-item-logout:focus-visible .dropdown-item-icon {
+    color: #B91C1C;
+}
+
+/* ── Index Page Dashboard Nav Button ── */
+.btn-dashboard-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: var(--ap-primary);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.btn-dashboard-nav:hover {
+    background: var(--ap-primary-hover);
+    transform: translateY(-1px);
+}
+
+/* ── Responsive Rules ── */
+@media (max-width: 680px) {
+    .header-nav-link span {
+        display: none;
+    }
+    .header-nav-link {
+        padding: 8px 10px;
+    }
+    .user-account-name {
+        display: none;
+    }
+    .user-panel button.user-account-btn {
+        padding: 4px 8px 4px 4px;
+        gap: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-nav {
+        gap: 4px;
+    }
+    .user-dropdown-menu {
+        width: calc(100vw - 32px);
+        right: 0;
+    }
+}

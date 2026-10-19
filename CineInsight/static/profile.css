@@ -391,3 +391,203 @@
 .btn-admin-panel:active {
     transform: translateY(0);
 }
+
+/* ── My Reports Section (Profile Aside) ── */
+.reports-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.view-all-reports-link {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-primary, #E35614);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.view-all-reports-link:hover {
+    color: var(--color-primary-hover, #C2410C);
+    text-decoration: underline;
+}
+
+.profile-reports-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-report-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #F8FAFC;
+    border: 1px solid var(--color-border, #E2E8F0);
+    border-radius: 12px;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-report-item:hover {
+    background: #FFFFFF;
+    border-color: #CBD5E1;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    transform: translateY(-1px);
+}
+
+.report-item-main {
+    min-width: 0;
+    flex: 1;
+}
+
+.report-item-title {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0A1128;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+    transition: color 0.15s ease;
+}
+
+.report-item-title:hover {
+    color: var(--color-primary, #E35614);
+}
+
+.report-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    color: #64748B;
+}
+
+.report-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.badge-positive {
+    background: #DCFCE7;
+    color: #15803D;
+}
+
+.badge-sarcasm {
+    background: rgba(227, 86, 20, 0.1);
+    color: #C2410C;
+}
+
+.btn-open-report {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    border: 1px solid var(--color-border, #E2E8F0);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-primary, #E35614);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.btn-open-report:hover {
+    background: var(--color-primary, #E35614);
+    color: #FFFFFF;
+    border-color: var(--color-primary, #E35614);
+}
+
+.profile-reports-footer {
+    margin-top: 14px;
+    text-align: center;
+}
+
+.btn-view-all-reports {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(227, 86, 20, 0.06);
+    color: var(--color-primary, #E35614);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.btn-view-all-reports:hover {
+    background: rgba(227, 86, 20, 0.12);
+    color: var(--color-primary-hover, #C2410C);
+}
+
+/* ── Reports Empty State ── */
+.reports-empty-state {
+    text-align: center;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #F1F5F9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.empty-state-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0A1128;
+    margin-bottom: 4px;
+}
+
+.empty-state-desc {
+    font-size: 0.82rem;
+    color: #64748B;
+    max-width: 320px;
+    margin-bottom: 16px;
+    line-height: 1.45;
+}
+
+.btn-empty-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: var(--color-primary, #E35614);
+    color: #FFFFFF;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.btn-empty-action:hover {
+    background: var(--color-primary-hover, #C2410C);
+}

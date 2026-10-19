@@ -13,6 +13,7 @@
         rel="stylesheet">
     <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/account_panel.css">
 </head>
 
 <body>
@@ -47,8 +48,13 @@
             </nav>
 
             <div class="header-actions">
+                {% if session.get('user_id') %}
+                <a href="{{ url_for('dashboard') }}" class="btn-dashboard-nav">Dashboard</a>
+                {% include 'components/account_panel.html' %}
+                {% else %}
                 <a href="{{ url_for('signin') }}" class="signin-link">Sign In</a>
                 <a href="{{ url_for('signup') }}" class="btn btn-primary btn-header">Get Started</a>
+                {% endif %}
             </div>
         </div>
     </header>
@@ -81,8 +87,19 @@
 
                     <!-- Hero Actions -->
                     <div class="hero-actions">
+                        {% if session.get('user_id') %}
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-hero">
+                            <svg class="btn-icon" width="12" height="14" viewBox="0 0 12 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.5 12.38V1.62C1.5 1.05 2.13 0.7 2.61 1.01L10.68 6.39C11.11 6.68 11.11 7.32 10.68 7.61L2.61 12.99C2.13 13.3 1.5 12.95 1.5 12.38Z"
+                                    fill="white" />
+                            </svg>
+                            Go to Dashboard
+                        </a>
+                        <a href="{{ url_for('reports.library') }}" class="btn btn-secondary btn-hero">My Reports</a>
+                        {% else %}
                         <a href="{{ url_for('signup') }}" class="btn btn-primary btn-hero">
-                            <!-- Play Icon -->
                             <svg class="btn-icon" width="12" height="14" viewBox="0 0 12 14" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -92,6 +109,7 @@
                             Get Started
                         </a>
                         <a href="{{ url_for('signin') }}" class="btn btn-secondary btn-hero">Sign In</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -187,6 +205,7 @@
 
     <!-- Main JavaScript File -->
     <script src="../static/main.js"></script>
+    <script src="../static/account_panel.js"></script>
 </body>
 
 </html>

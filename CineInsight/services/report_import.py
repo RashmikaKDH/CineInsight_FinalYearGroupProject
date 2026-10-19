@@ -92,47 +92,128 @@ def analysis_history(user_id):
     from services.db_service import get_analyses_for_user
     return get_analyses_for_user(user_id)
 
-@reports.route('/reports',methods=['GET','POST'])
-def library():
-    if 'user_id' not in session:return redirect(url_for('signin'))
+def get_user_saved_reports(instance_path, user_id, limit=None):
+    """
+    Return saved reports for user_id from imported_reports/<hashed_user_id>.
+    Only reports belonging to user_id are returned.
+    Labels use saved metadata (Title, video_url, date, scores, pipeline_status)
+    without calling external APIs or performing database queries.
+    """
+    owner = hashlib.sha256(str(user_id).encode()).hexdigest()
+    folder = Path(instance_path) / 'imported_reports' / owner
+    if not folder.is_dir():
+        return []
+
+    items = []
+    for path in sorted(folder.glob('*.json'), key=lambda p: p.stat().st_mtime, reverse=True):
+        try:
+            content = path.read_text(encoding='utf-8')
+            data = json.loads(content)
+            if not isinstance(data, dict):
+                continue
+            rep_id = str(data.get('id') or path.stem)
+
+            raw_title = data.get('title') or data.get('video_url') or f"Report {rep_id[:8]}"
+            title = str(raw_title).strip()
+
+            raw_date = data.get('analysis_date')
+            if raw_date and str(raw_date).strip():
+                date = str(raw_date).strip()
+            else:
+                import datetime
+                date = datetime.datetime.fromtimestamp(path.stat().st_mtime).strftime('%Y-%m-%d %H:%M')
+
+            positive_score = None
+            if isinstance(data.get('overall'), dict):
+                positive_score = data['overall'].get('positive')
+
+            sarcasm_rate = data.get('sarcasm_rate')
+            total = data.get('total', 0)
+            pipeline_status = data.get('pipeline_status', 'completed')
+
+            items.append({
+                'id': rep_id,
+                'title': title,
+                'video_url': data.get('video_url', ''),
+                'date': date,
+                'positive_score': positive_score,
+                'sarcasm_rate': sarcasm_rate,
+                'total': total,
+                'pipeline_status': pipeline_status
+            })
+        except Exception:
+            continue
+
+    if limit is not None:
+        return items[:limit]
+    return items
+
+def handle_manual_import(selected_id=''):
     if request.content_length and request.content_length > LIMIT + 1024 * 1024:
-        return render_template('reports.html',error='Choose a CSV smaller than 5 MB.',history=[]), 413
-    folder=store_dir();error=None
-    analyses=[]
+        return render_template('report_import.html', error='Choose a CSV smaller than 5 MB.', history=[], analyses=[]), 413
+    folder = store_dir()
+    error = None
+    analyses = []
     try:
-        analyses=analysis_history(session['user_id'])
+        analyses = analysis_history(session['user_id'])
     except Exception:
         current_app.logger.exception('Could not load analysis history')
-        error='Analysis history is temporarily unavailable. Please try again later.'
-    selected_id=request.form.get('analysis_id',request.args.get('analysis_id',''))
-    if request.method=='POST':
+        error = 'Analysis history is temporarily unavailable. Please try again later.'
+    selected_id = selected_id or request.form.get('analysis_id', request.args.get('analysis_id', ''))
+    if request.method == 'POST':
         import secrets
-        if not secrets.compare_digest(str(request.form.get('token','')),str(session.get('report_token','missing'))):abort(400)
+        if not secrets.compare_digest(str(request.form.get('token', '')), str(session.get('report_token', 'missing'))):
+            abort(400)
         try:
-            upload=request.files.get('report')
-            selected=next((a for a in analyses if str(a['Analysis_Id'])==selected_id),None)
-            if selected is None:raise ValueError(error or 'Select a video from your analysis history.')
-            title=selected.get('YouTube_url','')
-            if not title:raise ValueError('This analysis has no saved video URL.')
-            if not upload or not upload.filename.lower().endswith('.csv'):raise ValueError('Choose a final Colab CSV file.')
-            raw=upload.stream.read(LIMIT+1)
-            if len(raw)>LIMIT:raise ValueError('Choose a CSV smaller than 5 MB.')
-            data=parse_report(raw);identity=hashlib.sha256(str(selected['Analysis_Id']).encode()+b'\0'+raw).hexdigest()
-            target=folder/(identity+'.json')
+            upload = request.files.get('report')
+            selected = next((a for a in analyses if str(a['Analysis_Id']) == selected_id), None)
+            if selected is None:
+                raise ValueError(error or 'Select a video from your analysis history.')
+            title = selected.get('YouTube_url', '')
+            if not title:
+                raise ValueError('This analysis has no saved video URL.')
+            if not upload or not upload.filename.lower().endswith('.csv'):
+                raise ValueError('Choose a final Colab CSV file.')
+            raw = upload.stream.read(LIMIT + 1)
+            if len(raw) > LIMIT:
+                raise ValueError('Choose a CSV smaller than 5 MB.')
+            data = parse_report(raw)
+            identity = hashlib.sha256(str(selected['Analysis_Id']).encode() + b'\0' + raw).hexdigest()
+            target = folder / (identity + '.json')
             if not target.exists():
-                data.update(title=title,id=identity,analysis_id=selected['Analysis_Id'],video_url=title,analysis_date=str(selected.get('Analysis_Date','')))
-                temp=target.with_suffix('.tmp');temp.write_text(json.dumps(data,ensure_ascii=False),encoding='utf-8');temp.replace(target)
-                (folder/(identity+'.csv')).write_bytes(raw)
-            return redirect(url_for('reports.show',report_id=identity))
-        except ValueError as exc:error=str(exc)
+                data.update(title=title, id=identity, analysis_id=selected['Analysis_Id'], video_url=title, analysis_date=str(selected.get('Analysis_Date', '')))
+                temp = target.with_suffix('.tmp')
+                temp.write_text(json.dumps(data, ensure_ascii=False), encoding='utf-8')
+                temp.replace(target)
+                (folder / (identity + '.csv')).write_bytes(raw)
+            return redirect(url_for('reports.show', report_id=identity))
+        except ValueError as exc:
+            error = str(exc)
     import secrets
-    session.setdefault('report_token',secrets.token_urlsafe(32))
-    history=[]
-    for path in sorted(folder.glob('*.json'),key=lambda p:p.stat().st_mtime,reverse=True):
+    session.setdefault('report_token', secrets.token_urlsafe(32))
+    history = []
+    for path in sorted(folder.glob('*.json'), key=lambda p: p.stat().st_mtime, reverse=True):
         try:
-            data=json.loads(path.read_text(encoding='utf-8'));history.append({'id':data['id'],'title':data['title']})
-        except (ValueError,KeyError):continue
-    return render_template('reports.html',error=error,history=history,analyses=analyses,selected_id=selected_id)
+            data = json.loads(path.read_text(encoding='utf-8'))
+            history.append({'id': data['id'], 'title': data['title']})
+        except (ValueError, KeyError):
+            continue
+    return render_template('report_import.html', error=error, history=history, analyses=analyses, selected_id=selected_id)
+
+@reports.route('/reports', methods=['GET', 'POST'])
+def library():
+    if 'user_id' not in session:
+        return redirect(url_for('signin'))
+    if request.method == 'POST' or request.args.get('analysis_id') or request.args.get('import'):
+        return handle_manual_import()
+    saved_reports = get_user_saved_reports(current_app.instance_path, session['user_id'])
+    return render_template('reports.html', reports=saved_reports)
+
+@reports.route('/reports/import', methods=['GET', 'POST'])
+def manual_import():
+    if 'user_id' not in session:
+        return redirect(url_for('signin'))
+    return handle_manual_import()
 
 @reports.route('/reports/<report_id>')
 def show(report_id):

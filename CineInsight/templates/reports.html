@@ -1,22 +1,114 @@
-﻿{% extends 'report_base.html' %}{% block title %}Import report{% endblock %}{% block content %}
-<h1>Your review reports</h1>
-<p class="muted">Import the <strong>final explainability CSV</strong> downloaded from your Colab notebook to see sentiment, sarcasm and explanation results. This is <em>not</em> the initial local CSV produced during preparation &mdash; it is the final output that Colab generates after running all scoring cells.</p>
-<section class="card"><h2>Import Colab Report</h2>{% if error %}<p role="alert" class="error">{{ error }}</p>{% endif %}
-<form method="post" enctype="multipart/form-data" id="import-form"><input type="hidden" name="token" value="{{ session.report_token }}">
-<label for="analysis_id">Video from your analysis history</label>
-<select id="analysis_id" name="analysis_id" required {% if not analyses %}disabled{% endif %}>
-<option value="">Choose the video you processed</option>
-{% for analysis in analyses %}<option value="{{ analysis.Analysis_Id }}" {% if selected_id == analysis.Analysis_Id|string %}selected{% endif %}>{{ analysis.YouTube_url }} &mdash; {{ analysis.Analysis_Date }} (Analysis #{{ analysis.Analysis_Id }})</option>{% endfor %}
-</select>
-{% if selected_id %}
-{% set sel = analyses | selectattr('Analysis_Id', 'equalto', selected_id|int) | first | default(none) %}
-{% if sel %}<p class="muted selected-url-hint">Selected video URL: <strong>{{ sel.YouTube_url }}</strong>. Make sure you upload the final Colab CSV for <em>this</em> video.</p>{% endif %}
+{% extends 'report_base.html' %}
+{% block title %}Saved Reports{% endblock %}
+{% block content %}
+<div class="library-header">
+    <p class="eyebrow">YOUR ANALYSIS LIBRARY</p>
+    <h1>Saved Reports</h1>
+    <p class="muted">Browse, review, and download explainability and sentiment reports generated for your movie review videos.</p>
+</div>
+
+{% if reports %}
+<div class="reports-summary-bar">
+    <span class="reports-count-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        {{ reports|length }} Saved Report{{ 's' if reports|length != 1 else '' }}
+    </span>
+</div>
+
+<div class="saved-reports-grid">
+    {% for report in reports %}
+    <article class="card saved-report-card">
+        <div class="report-card-top">
+            <div class="report-card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E35614" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                    <line x1="7" y1="2" x2="7" y2="22"></line>
+                    <line x1="17" y1="2" x2="17" y2="22"></line>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <line x1="2" y1="7" x2="7" y2="7"></line>
+                    <line x1="2" y1="17" x2="7" y2="17"></line>
+                    <line x1="17" y1="17" x2="22" y2="17"></line>
+                    <line x1="17" y1="7" x2="22" y2="7"></line>
+                </svg>
+            </div>
+            <div class="report-card-header-info">
+                <h2 class="report-card-title">
+                    <a href="{{ url_for('reports.show', report_id=report.id) }}" title="{{ report.title }}">
+                        {{ report.title }}
+                    </a>
+                </h2>
+                <div class="report-card-date">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>{{ report.date }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-card-metrics">
+            {% if report.positive_score is not none %}
+            <div class="metric-chip chip-sentiment">
+                <span class="chip-label">Positive Sentiment</span>
+                <span class="chip-val">{{ report.positive_score }}%</span>
+            </div>
+            {% endif %}
+
+            {% if report.sarcasm_rate is not none %}
+            <div class="metric-chip chip-sarcasm">
+                <span class="chip-label">Sarcasm Flagged</span>
+                <span class="chip-val">{{ report.sarcasm_rate }}%</span>
+            </div>
+            {% endif %}
+
+            <div class="metric-chip chip-segments">
+                <span class="chip-label">Segments</span>
+                <span class="chip-val">{{ report.total }}</span>
+            </div>
+        </div>
+
+        <div class="report-card-actions">
+            <a href="{{ url_for('reports.show', report_id=report.id) }}" class="btn-primary-action">
+                View Report &rarr;
+            </a>
+            <a href="{{ url_for('reports.download', report_id=report.id) }}" class="btn-secondary-action" title="Download CSV">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                CSV
+            </a>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<section class="card empty-library-card">
+    <div class="empty-icon-circle">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <line x1="2" y1="7" x2="7" y2="7"></line>
+            <line x1="2" y1="17" x2="7" y2="17"></line>
+            <line x1="17" y1="17" x2="22" y2="17"></line>
+            <line x1="17" y1="7" x2="22" y2="7"></line>
+        </svg>
+    </div>
+    <h2>No saved reports yet</h2>
+    <p class="muted">Run an analysis on any YouTube movie review to generate your first AI sentiment and explainability report.</p>
+    <a href="{{ url_for('dashboard') }}" class="btn-empty-dashboard">Go to Dashboard</a>
+</section>
 {% endif %}
-{% if not analyses and not error %}<p class="muted">No saved analyses yet. Process a video while signed in, then return here to import its final Colab report.</p>{% endif %}
-<label for="report">Final Colab report CSV</label>
-<input id="report" name="report" type="file" accept=".csv,text/csv" required>
-<p class="muted">Choose the <strong>final</strong> explainability report exported from Colab (up to 5 MB). This CSV must contain the sentiment, sarcasm predictions, SHAP values and AI reasoning columns produced by the notebook &mdash; it is different from the initial local CSV created during preparation.</p>
-<button type="submit" {% if not analyses %}disabled{% endif %}>Import and view results</button><p id="import-status" role="status"></p></form></section>
-<section class="card"><h2>Saved reports</h2>{% for item in history %}<p><a href="{{ url_for('reports.show',report_id=item.id) }}">{{ item.title }}</a></p>{% else %}<p class="muted">No reports yet. Import your first final Colab CSV above.</p>{% endfor %}</section>
-<script>document.getElementById('import-form').addEventListener('submit',()=>{document.getElementById('import-status').textContent='Checking your report...';document.querySelector('button[type=submit]').disabled=true;});</script>
+
+<div class="backup-import-note">
+    <span>Need to import an external report CSV from Google Colab?</span>
+    <a href="{{ url_for('reports.manual_import') }}">Manual Report Import &rarr;</a>
+</div>
 {% endblock %}

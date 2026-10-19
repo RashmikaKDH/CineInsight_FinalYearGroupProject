@@ -69,12 +69,21 @@ def index():
     return render_template('index.html')
 
 
+# Bounded timeouts: 5s connection, 10s read, 10s write
+DB_CONNECTION_TIMEOUT = int(os.environ.get('DB_CONNECTION_TIMEOUT', 5))
+DB_READ_TIMEOUT = int(os.environ.get('DB_READ_TIMEOUT', 10))
+DB_WRITE_TIMEOUT = int(os.environ.get('DB_WRITE_TIMEOUT', 10))
+
+
 def get_db_connection():
     return mysql.connector.connect(
         host='localhost',
         user='root',
         password='',
         database='cineinsight_db',
+        connection_timeout=DB_CONNECTION_TIMEOUT,
+        read_timeout=DB_READ_TIMEOUT,
+        write_timeout=DB_WRITE_TIMEOUT,
     )
 
 
@@ -108,13 +117,25 @@ def signin():
                 return redirect(url_for('dashboard'))
 
             return render_template('signin.html', error='Invalid email or password.')
-        except mysql.connector.Error:
+        except (mysql.connector.errors.ConnectionTimeoutError,
+                mysql.connector.errors.ReadTimeoutError,
+                mysql.connector.errors.WriteTimeoutError) as exc:
+            app.logger.warning('Login database timeout: %s', exc)
+            return render_template('signin.html', error='Service temporarily unavailable. Please try again shortly.'), 503
+        except (mysql.connector.Error, TimeoutError, OSError) as exc:
+            msg = str(exc).lower()
+            if 'timeout' in msg or 'timed out' in msg:
+                app.logger.warning('Login database timeout: %s', exc)
+                return render_template('signin.html', error='Service temporarily unavailable. Please try again shortly.'), 503
+            app.logger.error('Login database error: %s', exc)
             return render_template('signin.html', error='Database error. Please try again.')
         finally:
             if cursor is not None:
-                cursor.close()
+                try: cursor.close()
+                except Exception: pass
             if connection is not None:
-                connection.close()
+                try: connection.close()
+                except Exception: pass
 
     return render_template('signin.html')
 
@@ -561,9 +582,11 @@ def api_debug_aspect_data():
 @app.route('/profile')
 @login_required
 def profile():
-    """Show the logged-in user's profile details."""
+    """Show the logged-in user's profile details and recent saved reports."""
     connection = None
     cursor = None
+    user = None
+    db_unavailable = False
     try:
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
@@ -572,12 +595,40 @@ def profile():
             (session['user_id'],)
         )
         user = cursor.fetchone()
-        return render_template('profile.html', user=user)
-    except mysql.connector.Error:
-        return redirect(url_for('dashboard'))
+    except (mysql.connector.Error, TimeoutError, OSError) as exc:
+        app.logger.warning('Profile database error or timeout: %s', exc)
+        db_unavailable = True
     finally:
-        if cursor: cursor.close()
-        if connection: connection.close()
+        if cursor:
+            try: cursor.close()
+            except Exception: pass
+        if connection:
+            try: connection.close()
+            except Exception: pass
+
+    # Treat deleted or nonexistent user differently from a database outage
+    if not db_unavailable and not user:
+        session.clear()
+        flash('Your account could not be found. Please sign in again.', 'error')
+        return redirect(url_for('signin'))
+
+    # Fall back to session identity when database is unavailable or timed out
+    if db_unavailable:
+        user = {
+            'User_Id': session.get('user_id'),
+            'Name': session.get('user_name', 'User'),
+            'Email': session.get('user_email', ''),
+            'Role': session.get('user_role', 'User')
+        }
+
+    from services.report_import import get_user_saved_reports
+    saved_reports = []
+    try:
+        saved_reports = get_user_saved_reports(app.instance_path, session['user_id'], limit=5)
+    except Exception:
+        app.logger.exception('Could not load saved reports for profile')
+
+    return render_template('profile.html', user=user, saved_reports=saved_reports, db_unavailable=db_unavailable)
 
 
 @app.route('/admin')
