@@ -1037,17 +1037,30 @@ def run_recover(args, instance_dir: Path | None = None) -> int:
         status_path = run_dir / "status.json"
         status_path.write_text(json.dumps({"status": target_state, "final_csv": str(output_csv)}), encoding="utf-8")
 
-        print("\n" + "=" * 76)
-        print("                        RECOVERY COMPLETE                             ")
-        print("=" * 76)
-        print(f"Analysis ID {aid} was successfully recovered!")
-        print(f"Status:       {target_state.upper()}")
-        print(f"Report URL:   /reports/{report_id}")
-        print(f"Download URL: /reports/{report_id}/download")
-        print(f"Final CSV:    {output_csv}")
-        print("\nYou can now view the results directly in the CineInsight web UI.")
-        print("=" * 76 + "\n")
-        return 0
+        if target_state == "completed":
+            print("\n" + "=" * 76)
+            print("                        RECOVERY COMPLETE                             ")
+            print("=" * 76)
+            print(f"Analysis ID {aid} was successfully recovered!")
+            print(f"Status:       {target_state.upper()}")
+            print(f"Report URL:   /reports/{report_id}")
+            print(f"Download URL: /reports/{report_id}/download")
+            print(f"Final CSV:    {output_csv}")
+            print("\nYou can now view the results directly in the CineInsight web UI.")
+            print("=" * 76 + "\n")
+            return 0
+        else:
+            print("\n" + "=" * 76)
+            print("                        RECOVERY PARTIAL                              ")
+            print("=" * 76)
+            print(f"Analysis ID {aid} recovery saved partial results.")
+            print(f"Status:       {target_state.upper()}")
+            print(f"Report URL:   /reports/{report_id}")
+            print(f"Download URL: /reports/{report_id}/download")
+            print(f"Final CSV:    {output_csv}")
+            print("\nPending segments remain. Run recovery again later to continue explanations.")
+            print("=" * 76 + "\n")
+            return 2
     finally:
         analysis_lock.release()
 

@@ -1,0 +1,179 @@
+================================================================================
+CINEINSIGHT: SHAP-TO-GEMINI EXPLANATION CONTINUATION IMPLEMENTATION REPORT
+================================================================================
+Generated: 2026-10-19
+Project:   C:\Users\Rashmika\Documents\GitHub\CineInsight_FinalYearGroupProject\CineInsight
+
+1. EXECUTIVE SUMMARY & OBJECTIVE
+--------------------------------------------------------------------------------
+The SHAP-to-Gemini explainability pipeline in CineInsight has been updated to remove
+the fixed 6-request stopping limit and continue reliably across all pending segments
+until all required explanations are completed, while strictly respecting configured
+Google Gemini 3.5 Flash Lite rate limits (15 RPM, 250,000 TPM, 500 RPD).
+
+Both the automatic local inference execution path (`src/local_inference.py:run`)
+and the standalone CLI recovery execution path (`manage_analysis.py recover`) have
+been unified onto a single authoritative `repair_reasoning` implementation, eliminating
+code divergence and preserving atomic progress tracking.
+
+
+2. EXACT CHANGES & AFFECTED FILES
+--------------------------------------------------------------------------------
+The following files were modified / created:
+
+1) `src/local_inference.py`
+   - Modified `repair_reasoning` signature to default `max_requests=None` (unlimited
+     continuation until all pending explanations succeed or an honest quota/error
+     pause occurs), while keeping optional `max_requests` for bounded testing/callers.
+   - Removed fixed 6-request limit check from the explanation processing loop.
+   - Enforced strict request pacing: at least 15.0 seconds between request starts
+     (`delay=15.0`) across all initial calls and retries (`pace_request()`).
+   - Kept batch size <= 5 segments per request and payload length safeguard <= 12,000
+     characters, preserving text without silent truncation.
+   - Implemented `extract_retry_delay()` to inspect response headers (`retry-after`)
+     and error text for server-specified wait intervals.
+   - Implemented quota and error classification:
+     * 429 / Quota limits: Differentiates temporary minute limits (RPM/TPM) from
+       daily quota exhaustion / zero quota. Temporary throttles back off with
+       `max(15.0, server_delay) + jitter` up to 2 retries (3 attempts total). Daily
+       or zero quota conditions pause immediately without looping or monopolizing
+       the worker, saving progress and setting status to `waiting_budget`.
+     * 5xx / Network / Timeouts: Bounded exponential backoff with jitter up to
+       2 retries (3 attempts total), strictly paced.
+     * 401 / 403 / 404 / 400: Fatal non-retryable errors stop immediately, setting
+       batch to `error` and remaining pending rows to `waiting_after_error`.
+     * Response validation: Ensures explanation IDs match expected segment IDs
+       without duplicates or empty text; failures set `error` and never produce false
+       completion.
+   - Deduplicated Stage 8 (`'Gemini reasoning'` in `STAGES`): replaced the 140-line
+     embedded duplicate definition with a direct invocation of `repair_reasoning()`,
+     retaining `api_key = REASONING_API_KEY` for test and environment compatibility.
+   - Passed `notify` and helper functions into `scope` in `run()` so UI callbacks
+     and terminal output receive real-time progress events.
+
+2) `manage_analysis.py`
+   - Updated `run_recover()` to return standard CLI status codes: exit code `0` on
+     full completion, and exit code `2` on partial / paused recovery when work remains.
+   - Retained database locking, ownership verification, and user library import logic.
+
+3) `tests/test_shap_reasoning_continuation.py` (New File)
+   - Added 11 isolated unit and regression tests verifying 57-segment continuation,
+     cache reuse (30 cached + 27 pending), 429 retry delay honoring, daily/zero quota
+     pausing without retry, bounded 5xx retries, auth error handling, response ID
+     validation, partial progress preservation, and unified code execution.
+
+
+3. CONFIRMATION OF SCOPE & PRESERVED PIPELINES
+--------------------------------------------------------------------------------
+All operations strictly adhered to the required boundaries:
+- Aspect Extraction: UNCHANGED. No changes were made to aspect batching, aspect
+  prompts, key rotation, aspect cache (`data/cache/aspect_sentiment/`), output
+  columns, or `GEMINI_API_KEY`/`GEMINI_API_KEYS` configuration.
+- YouTube API, Downloading, Whisper Transcription: UNCHANGED.
+- Feature Extraction, Sarcasm Prediction Model, Checkpoints: UNCHANGED.
+- SHAP Calculation: UNCHANGED. Grouped KernelExplainer calculation and background
+  distribution remain purely local.
+- API Configuration: `SHAP_GEMINI_API_KEY` and `SHAP_GEMINI_MODEL` remain preserved
+  and separated. No key fallback or rotation was added. Existing `.env` values
+  and secrets were preserved intact.
+- Data and Final CSV Schema: Final CSV columns (`reasoning_status`, `ai_reasoning`,
+  `reasoning_error_code`, `reasoning_error`, `reasoning_model`) and JSON cache
+  structures are 100% backward- and forward-compatible.
+
+
+4. PACING, RETRY AND QUOTA-PAUSE SPECIFICATIONS
+--------------------------------------------------------------------------------
+- Configured Rate Limits (Gemini 3.5 Flash Lite):
+  * 15 Requests Per Minute (RPM)
+  * 250,000 Input Tokens Per Minute (TPM)
+  * 500 Requests Per Day (RPD)
+
+- Request Pacing:
+  * Strict minimum 15.0 seconds between the start of ANY two requests (both initial
+    and retry attempts). At 15s delay, the process operates at a maximum of 4 RPM,
+    well below the 15 RPM project quota limit.
+  * Batch size capped at 5 segments per request and payload capped at 12,000 characters.
+    Even with dense tokens, input TPM remains well under 10% of the 250,000 TPM limit.
+
+- Finite Bounded Retries:
+  * Maximum 3 attempts per batch (1 initial + 2 retries).
+  * 429 Temporary Throttling: Waits `max(15.0, server_retry_delay) + jitter` (0.5-2.0s).
+    Every attempt passes through the 15s pacing barrier.
+  * 5xx Server Errors & Connection Drops: Exponential backoff `min(60.0, 15.0 * 2^attempt) + jitter`.
+  * Daily Quota Exhaustion / Zero Quota: Detected via response error markers (e.g.
+    `requests per day`, `daily`, `rpd`, `limit: 0`, `free_tier_requests_per_day` or
+    `retry-after > 60s`). Does NOT enter an infinite retry loop or sleep for hours.
+    Pauses immediately, preserves partial results to CSV, marks batch and remaining
+    pending segments as `waiting_budget`, and returns an honest partial result.
+  * Invalid Credentials / 404 / 400: Fatal; stops immediately without retry.
+  * No local assumption is made regarding exclusive access to the project quota,
+    and no false remaining-quota counters are displayed.
+
+
+5. CACHE COMPATIBILITY & RESUME BEHAVIOR
+--------------------------------------------------------------------------------
+- Atomic Persistence:
+  * Validated explanation batches are saved immediately to `gemini_explanations.json`
+    via `.tmp.json` atomic file replacement (`os.replace`).
+  * The dataframe report is saved atomically to the final CSV (`save_csv`) after
+    every batch or status transition.
+- Resumption Logic:
+  * When resuming, previously completed explanations (`reasoning_status == 'completed'`)
+    and explanations cached in `gemini_explanations.json` are loaded immediately
+    without making API calls.
+  * Any segments previously marked `waiting_budget`, `waiting_after_error`, or `error`
+    are reset to `pending` and processed.
+  * Media preparation, feature vectors, model predictions, and SHAP calculations
+    are never rerun during recovery.
+
+
+6. TEST RESULTS & REGRESSION VALIDATION
+--------------------------------------------------------------------------------
+A comprehensive test run was executed using pytest across all affected and adjacent
+modules:
+
+Test Suites Executed:
+- `tests/test_shap_reasoning_continuation.py`: 11 PASSED
+  * `test_57_eligible_rows_complete_in_12_requests_and_continues_beyond_6`: PASSED
+  * `test_cached_30_and_pending_27_only_requests_remaining_27`: PASSED
+  * `test_temporary_429_honors_server_retry_delay_and_succeeds`: PASSED
+  * `test_daily_quota_pauses_without_infinite_retry_loop`: PASSED
+  * `test_zero_quota_pauses_without_retry`: PASSED
+  * `test_network_and_5xx_retries_are_bounded_and_paced`: PASSED
+  * `test_invalid_credentials_do_not_repeatedly_retry`: PASSED
+  * `test_invalid_response_ids_do_not_produce_false_completion`: PASSED
+  * `test_failed_batch_preserves_earlier_successful_explanations`: PASSED
+  * `test_automatic_and_recovery_paths_use_same_implementation`: PASSED
+  * `test_recovery_returns_nonzero_code_on_partial`: PASSED
+- `tests/test_local_inference.py`: 8 PASSED
+- `tests/test_manage_analysis.py`: 25 PASSED
+- `tests/test_automated_flow.py`: 5 PASSED
+- `tests/test_analyze_flow.py`: 10 PASSED
+- `tests/test_database_timeout_and_reports.py`: 6 PASSED
+- `tests/test_account_navigation.py`: 14 PASSED
+
+Total: 79 passed, 4 subtests passed in 15.49s. Zero failures.
+All tests used mocked network and timing calls; no live Gemini quota was consumed.
+
+
+7. USER ACTION: COMMAND TO RESUME ANALYSIS ID 20
+--------------------------------------------------------------------------------
+Analysis ID 20 currently has 57 completed SHAP results, 30 completed explanations
+in its cache, and 27 segments in `waiting_budget` status.
+
+As per strict instruction, recovery was NOT executed automatically. To resume
+Analysis ID 20 and generate the remaining 27 explanations using the new continuation
+logic without rerunning earlier pipeline stages, run the following command in your
+project virtual environment:
+
+    venv\Scripts\python manage_analysis.py recover --analysis-id 20
+
+What will happen when you run this command:
+1. It validates the existing predictions and SHAP results in Analysis ID 20.
+2. It detects the 30 existing completed explanations in `gemini_explanations.json`
+   and reuses them without consuming API quota.
+3. It sends only the remaining 27 segments in 6 requests (5 batches of 5 + 1 batch of 2),
+   pacing each request with at least 15 seconds between request starts.
+4. Once completed, it updates the database records, finalizes `task.json`, and imports
+   the complete report into your saved report library.
+================================================================================
