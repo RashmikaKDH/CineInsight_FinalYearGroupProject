@@ -12,6 +12,7 @@ Usage (in app.py):
     from services.db_service import get_or_create_video, create_analysis, create_reasoning_report
 """
 
+import os
 import mysql.connector
 
 
@@ -20,10 +21,11 @@ import mysql.connector
 # ---------------------------------------------------------------------------
 def _get_connection():
     return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='cineinsight_db',
+        host=os.environ.get('DB_HOST', 'localhost'),
+        user=os.environ.get('DB_USER', 'root'),
+        password=os.environ.get('DB_PASSWORD', ''),
+        database=os.environ.get('DB_NAME', 'cineinsight_db'),
+        port=int(os.environ.get('DB_PORT', 3306)),
     )
 
 
@@ -166,3 +168,72 @@ def get_analyses_for_user(user_id: int) -> list:
     finally:
         cursor.close()
         connection.close()
+
+
+# ---------------------------------------------------------------------------
+# password_reset_tokens table operations
+# ---------------------------------------------------------------------------
+def init_password_reset_table(connection=None) -> None:
+    """
+    Ensure the password_reset_tokens table exists in the database.
+    Safe to call repeatedly on startup.
+    """
+    should_close = False
+    if connection is None:
+        try:
+            connection = _get_connection()
+            should_close = True
+        except Exception:
+            return  # If DB is not reachable at import time, skip
+
+    cursor = connection.cursor()
+    try:
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
+              `id` INT(11) NOT NULL AUTO_INCREMENT,
+              `user_id` INT(11) NOT NULL,
+              `token_hash` VARCHAR(64) NOT NULL,
+              `expires_at` DATETIME NOT NULL,
+              `used_at` DATETIME DEFAULT NULL,
+              `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+              PRIMARY KEY (`id`),
+              INDEX `idx_token_hash` (`token_hash`),
+              INDEX `idx_user_id` (`user_id`),
+              CONSTRAINT `fk_prt_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`User_Id`) ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            """
+        )
+        connection.commit()
+    except Exception:
+        connection.rollback()
+    finally:
+        cursor.close()
+        if should_close:
+            connection.close()
+
+
+def invalidate_user_reset_tokens(cursor, user_id: int) -> None:
+    """
+    Mark any older, unused password reset tokens for this user as used/invalidated.
+    Ensures that when a newer token is issued, older tokens become invalid.
+    """
+    cursor.execute(
+        "UPDATE password_reset_tokens SET used_at = UTC_TIMESTAMP() WHERE user_id = %s AND used_at IS NULL",
+        (user_id,)
+    )
+
+
+def create_password_reset_token(cursor, user_id: int, token_hash: str, expires_at_dt) -> int:
+    """
+    Store the SHA-256 hash of a password reset token for the given user.
+    """
+    cursor.execute(
+        """
+        INSERT INTO password_reset_tokens (user_id, token_hash, expires_at)
+        VALUES (%s, %s, %s)
+        """,
+        (user_id, token_hash, expires_at_dt)
+    )
+    return cursor.lastrowid
+
